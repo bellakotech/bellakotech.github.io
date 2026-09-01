@@ -1,0 +1,498 @@
+document.addEventListener('DOMContentLoaded',()=>{
+  // Remove images whose src fails to load, then initialize carousel with existing images
+  const carouselEl = document.getElementById('carousel')
+  const thumbsEl = document.querySelector('.thumbnails')
+
+  const testImage = src => new Promise(resolve=>{
+    const img = new Image()
+    img.onload = ()=> resolve({src, ok:true})
+    img.onerror = ()=> resolve({src, ok:false})
+    img.src = src
+  })
+
+  const removeInvalid = async ()=>{
+    if(!carouselEl) return
+    const imgs = Array.from(carouselEl.querySelectorAll('img'))
+    const thumbs = thumbsEl ? Array.from(thumbsEl.querySelectorAll('img')) : []
+    const srcs = imgs.map(i=>i.getAttribute('src'))
+    const results = await Promise.all(srcs.map(testImage))
+    results.forEach((r, i)=>{
+      if(!r.ok){
+        // remove carousel img
+        const el = imgs[i]
+        if(el) el.remove()
+        // also remove matching thumbnail (same src)
+        thumbs.forEach(t=>{ if(t.getAttribute('src')===r.src) t.remove() })
+      }
+    })
+  }
+
+  removeInvalid().then(()=>{
+    const imgs = Array.from(document.querySelectorAll('#carousel img'))
+    const thumbs = Array.from(document.querySelectorAll('.thumbnails img'))
+    let idx=0
+
+  const clampIndex = i => {
+    if(imgs.length === 0) return 0
+    return (i + imgs.length) % imgs.length
+  }
+
+  const show = i=>{
+    const n = clampIndex(i)
+    imgs.forEach((img, j)=>{
+      img.classList.toggle('visible', j===n)
+      img.classList.toggle('hidden', j!==n)
+    })
+    thumbs.forEach((t, j)=>{
+      t.classList.toggle('active', j===n)
+      if(j===n) t.setAttribute('aria-current','true')
+      else t.removeAttribute('aria-current')
+    })
+    idx = n
+  }
+
+    const prevBtn = document.getElementById('prev')
+    const nextBtn = document.getElementById('next')
+    if(prevBtn) prevBtn.addEventListener('click',()=>{ show(idx-1) })
+    if(nextBtn) nextBtn.addEventListener('click',()=>{ show(idx+1) })
+
+    // hide navigation if not needed
+    if(imgs.length <= 1){ if(prevBtn) prevBtn.style.display='none'; if(nextBtn) nextBtn.style.display='none' }
+
+  // thumbnail click handlers
+    // normalize thumbnail indices after any removals
+    thumbs.forEach((t,i)=> t.dataset.index = i)
+    thumbs.forEach(t=>{
+      t.addEventListener('click', (e)=>{
+        const i = parseInt(t.dataset.index || '0', 10)
+        show(i)
+      })
+    })
+
+  // initialize
+  show(0)
+})
+
+// Simple translations map and helper to update text nodes with `data-i18n` keys
+const I18N = {
+  en: {
+    discover: 'Discover GrowTale',
+    back_to_cover: 'Back to cover',
+    view_profile: 'View full profile',
+    hide_profile: 'Hide profile',
+    view_product: 'View product',
+    contact: 'Contact',
+    // nav
+    nav_impact: 'Impact',
+    nav_game: 'Game',
+    nav_universe: 'Universe',
+    nav_team: 'Team',
+    nav_contact: 'Contact',
+    // vision
+    vision_title: 'An adventure that grows as the player disconnects',
+    vision_lead: 'GrowTale turns reduced passive mobile use into progress within an RPG universe, combining entertainment, digital wellbeing and social impact.',
+    // blocks
+    block_impact_title: 'IMPACT & INVESTMENT',
+    block_impact_sub: 'An entertainment proposal designed to address a real digital wellbeing challenge.',
+    block_game_title: 'THE VIDEO GAME',
+    block_game_sub: 'Discover the mechanics, challenges and universe that turn disconnection into progress.',
+    block_project_title: 'PROJECT & INVESTMENT',
+    block_project_sub: 'Learn the development status, the opportunity and the team behind GrowTale.'
+  },
+  es: {
+    discover: 'Descubrir GrowTale',
+    back_to_cover: 'Volver a portada',
+    view_profile: 'Ver perfil completo',
+    hide_profile: 'Ocultar perfil',
+    view_product: 'Ver producto',
+    contact: 'Contacto',
+    // nav
+    nav_impact: 'Impacto',
+    nav_game: 'Videojuego',
+    nav_universe: 'Universo',
+    nav_team: 'Equipo',
+    nav_contact: 'Contacto',
+    // vision
+    vision_title: 'Una aventura que crece cuando el jugador desconecta',
+    vision_lead: 'GrowTale transforma la reducción del uso pasivo del móvil en progreso dentro de un universo RPG, combinando entretenimiento, bienestar digital e impacto social.',
+    // blocks
+    block_impact_title: 'IMPACTO E INVERSIÓN',
+    block_impact_sub: 'Una propuesta de entretenimiento diseñada para abordar un reto real de bienestar digital.',
+    block_game_title: 'EL VIDEOJUEGO',
+    block_game_sub: 'Descubre las mecánicas, los retos y el universo que convierten la desconexión en progreso.',
+    block_project_title: 'PROYECTO E INVERSIÓN',
+    block_project_sub: 'Conoce el estado de desarrollo, la oportunidad y el equipo responsable de GrowTale.'
+  }
+}
+
+function translatePage(code){
+  const lang = I18N[code] ? code : 'es'
+  const map = I18N[lang]
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n')
+    if(key && map[key]) el.textContent = map[key]
+  })
+  // update profile buttons according to expanded state
+  document.querySelectorAll('.view-profile').forEach(btn=>{
+    const card = btn.closest('.member-card')
+    const expanded = card && card.classList.contains('expanded')
+    btn.textContent = expanded ? (map.hide_profile || map.view_profile) : (map.view_profile || map.hide_profile)
+  })
+}
+
+// Music control: floating toggle that saves preference in localStorage.
+document.addEventListener('DOMContentLoaded', ()=>{
+  const audio = document.getElementById('theme-audio')
+  const btn = document.getElementById('music-toggle')
+  if(!audio || !btn) return
+  const STORAGE_KEY = 'growtale_music'
+  audio.loop = true
+  audio.volume = 0.6
+
+  const setButtonState = (on)=>{
+    btn.classList.toggle('on', !!on)
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false')
+    btn.title = on ? 'Música activada (clic para pausar)' : 'Música desactivada (clic para reproducir)'
+  }
+
+  // Initialize from saved preference. IMPORTANT: do NOT autoplay — user must activate manually.
+  const saved = localStorage.getItem(STORAGE_KEY)
+  const prefOn = saved === 'on'
+  setButtonState(prefOn)
+
+  btn.addEventListener('click', async ()=>{
+    if(audio.paused){
+      try{
+        await audio.play()
+        setButtonState(true)
+        localStorage.setItem(STORAGE_KEY, 'on')
+      }catch(err){
+        console.warn('Reproducción de audio bloqueada:', err)
+      }
+    } else {
+      audio.pause()
+      setButtonState(false)
+      localStorage.setItem(STORAGE_KEY, 'off')
+    }
+  })
+})
+
+// Additional interactions: claim buttons and simple map zoom
+document.addEventListener('click', (e)=>{
+  if(e.target.matches('.claim')){
+    e.target.textContent = 'Aceptado';
+    e.target.disabled = true;
+    e.target.style.opacity = 0.9;
+    alert('¡Reto aceptado! Buen trabajo.');
+  }
+});
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const map = document.querySelector('.map-wrapper img');
+  if(map){
+    map.style.transition = 'transform 300ms ease';
+    map.addEventListener('click', ()=>{
+      map.classList.toggle('zoomed');
+      if(map.classList.contains('zoomed')) map.style.transform = 'scale(1.05)';
+      else map.style.transform = 'scale(1)';
+    });
+  }
+});
+
+// Landing cover: sound toggle for trailer video (muted by default to allow autoplay)
+document.addEventListener('DOMContentLoaded', ()=>{
+  const vid = document.getElementById('landing-video')
+  const btn = document.getElementById('landing-sound-toggle')
+  const STORAGE_KEY = 'growtale_trailer_sound'
+  if(!vid || !btn) return
+
+  // Ensure video is muted initially unless user previously enabled
+  const saved = localStorage.getItem(STORAGE_KEY)
+  const wasOn = saved === 'on'
+  vid.muted = !wasOn
+  btn.classList.toggle('on', wasOn)
+  btn.setAttribute('aria-pressed', wasOn ? 'true' : 'false')
+
+  // Ensure video starts at 0 when ready
+  const setStart = ()=>{
+    try{ if(typeof vid.currentTime === 'number') vid.currentTime = 0 }catch(e){}
+  }
+  if(vid.readyState >= 1) setStart(); else vid.addEventListener('loadedmetadata', setStart)
+
+  btn.addEventListener('click', ()=>{
+    const nowOn = !btn.classList.contains('on')
+    btn.classList.toggle('on', nowOn)
+    btn.setAttribute('aria-pressed', nowOn ? 'true' : 'false')
+    vid.muted = !nowOn
+    try{ localStorage.setItem(STORAGE_KEY, nowOn ? 'on' : 'off') }catch(e){}
+    // If enabling sound, try to play to ensure audio context is ready
+    if(nowOn){ vid.play().catch(()=>{}) }
+  })
+
+  // Discover button: ensure it navigates to proyecto.html (default link exists in markup)
+  const discover = document.getElementById('discover-btn')
+  if(discover) discover.addEventListener('click', ()=>{ /* allow default navigation */ })
+})
+
+// Diagnostic checks for landing visibility and resource loading
+document.addEventListener('DOMContentLoaded', async ()=>{
+  const diag = (msg, ...args)=> console.info('[LANDING DIAG]', msg, ...args)
+  const vid = document.getElementById('landing-video')
+  const overlay = document.querySelector('.landing-overlay')
+  const content = document.querySelector('.landing-content')
+  const logo = document.querySelector('.landing-logo')
+  const tagline = document.querySelector('.landing-tagline')
+
+  diag('elements presence', { vid: !!vid, overlay: !!overlay, content: !!content, logo: !!logo, tagline: !!tagline })
+
+  const cs = el => el ? getComputedStyle(el) : null
+  if(overlay && content){
+    const o = cs(overlay)
+    const c = cs(content)
+    diag('computed', { overlayZ: o && o.zIndex, overlayOpacity: o && o.opacity, contentZ: c && c.zIndex })
+    try{
+      const oz = parseInt((o && o.zIndex) || 0, 10)
+      const cz = parseInt((c && c.zIndex) || 0, 10)
+      if(!isFinite(cz) || cz <= oz){
+        content.style.zIndex = (oz + 10).toString()
+        diag('adjusted content zIndex to', content.style.zIndex)
+      }
+    }catch(e){ diag('z-index check error', e) }
+  }
+
+  ;[content, logo, tagline].forEach(el=>{
+    if(!el) return
+    const s = cs(el)
+    const hidden = s && (s.display === 'none' || s.visibility === 'hidden' || parseFloat(s.opacity) === 0)
+    diag('visibility', el.className || el.tagName, { display: s && s.display, visibility: s && s.visibility, opacity: s && s.opacity, hidden })
+  })
+
+  // Check resources via HEAD
+  async function headCheck(url){
+    try{ const r = await fetch(url, { method:'HEAD' }); return r.ok ? null : `HEAD ${r.status}` }catch(e){ return e.message }
+  }
+
+  if(logo && logo.getAttribute('src')){
+    const res = await headCheck(logo.getAttribute('src'))
+    diag('logo check', logo.getAttribute('src'), res)
+  }
+
+  if(vid){
+    const srcEl = vid.querySelector('source')
+    const videoUrl = srcEl ? srcEl.getAttribute('src') : vid.getAttribute('src')
+    if(videoUrl){
+      const res = await headCheck(videoUrl)
+      diag('video check', videoUrl, res)
+    }
+    vid.addEventListener('error', (ev)=>{ diag('video element error', ev); console.error('Video element error', ev) })
+    diag('video readyState', vid.readyState)
+  }
+
+  const imgs = Array.from(document.querySelectorAll('#carousel img, .thumbnails img'))
+  for(const img of imgs){
+    const url = img.getAttribute('src')
+    const res = await headCheck(url)
+    diag('image check', url, res)
+  }
+
+  diag('landing diagnostics complete')
+})
+
+  // Lightbox: open gallery images in modal with navigation
+  document.addEventListener('DOMContentLoaded', ()=>{
+      const lightbox = document.getElementById('lightbox')
+    if(!lightbox) return
+    const lbImage = lightbox.querySelector('.lb-image')
+    const lbCaption = lightbox.querySelector('.lb-caption')
+    const btnClose = lightbox.querySelector('[data-lb-close]')
+    const btnNext = lightbox.querySelector('.lb-next')
+    const btnPrev = lightbox.querySelector('.lb-prev')
+
+    const items = Array.from(document.querySelectorAll('.gallery-item'))
+    const imgs = items.map(it=>{
+      const img = it.querySelector('img')
+      return { src: img ? img.getAttribute('src') : '', alt: img ? (img.getAttribute('alt')||'') : '', caption: it.querySelector('figcaption') ? it.querySelector('figcaption').textContent.trim() : '' }
+    }).filter(i=>i.src)
+    if(imgs.length === 0) return
+
+    let current = 0
+    const show = i=>{
+      current = (i + imgs.length) % imgs.length
+      lbImage.src = imgs[current].src
+      lbImage.alt = imgs[current].alt || imgs[current].caption || 'Imagen'
+      lbCaption.textContent = imgs[current].caption || ''
+    }
+
+    const open = idx=>{
+      show(idx)
+      lightbox.classList.remove('lightbox-hidden')
+      lightbox.classList.add('lightbox-visible')
+      lightbox.setAttribute('aria-hidden','false')
+      document.body.style.overflow = 'hidden'
+      // focus close for accessibility
+      const c = lightbox.querySelector('.lb-close')
+      if(c) c.focus()
+    }
+    const close = ()=>{
+      lightbox.classList.remove('lightbox-visible')
+      lightbox.classList.add('lightbox-hidden')
+      lightbox.setAttribute('aria-hidden','true')
+      document.body.style.overflow = ''
+      lbImage.src = ''
+    }
+
+    // attach click handlers to open
+    items.forEach((it, idx)=>{
+      const img = it.querySelector('img')
+      if(!img) return
+      img.style.cursor = 'zoom-in'
+      img.addEventListener('click', (e)=>{ e.preventDefault(); open(idx) })
+    })
+
+    // Team profile toggle for mobile / keyboard
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const toggles = Array.from(document.querySelectorAll('.team-section .view-profile'))
+      if(toggles.length === 0) return
+      toggles.forEach(btn=>{
+        btn.addEventListener('click', (e)=>{
+          const card = btn.closest('.member-card')
+          if(!card) return
+          card.classList.toggle('expanded')
+          const expanded = card.classList.contains('expanded')
+          // Use translations for button text
+          const lang = document.documentElement.lang || localStorage.getItem('growtale_lang') || 'es'
+          const map = I18N[lang] || I18N['es']
+          btn.textContent = expanded ? (map.hide_profile || map.view_profile) : (map.view_profile || map.hide_profile)
+          // ensure aria
+          card.setAttribute('aria-expanded', expanded ? 'true' : 'false')
+        })
+      })
+    })
+
+    // Language selector: save choice to localStorage, toggle menu, apply lang to <html>
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const SELECTOR_ID = 'growtale_lang'
+      const sel = document.getElementById('lang-select')
+      if(!sel) return
+      const btn = sel.querySelector('#lang-select-btn')
+      const menu = sel.querySelector('.lang-menu')
+      const options = Array.from(menu.querySelectorAll('li'))
+
+      const applyLang = (code)=>{
+        try{ document.documentElement.lang = code }catch(e){}
+        if(btn) btn.textContent = code === 'en' ? 'EN' : 'ES'
+        // apply translations when language changes
+        translatePage(code)
+      }
+
+      // init from localStorage
+      const saved = localStorage.getItem(SELECTOR_ID) || (navigator.language && navigator.language.startsWith('en') ? 'en' : 'es')
+      applyLang(saved)
+
+      // set selected aria
+      options.forEach(o=> o.setAttribute('aria-checked', o.dataset.lang === saved ? 'true' : 'false'))
+
+      // toggle menu
+      const closeMenu = ()=>{ sel.classList.remove('open'); sel.setAttribute('aria-expanded','false') }
+      const openMenu = ()=>{ sel.classList.add('open'); sel.setAttribute('aria-expanded','true'); menu.querySelector('[data-lang]') && menu.querySelector('[data-lang]').focus()
+      }
+
+      btn.addEventListener('click', (e)=>{ e.stopPropagation(); if(sel.classList.contains('open')) closeMenu(); else openMenu() })
+
+      options.forEach(opt=>{
+        opt.tabIndex = 0
+        opt.addEventListener('click', ()=>{
+          const code = opt.dataset.lang
+          localStorage.setItem(SELECTOR_ID, code)
+          applyLang(code)
+          options.forEach(o=> o.setAttribute('aria-checked', o===opt ? 'true' : 'false'))
+          closeMenu()
+        })
+        opt.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); opt.click() } })
+      })
+
+      // click outside to close
+      document.addEventListener('click', (e)=>{ if(!sel.contains(e.target)) closeMenu() })
+      // escape to close
+      document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeMenu() })
+    })
+
+    // controls
+    if(btnClose) btnClose.addEventListener('click', close)
+    if(lightbox.querySelector('[data-lb-close]')){
+      lightbox.querySelectorAll('[data-lb-close]').forEach(el=> el.addEventListener('click', close))
+    }
+    if(btnNext) btnNext.addEventListener('click', ()=> show(current+1))
+    if(btnPrev) btnPrev.addEventListener('click', ()=> show(current-1))
+
+    // backdrop click to close
+    const backdrop = lightbox.querySelector('.lightbox-backdrop')
+    if(backdrop) backdrop.addEventListener('click', close)
+
+    // keyboard navigation
+    document.addEventListener('keydown', (e)=>{
+      if(lightbox.classList.contains('lightbox-visible')){
+        if(e.key === 'Escape') { close(); return }
+        if(e.key === 'ArrowRight') { show(current+1); return }
+        if(e.key === 'ArrowLeft') { show(current-1); return }
+      }
+    })
+  })
+
+// Navigation behavior: mobile toggle, smooth close on select/outside, and active link highlighting
+document.addEventListener('DOMContentLoaded', ()=>{
+  const nav = document.querySelector('.top-nav')
+  if(!nav) return
+  const toggle = nav.querySelector('.nav-toggle')
+  const links = Array.from(nav.querySelectorAll('.nav-links a'))
+  const navLinksContainer = nav.querySelector('.nav-links')
+
+  // Move music toggle into nav-right if present elsewhere
+  const musicToggle = document.getElementById('music-toggle')
+  const navRight = nav.querySelector('.nav-right')
+  if(musicToggle && navRight && !navRight.contains(musicToggle)){
+    navRight.appendChild(musicToggle)
+  }
+
+  // Toggle mobile menu
+  if(toggle){
+    toggle.addEventListener('click', ()=>{
+      const open = navLinksContainer.classList.toggle('open')
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false')
+    })
+  }
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e)=>{
+    if(!nav.contains(e.target) && navLinksContainer.classList.contains('open')){
+      navLinksContainer.classList.remove('open')
+      if(toggle) toggle.setAttribute('aria-expanded','false')
+    }
+  })
+
+  // Smooth scroll is handled by CSS, but ensure menu closes on link click
+  links.forEach(a=>{
+    a.addEventListener('click', (e)=>{
+      // close mobile menu
+      if(navLinksContainer.classList.contains('open')){
+        navLinksContainer.classList.remove('open')
+        if(toggle) toggle.setAttribute('aria-expanded','false')
+      }
+    })
+  })
+
+  // Highlight link for visible section
+  const sections = links.map(a=> document.querySelector(a.getAttribute('href')) ).filter(Boolean)
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{
+      if(!en.target) return
+      const id = '#' + en.target.id
+      const link = nav.querySelector('.nav-links a[href="'+id+'"]')
+      if(en.isIntersecting && link){
+        nav.querySelectorAll('.nav-links a').forEach(l=> l.classList.remove('active'))
+        link.classList.add('active')
+      }
+    })
+  },{threshold:0.45})
+  sections.forEach(s=> obs.observe(s))
+})

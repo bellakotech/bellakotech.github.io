@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>GrowTale — Portada</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#042029">
+    <style>
+      /* Prevent scrolling on the cinematic cover page */
+      html,body{height:100%;margin:0}
+      body{overflow:hidden}
+      main#landing{height:100vh}
+      </style>
+  </head>
+  <body>
+    <!-- Landing: full-screen trailer background -->
+    <main id="landing" aria-label="Portada GrowTale">
+      <video id="landing-video" class="landing-video" autoplay muted loop playsinline poster="../assets/images/trailer-poster.svg">
+        <source src="../assets/video/trailer.mp4" type="video/mp4">
+      </video>
+
+      <div class="landing-overlay" aria-hidden="true"></div>
+
+      <header class="landing-top">
+        <div class="lang-select" id="lang-select" aria-haspopup="true" aria-expanded="false">
+          <button id="lang-select-btn" class="lang-btn" aria-label="Seleccionar idioma" title="Idioma">ES</button>
+          <ul class="lang-menu" role="menu" aria-label="Seleccionar idioma">
+            <li role="menuitem" data-lang="es">Español</li>
+            <li role="menuitem" data-lang="en">English</li>
+          </ul>
+        </div>
+        <button id="landing-sound-toggle" class="sound-toggle" aria-pressed="false" aria-label="Activar sonido" title="Activar sonido">
+          <svg class="sound-on" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 9v6h4l5 4V5L9 9H5z" fill="currentColor"/><path d="M16.5 8.5a4.5 4.5 0 010 7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg class="sound-off" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 9v6h4l5 4V5L9 9H5z" fill="currentColor"/><path d="M18 6l-6 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </header>
+
+      <div class="landing-content">
+        <img src="../assets/images/logo.svg" alt="GrowTale logo" class="landing-logo">
+        <h1 class="landing-tagline">Convierte hábitos saludables en progreso en un RPG de fantasía</h1>
+        <div class="landing-cta">
+          <a id="discover-btn" class="btn btn-primary" href="proyecto.html" data-i18n="discover">Descubrir GrowTale</a>
+        </div>
+      </div>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

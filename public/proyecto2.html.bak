@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>GrowTale — Página oficial</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Game-friendly rounded fonts: priority order Nunito, Quicksand, M+PLUS Rounded 1c, Varela Round -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700;800&family=Quicksand:wght@300;400;500;700&family=M+PLUS+Rounded+1c:wght@300;400;500;700&family=Varela+Round&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+  </head>
+  <body>
+    <!-- Top navigation (fixed) -->
+    <nav class="top-nav" role="navigation" aria-label="Principal">
+      <div class="nav-inner container-lg">
+        <div class="nav-left">
+          <a href="index.html" class="nav-logo" aria-label="Volver a la portada">
+            <img src="../assets/images/logo.svg" alt="GrowTale" />
+          </a>
+        </div>
+
+        <button class="nav-toggle" aria-expanded="false" aria-label="Abrir menú">☰</button>
+
+        <ul class="nav-links" role="menubar">
+          <li><a href="#problem" data-nav="impacto" data-i18n="nav_impact">Impacto</a></li>
+          <li><a href="#how" data-nav="videojuego" data-i18n="nav_game">Videojuego</a></li>
+          <li><a href="#universe" data-nav="universo" data-i18n="nav_universe">Universo</a></li>
+          <li><a href="#team" data-nav="equipo" data-i18n="nav_team">Equipo</a></li>
+          <li><a href="#contact" data-nav="contacto" data-i18n="nav_contact">Contacto</a></li>
+        </ul>
+
+        <div class="nav-right">
+          <a href="index.html" class="back-to-cover nav-back" data-i18n="back_to_cover">Volver a portada</a>
+          <div class="lang-select" id="lang-select" aria-haspopup="true" aria-expanded="false">
+            <button id="lang-select-btn" class="lang-btn" aria-label="Seleccionar idioma" title="Idioma">ES</button>
+            <ul class="lang-menu" role="menu" aria-label="Seleccionar idioma">
+              <li role="menuitem" data-lang="es">Español</li>
+              <li role="menuitem" data-lang="en">English</li>
+            </ul>
+          </div>
+          <!-- music toggle will be moved here by markup (id preserved) -->
+        </div>
+      </div>
+    </nav>
+    <!-- VISIÓN: sustituye al hero para introducir el proyecto de forma humana -->
+    <section id="vision" class="vision-section">
+      <div class="container vision-grid">
+        <div class="vision-image" aria-hidden="true">
+          <img src="../assets/images/icono_vision.png" alt="Personaje GrowTale" loading="lazy">
+        </div>
+        <div class="vision-copy">
+          <h1 data-i18n="vision_title">Una aventura que crece cuando el jugador desconecta</h1>
+          <p class="lead" data-i18n="vision_lead">GrowTale transforma la reducción del uso del móvil en progreso dentro de un universo RPG, combinando entretenimiento, bienestar digital e impacto social</p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="#product" data-i18n="view_product">Ver producto</a>
+            <a class="btn btn-secondary" href="#contact" data-i18n="contact">Contacto</a>
+            <a href="docs/GrowTale_PitchDeck.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+      📄 Pitch Deck</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <!-- Trailer removed: se utiliza en la portada (index.html) -->
+
+      <!-- El Problema (3) -->
+      <!-- BLOCK: IMPACTO E INVERSIÓN -->
+      <div class="block-sep" data-block="impacto">
+        <div class="block-inner container">
+          <div class="block-icon" aria-hidden="true">⚖️</div>
+          <div class="block-text">
+            <h2 class="block-title" data-i18n="block_impact_title">IMPACTO E INVERSIÓN</h2>
+            <p class="block-sub" data-i18n="block_impact_sub">Una propuesta de entretenimiento diseñada para abordar un reto real de bienestar digital.</p>
+          </div>
+          <div class="block-deco" aria-hidden="true"></div>
+        </div>
+      </div>
+      <section id="problem" class="investor-section">
+        <div class="container">
+          <h2 data-i18n="problem_title">El problema</h2>
+          <ul>
+            <li><strong data-i18n="problem_screen_label">Tiempo de pantalla elevado:</strong> <span data-i18n="problem_screen_text">Usuarios jóvenes pasan demasiado tiempo en apps distractoras.</span></li>
+            <li><strong data-i18n="problem_distraction_label">Distracción digital:</strong><span data-i18n="problem_distraction_text">Pérdida de concentración y bienestar emocional.</span></li>
+            <li><strong data-i18n="problem_need_label">Necesidad:</strong> <span data-i18n="problem_need_text">Herramientas que integren diversión y reducción de uso pasivo del móvil.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Validación profesional (4) -->
+    <section id="validation" class="investor-section">
+  <div class="container">
+
+    <h2>Validación profesional e impacto social</h2>
+
+    <p>
+      GrowTale ha sido evaluado desde una perspectiva socioeducativa y de bienestar digital.
+    </p>
+
+    <div class="validators">
+      <div class="step">
+        <h3>🧠 Bienestar digital</h3>
+
+        <p>
+      Diseñado para ayudar a reducir el uso pasivo del móvil mediante mecánicas de juego positivas.
+        </p>
+      </div>
+
+      <div class="step">
+        <h3>🌱 Diseño ético</h3>
+
+       Sin mecánicas compulsivas ni modelos orientados a la dependencia del usuario.
+      </div>
+
+      <div class="step">
+        <h3>🚀 Potencial de aplicación</h3>
+       Potencial de aplicación en bienestar digital, educación y prevención.
+      </div>
+
+    </div>
+
+    <blockquote class="validation-quote">
+      "GrowTale presenta una propuesta innovadora y socialmente pertinente dentro del bienestar digital y la prevención psicosocial."
+       </blockquote>
+<div class="validator-author">
+
+  <p>
+    Valoración elaborada por María del Mar,
+    profesional del ámbito del Trabajo Social.
+  </p>
+
+  <a href="../public/docs/AnalisisMdm.pdf"
+     target="_blank"
+     rel="noopener noreferrer"
+     class="btn btn-secondary">
+
+    📄 Ver informe completo
+
+  </a>
+
+</div>
+  </div>
+</section>
+
+      <!-- Cómo funciona (5) -->
+      <!-- BLOCK: EL VIDEOJUEGO -->
+      <div class="block-sep block-sep-immersive" data-block="videojuego">
+        <div class="block-inner container">
+          <div class="block-icon" aria-hidden="true">🜚</div>
+          <div class="block-text">
+            <h2 class="block-title" data-i18n="block_game_title">EL VIDEOJUEGO</h2>
+            <p class="block-sub" data-i18n="block_game_sub">Descubre las mecánicas, los retos y el universo que convierten la desconexión en progreso.</p>
+          </div>
+          <div class="block-deco" aria-hidden="true"></div>
+        </div>
+      </div>
+      <section id="how" class="how">
+        <h2>Cómo funciona</h2>
+        <p>GrowTale es un juego de bienestar digital donde tu progreso depende de cuánto tiempo pasas fuera de apps distractoras. Completa retos diarios, explora el mapa del mundo y observa cómo crece tu personaje.</p>
+        <div class="steps">
+          <div class="step">
+            <strong>1.</strong>
+            <p>Establece límites de uso del móbil y retos diarios.</p>
+<figure class="gallery-item"><img src="../assets/images/comofunciona1.webp" alt="Captura 1" loading="lazy"></figure>
+          </div>
+          <div class="step">
+            <strong>2.</strong>
+            <p>Consigue recompensas por tiempo de concentración real.</p>
+<figure class="gallery-item"><img src="../assets/images/comofunciona2.png" alt="Captura 2" loading="lazy"></figure>
+          </div>
+          <div class="step">
+            <strong>3.</strong>
+            <p>Explora el mundo del juego y desbloquea historias.</p>
+<figure class="gallery-item"><img src="../assets/images/comofunciona3.png" alt="Captura 3" loading="lazy"></figure>
+
+          </div>
+        </div>
+      </section>
+
+      
+
+      <!-- Producto (7) -->
+      <section id="product" class="product-section">
+        <div class="container">
+          <h2>Producto</h2>
+          <!-- Galería -->
+          <section id="gallery" class="gallery">
+            <h3 class="section-subtitle">Galería</h3>
+            <div class="gallery-grid">
+              <figure class="gallery-item">
+                <img src="../assets/images/captura1.png" alt="Captura 1" loading="lazy">
+                <figcaption>Skills</figcaption>
+              </figure>
+
+              <figure class="gallery-item">
+                <img src="../assets/images/captura2.png" alt="Captura 2" loading="lazy">
+                <figcaption>Combate</figcaption>
+              </figure>
+
+              <figure class="gallery-item">
+                <img src="../assets/images/captura3.png" alt="Captura 3" loading="lazy">
+                <figcaption>Personaje</figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <!-- Retos diarios -->
+          <section id="challenges" class="challenges">
+            <h3 class="section-subtitle">Retos diarios</h3>
+            <div class="challenge-list compact">
+              <article class="challenge card">
+                <h4>Concentración de 30 min</h4>
+                <p>Evita apps distractoras durante 30 minutos y gana semillas.</p>
+                <div class="challenge-meta">
+                  <span class="badge">Reto diario</span>
+                  <span class="reward">Recompensa: Semillas</span>
+                </div>
+              </article>
+              <article class="challenge card">
+                <h4>Paseo al aire libre</h4>
+                <p>Pasa 20 minutos fuera del móvil y desbloquea una zona en el mapa.</p>
+                <div class="challenge-meta">
+                  <span class="badge">Reto de bienestar</span>
+                  <span class="reward">Recompensa: Desbloqueo de región</span>
+                </div>
+              </article>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- Universo GrowTale (8) -->
+      <section id="universe" class="universe-section">
+        <div class="container">
+          <h2>Universo GrowTale</h2>
+          <!-- Mapa (mantener id) -->
+          <section id="map" class="map">
+            <h3 class="section-subtitle">Mapa del mundo</h3>
+            <p class="muted">Explora regiones y descubre retos únicos.</p>
+              <div class="map-wrapper compact">
+                <img src="../assets/images/mapa.jpg" alt="Mapa del mundo de GrowTale">
+              </div>
+          </section>
+        </div>
+      </section>
+      <!-- Estado del proyecto (9) -->
+      <!-- BLOCK: PROYECTO E INVERSIÓN -->
+      <div class="block-sep" data-block="proyecto">
+        <div class="block-inner container">
+          <div class="block-icon" aria-hidden="true">🏗️</div>
+          <div class="block-text">
+              <h2 class="block-title" data-i18n="block_project_title">PROYECTO E INVERSIÓN</h2>
+              <p class="block-sub" data-i18n="block_project_sub">Conoce el estado de desarrollo, la oportunidad y el equipo responsable de GrowTale.</p>
+            </div>
+          <div class="block-deco" aria-hidden="true"></div>
+        </div>
+      </div>
+      <!-- Diferenciación (moved here) -->
+      <section id="differentiation" class="investor-section">
+        <div class="container">
+          <h2>Diferenciación</h2>
+          <div class="diff-grid">
+            <div>
+              <h4>Frente a apps de bienestar</h4>
+              <p>Gamificación centrada en progresión dentro del juego, no solo métricas de tiempo.</p>
+            </div>
+            <div>
+              <h4>Frente a otros juegos móviles</h4>
+              <p>Objetivo social: mejorar el bienestar real del jugador, con aval profesional.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="status" class="investor-section">
+        <div class="container">
+          <h2>Estado del proyecto</h2>
+          <ul class="status-list">
+            <li><strong>Prototipo:</strong> Funcional</li>
+            <li><strong>Música:</strong> Original disponible</li>
+            <li><strong>Arte:</strong> Conceptos y assets iniciales (originales)</li>
+            <li><strong>Desarrollo:</strong> Alpha — sistemas principales implementados</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Mercado (10) -->
+      <section id="market" class="investor-section">
+        <div class="container">
+          <h2>Mercado</h2>
+          <p><strong>Público objetivo:</strong> Usuarios 16-35 interesados en bienestar digital y juegos casuales con propósito.</p>
+          <p><strong>Oportunidad:</strong> Intersección entre mercado de bienestar y mobile gaming; alto potencial de retención por mecánicas sociales y recompensas.</p>
+        </div>
+      </section>
+
+      <!-- Equipo (11) - Collage revisado para transmitir credibilidad e inversión -->
+      <section id="team" class="team-section investor-section">
+        <div class="container">
+          <h2>Equipo</h2>
+          <p class="muted">Equipo técnico y creativo con experiencia en producto, AAA y operaciones — preparado para ejecutar y escalar.</p>
+
+          <div class="team-collage" role="list">
+            <article class="member-card" role="listitem">
+              <figure class="avatar-wrap">
+                <div class="avatar-initials" aria-hidden="true">DR</div>
+              </figure>
+              <div class="member-meta">
+                <h4>Daniel Robledo</h4>
+                <div class="role">CPO y Director de Producto</div>
+                <p class="bio-short">Technical Producer Producto en Foundever y anterior Director de Producto en BrytSpace. Ingeniero y gestor que combina su pasión por la tecnología y la psicología para mejorar la salud mental mediante software.</p>
+                <div class="bio-full" aria-hidden="true">
+                  <p>Technical Producer Producto en Foundever y anterior Director de Producto en BrytSpace. Ingeniero y gestor que combina su pasión por la tecnología y la psicología para mejorar la salud mental mediante software.</p>
+                  <ul class="exp-list"><li>Director de Producto — BrytSpace</li><li>Technical Producer — Foundever</li></ul>
+                </div>
+                <button class="btn view-profile" data-i18n="view_profile">Ver perfil completo</button>
+              </div>
+            </article>
+
+            <article class="member-card" role="listitem">
+              <figure class="avatar-wrap">
+                <div class="avatar-initials" aria-hidden="true">CS</div>
+              </figure>
+              <div class="member-meta">
+                <h4>Charlie Sánchez</h4>
+                <div class="role">Director Creativo</div>
+                <p class="bio-short">Senior Game Designer en Gameloft Barcelona, profesor en U-Tad y fundador de Beast Arts. Especialista en gamificación con más de siete años de experiencia.</p>
+                <div class="bio-full" aria-hidden="true">
+                  <p>Senior Game Designer en Gameloft Barcelona, profesor en U-Tad y fundador de Beast Arts. Especialista en gamificación con más de siete años de experiencia.</p>
+                  <ul class="exp-list"><li>Senior Game Designer — Gameloft</li><li>Profesor — U-Tad</li></ul>
+                </div>
+                <button class="btn view-profile">Ver perfil completo</button>
+              </div>
+            </article>
+
+            <article class="member-card" role="listitem">
+              <figure class="avatar-wrap">
+                <div class="avatar-initials" aria-hidden="true">RM</div>
+              </figure>
+              <div class="member-meta">
+                <h4>Raquel Mas</h4>
+                <div class="role">Programadora Full-Stack</div>
+                <p class="bio-short">Ex-desarrolladora de gameplay y sistemas en Pendulo Studios. Especialista en Unity, Unreal Engine e interfaces.</p>
+                <div class="bio-full" aria-hidden="true">
+                  <p>Ex-desarrolladora de gameplay y sistemas en Pendulo Studios. Especialista en Unity, Unreal Engine e interfaces.</p>
+                  <ul class="exp-list"><li>Gameplay Developer — Péndulo Studios</li></ul>
+                </div>
+                <button class="btn view-profile">Ver perfil completo</button>
+              </div>
+            </article>
+
+            <article class="member-card" role="listitem">
+              <figure class="avatar-wrap">
+                <div class="avatar-initials" aria-hidden="true">DM</div>
+              </figure>
+              <div class="member-meta">
+                <h4>David Muñoz</h4>
+                <div class="role">Programador Full-Stack y DevSecOps</div>
+                <p class="bio-short">Programador de rig e IT en Huhaa Studios. Graduado en Ingeniería Industrial y experto en sistemas y backend.</p>
+                <div class="bio-full" aria-hidden="true">
+                  <p>Programador de rig e IT en Huhaa Studios. Graduado en Ingeniería Industrial y experto en sistemas y backend.</p>
+                  <ul class="exp-list"><li>DevOps — Huhaa Studios</li></ul>
+                </div>
+                <button class="btn view-profile">Ver perfil completo</button>
+              </div>
+            </article>
+
+            <article class="member-card" role="listitem">
+              <figure class="avatar-wrap">
+                <div class="avatar-initials" aria-hidden="true">RD</div>
+              </figure>
+              <div class="member-meta">
+                <h4>Rober Díaz</h4>
+                <div class="role">Compositor y Sound Designer</div>
+                <p class="bio-short">Compositor de música para videojuegos y autor de Crónicas de un Gamer: Guía Emocional de Videojuegos.</p>
+                <div class="bio-full" aria-hidden="true">
+                  <p>Compositor de música para videojuegos y autor de Crónicas de un Gamer: Guía Emocional de Videojuegos.</p>
+                  <ul class="exp-list"><li>Compositor — Freelance</li></ul>
+                </div>
+                <button class="btn view-profile">Ver perfil completo</button>
+              </div>
+            </article>
+
+            <article class="member-card" role="listitem">
+              <figure class="avatar-wrap">
+                <div class="avatar-initials" aria-hidden="true">IR</div>
+              </figure>
+              <div class="member-meta">
+                <h4>Ismael Ruiz</h4>
+                <div class="role">Concept Artist</div>
+                <p class="bio-short">Concept Artist y Diseñador Gráfico en Infinite Thread Games. Especializado en ilustración digital y concept art.</p>
+                <div class="bio-full" aria-hidden="true">
+                  <p>Concept Artist y Diseñador Gráfico en Infinite Thread Games. Especializado en ilustración digital y concept art.</p>
+                  <ul class="exp-list"><li>Concept Artist — Infinite Thread Games</li></ul>
+                </div>
+                <button class="btn view-profile">Ver perfil completo</button>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Qué buscamos (12) -->
+      <section id="ask" class="investor-section">
+        <div class="container">
+          <h2>Qué buscamos</h2>
+          <ul>
+            <li><strong>Inversión:</strong> Seed para ampliar el equipo y validar mercado.</li>
+            <li><strong>Partners:</strong> Escuelas, ONGs y plataformas de salud digital.</li>
+            <li><strong>Colaboradores:</strong> Estudios de investigación y publishers interesados en wellbeing.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Contacto (13) -->
+      <section id="contact" class="investor-section contact-section">
+        <div class="container">
+          <h2>Contacto</h2>
+          <p><strong>Email:</strong> <a href="mailto:bellakotech@gmail.com">bellakotech@gmail.com</a></p>
+                    <p><strong>Pitch Deck:</strong> <a href="docs/GrowTale_PitchDeck.pdf" target="_blank">Descargar</a></p>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="site-footer">
+        <div class="footer-inner">
+          <div class="footer-links">
+            <a href="#how">Cómo funciona</a>
+            <a href="#gallery">Galería</a>
+            <a href="#map">Mapa</a>
+            <a href="#challenges">Retos</a>
+          </div>
+          <div class="copyright">© GrowTale — growtale.app<br>Diseñada por José Manuel Ruiz Sánchez</div>
+        </div>
+      </footer>
+
+    <!-- Audio theme: hidden native player; controlled via music toggle -->
+    <audio id="theme-audio" preload="metadata" aria-label="Tema musical GrowTale" style="display:none;" aria-hidden="true">
+      <source src="../assets/audio/theme.mp4" type="audio/mp4">
+      Tu navegador no soporta reproducción de audio.
+    </audio>
+    
+    <!-- Music toggle (keeps id for JS control) -->
+    <button id="music-toggle" class="music-toggle" aria-pressed="false" aria-label="Activar música" title="Activar música">
+      <!-- Speaker on icon -->
+      <svg class="icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M5 9v6h4l5 4V5L9 9H5z" fill="currentColor" />
+        <path d="M16.5 8.5a4.5 4.5 0 010 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <!-- Speaker off icon -->
+      <svg class="icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M5 9v6h4l5 4V5L9 9H5z" fill="currentColor" />
+        <path d="M18 6l-6 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    </main>
+
+    <script src="app.js"></script>
+    <!-- Lightbox markup -->
+    <div id="lightbox" aria-hidden="true" class="lightbox-hidden">
+      <div class="lightbox-backdrop" data-lb-close></div>
+      <div class="lightbox-panel" role="dialog" aria-modal="true" aria-label="Imagen ampliada">
+        <button class="lb-close" aria-label="Cerrar (Esc)" data-lb-close>✕</button>
+        <button class="lb-prev" aria-label="Anterior">‹</button>
+        <div class="lb-content">
+          <img class="lb-image" src="" alt="" />
+          <div class="lb-caption"></div>
+        </div>
+        <button class="lb-next" aria-label="Siguiente">›</button>
+      </div>
+    </div>
+  </body>
+</html>
