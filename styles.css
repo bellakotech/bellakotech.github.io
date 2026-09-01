@@ -800,3 +800,10 @@ svg{transition:color 160ms ease,fill 160ms ease,transform 160ms ease}
   }
 
 }
+@media (max-width:900px){
+
+  .gallery-grid{
+    grid-template-columns:1fr;
+  }
+
+}
