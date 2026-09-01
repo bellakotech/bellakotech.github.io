@@ -432,7 +432,15 @@ svg{transition:color 160ms ease,fill 160ms ease,transform 160ms ease}
 .team-section .member-meta{display:flex;flex-direction:column;gap:8px;width:100%}
 .team-section .member-meta h4{margin:0;font-size:18px;font-weight:700}
 .team-section .member-meta .role{font-size:13px;color:var(--turquoise);font-weight:700}
-.team-section .member-meta .bio-short{margin:6px 0 0;color:var(--text-muted);font-size:14px;line-height:1.3;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden;-webkit-line-clamp:2}
+.team-section .member-meta .bio-short{
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+
+  -webkit-line-clamp:2;
+  line-clamp:2;
+
+  overflow:hidden;
+}
 .team-section .member-meta .bio-full{display:none;color:var(--text-muted);font-size:14px;line-height:1.45}
 .team-section .member-card .view-profile{margin-top:auto;align-self:stretch;text-align:center}
 .team-section .member-card:hover{transform:translateY(-6px);box-shadow:0 30px 80px rgba(2,6,23,0.6);border-color:rgba(20,184,176,0.08)}
