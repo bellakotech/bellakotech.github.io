@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>GrowTale — Página oficial</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=20260902-2200">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -461,7 +461,7 @@
 
     </main>
 
-    <script src="app.js"></script>
+    <script src="app.js?v=20260902-2200"></script>
     <!-- Lightbox markup -->
     <div id="lightbox" aria-hidden="true" class="lightbox-hidden">
       <div class="lightbox-backdrop" data-lb-close></div>
@@ -475,5 +475,11 @@
         <button class="lb-next" aria-label="Siguiente">›</button>
       </div>
     </div>
+    <!-- Custom animated cursor (desktop only) -->
+    <div id="custom-cursor" aria-hidden="true">
+      <div class="cursor-outer"></div>
+      <div class="cursor-inner"></div>
+    </div>
+    <script src="cursor.js?v=20260902-2200" defer></script>
   </body>
 </html>

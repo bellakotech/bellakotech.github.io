@@ -12,12 +12,13 @@
     <meta name="theme-color" content="#042029">
     <style>
       /* Prevent scrolling on the cinematic cover page */
-      html,body{height:100%;margin:0}
-      body{overflow:hidden}
+      html,body{height:100%;margin:0;padding:0;border:0;background:#042029}
+      body{overflow:hidden;background-color:#042029}
       main#landing{height:100vh}
       </style>
   </head>
   <body>
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
     <!-- Landing: full-screen trailer background -->
     <main id="landing" aria-label="Portada GrowTale">
       <!--DESCOMENTAR CUANDO ESTE LISTO EL TRAILER <video id="landing-video" class="landing-video" autoplay muted loop playsinline poster="assets/images/trailer-poster.svg">
@@ -41,14 +42,21 @@
       </header>
 
       <div class="landing-content">
-        <img src="assets/images/logo.svg" alt="GrowTale logo" class="landing-logo">
+        <img src="assets/images/logo.png" alt="GrowTale logo" class="landing-logo">
         <h1 class="landing-tagline">Convierte hábitos saludables en progreso en un RPG de fantasía</h1>
         <div class="landing-cta">
-          <a id="discover-btn" class="btn btn-primary" href="proyecto.html" data-i18n="discover">Descubrir GrowTale</a>
+          <a id="discover-btn" class="btn btn-primary" href="proyecto.html" data-i18n="discover">Descubre GrowTale</a>
         </div>
       </div>
     </main>
 
+    <script src="shader.js" defer></script>
     <script src="app.js"></script>
+    <!-- Custom animated cursor (desktop only) -->
+    <div id="custom-cursor" aria-hidden="true">
+      <div class="cursor-outer"></div>
+      <div class="cursor-inner"></div>
+    </div>
+    <script src="cursor.js" defer></script>
   </body>
 </html>

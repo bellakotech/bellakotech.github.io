@@ -1,4 +1,23 @@
 document.addEventListener('DOMContentLoaded',()=>{
+  const resetScrollPosition = () => {
+    const root = document.scrollingElement || document.documentElement || document.body
+    if (root) root.scrollTop = 0
+    if (document.documentElement) document.documentElement.scrollTop = 0
+    if (document.body) document.body.scrollTop = 0
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }
+
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual'
+  }
+
+  // reset browser-restored scroll before the user can interact
+  resetScrollPosition()
+  requestAnimationFrame(resetScrollPosition)
+  setTimeout(resetScrollPosition, 50)
+  setTimeout(resetScrollPosition, 150)
+  setTimeout(resetScrollPosition, 300)
+
   // Remove images whose src fails to load, then initialize carousel with existing images
   const carouselEl = document.getElementById('carousel')
   const thumbsEl = document.querySelector('.thumbnails')
@@ -110,7 +129,7 @@ const I18N = {
 
   },
   es: {
-    discover: 'Descubrir GrowTale',
+    discover: 'Descubre GrowTale',
     back_to_cover: 'Volver a portada',
     view_profile: 'Ver perfil completo',
     hide_profile: 'Ocultar perfil',
@@ -480,7 +499,29 @@ document.addEventListener('DOMContentLoaded', async ()=>{
 
 // Navigation behavior: mobile toggle, smooth close on select/outside, and active link highlighting
 document.addEventListener('DOMContentLoaded', ()=>{
+  const scrollRoot = document.scrollingElement || document.documentElement || document.body
+  document.documentElement.style.overflow = 'auto'
+  document.documentElement.style.overflowY = 'auto'
+  document.documentElement.style.height = 'auto'
+  document.body.style.overflow = 'auto'
+  document.body.style.overflowY = 'auto'
+  document.body.style.height = 'auto'
+  document.body.style.paddingTop = '0'
+  scrollRoot.style.overflow = 'auto'
+  scrollRoot.style.overflowY = 'auto'
+  scrollRoot.style.height = 'auto'
+  scrollRoot.style.paddingTop = '0'
+
   const nav = document.querySelector('.top-nav')
+  if(nav){
+    nav.style.position = ''
+    nav.style.top = ''
+    nav.style.left = ''
+    nav.style.right = ''
+    nav.style.zIndex = ''
+    nav.style.transform = ''
+    nav.style.width = ''
+  }
   if(!nav) return
   const toggle = nav.querySelector('.nav-toggle')
   const links = Array.from(nav.querySelectorAll('.nav-links a'))
@@ -690,3 +731,30 @@ if (document.readyState === 'loading') {
 } else {
   initGrowTaleLanguage();
 }
+
+// Parallax effect for #vision background: update CSS variable on scroll
+document.addEventListener('DOMContentLoaded', ()=>{
+  const el = document.getElementById('vision')
+  if(!el) return
+  const maxShift = 88 // maximum vertical shift in px (increased for stronger parallax)
+  let ticking = false
+
+  function updateParallax(){
+    const rect = el.getBoundingClientRect()
+    // if completely outside viewport, clear variable for perf
+    if(rect.bottom < 0 || rect.top > window.innerHeight){
+      el.style.removeProperty('--vision-parallax')
+      return
+    }
+    const pct = (rect.top + rect.height/2 - window.innerHeight/2) / (window.innerHeight/2 + rect.height/2)
+    const y = Math.round(pct * maxShift)
+    el.style.setProperty('--vision-parallax', `${y}px`)
+  }
+
+  function onScroll(){ if(!ticking){ requestAnimationFrame(()=>{ updateParallax(); ticking = false }); ticking = true } }
+
+  window.addEventListener('scroll', onScroll, { passive: true })
+  window.addEventListener('resize', ()=> updateParallax())
+  // initial position
+  updateParallax()
+})

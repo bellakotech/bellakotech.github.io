@@ -7,14 +7,14 @@
 	--page-bg:#042029; /* base oscura azul verdosa */
 	--card-dark:#071722;
 	--text-light:#e6f7f4; /* main readable text */
-	--nav-height:64px;
+	--nav-height:56px;
 	--text-muted:#bcdad6; /* secondary text on dark */
 	--cta-contrast:#052334; /* dark text for light CTAs */
 }
 *{box-sizing:border-box}
 /* Primary UI font: prefer Nunito, fallback to Quicksand, M PLUS Rounded 1c, Varela Round, then system */
-body{font-family:'Nunito', 'Quicksand', 'M PLUS Rounded 1c', 'Varela Round', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;margin:0;color:#e6f7f4;background:linear-gradient(180deg,var(--page-bg), #031a20);line-height:1.45;font-weight:400}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;background:var(--page-bg);height:auto;overflow:auto;overflow-x:hidden}
+body{font-family:'Nunito', 'Quicksand', 'M PLUS Rounded 1c', 'Varela Round', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;margin:0;padding:0;border:0;color:#e6f7f4;background:var(--page-bg);line-height:1.45;font-weight:400;position:relative;overflow-x:hidden;overflow-y:auto;padding-top:0}
 
 /* Hero */
 .hero{background:linear-gradient(180deg,var(--dark),#052334);color:#e8f7f6}
@@ -25,7 +25,7 @@ html{scroll-behavior:smooth}
 /* VISIÓN section: two-column desktop layout with background and strong overlay */
 .vision-section{position:relative;padding:10px 0;min-height:350px;max-height:350px;display:flex;align-items:center;overflow:hidden}
 /* Background layer (separate pseudo-element for controlled filter/desaturation) */
-.vision-section::before{content:'';position:absolute;inset:0;background-image:url('assets/images/fondo.jpg');background-size:cover;background-position:center center;background-repeat:no-repeat;filter:saturate(0.75) brightness(0.5);z-index:0}
+.vision-section::before{content:'';position:absolute;inset:-40% 0 -40% 0;background-image:url('assets/images/fondo.jpg');background-size:cover;background-position:center 35%;background-repeat:no-repeat;filter:saturate(0.75) brightness(0.5);z-index:0;transform-origin:center;transform:translate3d(0, var(--vision-parallax, 0px), 0) scale(var(--vision-scale,1.12));will-change:transform}
 /* Dark overlay above background but kept <=60% to keep illustration visible */
 .vision-section::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.55);pointer-events:none;z-index:1}
 .vision-grid{position:relative;display:grid;grid-template-columns:35% 65%;gap:24px;align-items:center;z-index:3;max-width:1100px;margin:0 auto;padding:0 20px}
@@ -46,6 +46,15 @@ html{scroll-behavior:smooth}
 	.vision-image::before{left:50%;transform:translate(-50%,-50%);width:220px;height:220px}
 	.vision-image img{max-width:140px}
 	.vision-copy h1{font-size:26px}
+}
+
+/* Ensure background always covers: reduce inset/scale on smaller screens */
+@media (max-width:900px){
+  .vision-section::before{
+    inset:-18% 0 -18% 0;
+    transform:translate3d(0, var(--vision-parallax, 0px), 0) scale(1.06);
+    background-position:center 45%;
+  }
 }
 
 /* Use rounded game-friendly font for most UI elements (titles, nav, buttons, cards) */
@@ -318,6 +327,51 @@ h2:hover::before{background:linear-gradient(180deg,rgba(20,184,176,0.12),rgba(20
 .btn{transition:transform 220ms cubic-bezier(.2,.9,.2,1),box-shadow 220ms ease,background 160ms ease}
 .btn:hover{transform:scale(1.02);box-shadow:0 18px 40px rgba(20,184,176,0.12)}
 
+/* Discover button: subtle idle "wave" pulses that intensify on hover/focus */
+#discover-btn{display:inline-block;position:relative;z-index:71;overflow:visible}
+#discover-btn::before, #discover-btn::after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(1);border-radius:999px;pointer-events:none;z-index:70}
+/* make initial pulses slightly visible so idle effect is noticeable */
+#discover-btn::before{width:130%;height:130%;background:radial-gradient(circle, rgba(20,184,176,0.18) 0%, rgba(20,184,176,0.08) 30%, transparent 55%);opacity:0.06}
+#discover-btn::after{width:210%;height:210%;background:radial-gradient(circle, rgba(20,184,176,0.12) 0%, rgba(20,184,176,0.05) 30%, transparent 55%);opacity:0.04}
+
+/* Fallback/compatible glow: animate box-shadow for browsers that may not show large pseudo backgrounds */
+@keyframes discoverBoxPulse {
+  /* expand spread outward and diffuse (no inward bounce) */
+  0% { box-shadow: 0 8px 28px rgba(20,184,176,0.12), 0 0 0 0 rgba(20,184,176,0.06); }
+  60% { box-shadow: 0 40px 96px rgba(20,184,176,0.10), 0 0 0 40px rgba(20,184,176,0.06); }
+ 100% { box-shadow: 0 80px 140px rgba(20,184,176,0.04), 0 0 0 80px rgba(20,184,176,0); }
+}
+
+/* Attach subtle infinite outward glow to the button itself (Edge-friendly) */
+#discover-btn{animation:discoverBoxPulse 3.4s ease-out infinite;}
+
+/* Speed up glow on hover/focus */
+#discover-btn:hover, #discover-btn:focus, #discover-btn:focus-visible{animation-duration:1.2s}
+
+@keyframes discoverPulse {
+  /* expand from small center to large diffused edge; monotonic outward motion */
+  0% { transform:translate(-50%,-50%) scale(0.28); opacity:0.36 }
+  50% { transform:translate(-50%,-50%) scale(1.45); opacity:0.14 }
+ 100% { transform:translate(-50%,-50%) scale(2.6); opacity:0 }
+}
+
+/* Idle pulses: overlapping outward-only pulses with ease-out timing */
+#discover-btn::before{animation:discoverPulse 3.4s ease-out infinite;animation-fill-mode:both}
+#discover-btn::after{animation:discoverPulse 3.4s ease-out infinite 1.7s;animation-fill-mode:both}
+
+/* On hover or focus, speed up and increase opacity slightly while keeping outward expansion */
+#discover-btn:hover::before, #discover-btn:focus::before, #discover-btn:focus-visible::before{animation-duration:1.6s;opacity:0.54}
+#discover-btn:hover::after, #discover-btn:focus::after, #discover-btn:focus-visible::after{animation-duration:1.6s;opacity:0.42}
+
+/* Also nudge the button itself slightly when hovered/focused to reinforce call-to-action */
+#discover-btn:hover, #discover-btn:focus, #discover-btn:focus-visible{transform:translateY(-2px) scale(1.03)}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce){
+	#discover-btn::before, #discover-btn::after{animation:none;opacity:0}
+	#discover-btn:hover, #discover-btn:focus{transform:none}
+}
+
 /* Icons (SVG) color change on hover */
 svg{transition:color 160ms ease,fill 160ms ease,transform 160ms ease}
 .music-toggle:hover svg{color:var(--turquoise);fill:var(--turquoise);transform:translateY(-2px)}
@@ -398,6 +452,39 @@ svg{transition:color 160ms ease,fill 160ms ease,transform 160ms ease}
 .diff-grid{display:flex;gap:12px}
 .status-list{list-style:none;padding:0;margin:0}
 .status-list li{padding:6px 0}
+
+/* Custom animated cursor (desktop only) */
+#custom-cursor{display:none;pointer-events:none}
+
+@media (hover: hover) and (pointer: fine){
+	/* use a class to toggle global native-cursor hiding */
+	.has-custom-cursor *:not(input):not(textarea):not(select):not([contenteditable]){cursor:none !important}
+
+	#custom-cursor{display:block;position:fixed;left:0;top:0;width:44px;height:44px;z-index:99999;pointer-events:none;transform:translate(-50%,-50%);mix-blend-mode:normal}
+	
+	/* translucent white outer ring */
+	#custom-cursor .cursor-outer{position:absolute;left:50%;top:50%;width:44px;height:44px;transform:translate(-50%,-50%);border-radius:50%;border:2px solid rgba(255,255,255,0.28);opacity:1;transition:transform 220ms cubic-bezier(.2,.9,.2,1),border-color 180ms ease,opacity 180ms,box-shadow 220ms ease;will-change:transform,opacity;box-shadow:0 6px 20px rgba(255,255,255,0.03)}
+	/* small solid white dot */
+	#custom-cursor .cursor-inner{position:absolute;left:50%;top:50%;width:10px;height:10px;background:rgba(255,255,255,0.95);border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 10px 30px rgba(255,255,255,0.08);transition:transform 160ms ease,background 160ms ease,opacity 160ms ease,width 160ms ease,height 160ms ease;will-change:transform,opacity}
+
+	/* ensure solid appearance regardless of page blending */
+	#custom-cursor .cursor-inner, #custom-cursor .cursor-outer{mix-blend-mode:normal}
+
+	/* Hover over clickable: enlarge outer, reduce opacity for depth, enlarge inner slightly */
+	#custom-cursor.cursor--hover .cursor-outer{transform:translate(-50%,-50%) scale(1.6);border-color:rgba(255,255,255,0.96);opacity:0.85}
+	#custom-cursor.cursor--hover .cursor-inner{transform:translate(-50%,-50%) scale(1.3);width:12px;height:12px;opacity:0.98}
+
+	/* Active click */
+	#custom-cursor.cursor--active .cursor-inner{transform:translate(-50%,-50%) scale(0.7);box-shadow:none;opacity:0.9}
+
+	/* Dragging state */
+	#custom-cursor.cursor--dragging .cursor-outer{transform:translate(-50%,-50%) scale(1.15) rotate(12deg);border-color:rgba(255,255,255,0.78)}
+}
+
+/* Ensure cursor hidden on touch/smaller screens */
+@media (max-width:1024px){
+	#custom-cursor{display:none !important}
+}
 .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:start}
 .member{background:linear-gradient(180deg,#062c2c,#093233);padding:16px;border-radius:10px;display:flex;flex-direction:column;gap:8px;min-height:120px;box-shadow:0 8px 24px rgba(2,6,23,0.36)}
 .member h4{margin:0;font-size:16px;color:var(--text-light);font-weight:700}
@@ -468,10 +555,12 @@ svg{transition:color 160ms ease,fill 160ms ease,transform 160ms ease}
 	.team-section .team-collage{grid-template-columns:repeat(1,1fr)}
 	.team-section .member-card{height:auto}
 }
-#landing{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;color:var(--text-light);z-index:999;background-image:url('assets/images/trailer-poster.jpg');background-size:cover;background-position:center}
 .landing-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
-.landing-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(1,6,12,0.45), rgba(1,6,12,0.55));z-index:2}
-.landing-top{position:fixed;top:18px;right:18px;z-index:10;display:flex;gap:8px}
+/* Make #landing a normal block so the fixed canvas beneath fills viewport; remove background image */
+#landing{position:relative;display:flex;align-items:center;justify-content:center;background:transparent;color:var(--text-light);z-index:10}
+.landing-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(1,6,12,0.45), rgba(1,6,12,0.55));z-index:12;pointer-events:none}
+/* Full-width top bar */
+.landing-top{position:fixed;left:0;right:0;top:0;height:var(--nav-height);display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:8px 18px;z-index:60;pointer-events:auto;background:#042029;border:0;border-bottom:0;border-top:0;box-shadow:none;backdrop-filter:none}
 .lang-toggle,.sound-toggle{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);color:var(--text-light);padding:8px;border-radius:8px;cursor:pointer;backdrop-filter:blur(6px);display:inline-flex;align-items:center;justify-content:center}
 .sound-toggle svg{width:18px;height:18px}
 .lang-select{position:relative;font-family:Inter,system-ui,Arial,sans-serif}
@@ -515,11 +604,11 @@ svg{transition:color 160ms ease,fill 160ms ease,transform 160ms ease}
 	.landing-logo{width:140px}
 	.landing-tagline{font-size:16px;padding:0 12px}
 	.landing-cta .btn-primary{font-size:16px;padding:12px 18px}
-	.landing-top{right:10px;top:8px}
+	.landing-top{padding:8px 12px;top:0;height:56px}
 }
 
-/* Top navigation: fixed, translucent, compact */
-.top-nav{position:fixed;top:0;left:0;right:0;height:var(--nav-height);display:flex;align-items:center;z-index:10010;background:linear-gradient(180deg, rgba(1,6,10,0.65), rgba(1,6,10,0.45));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.04)}
+/* Top navigation must stay at the top of the viewport while scrolling without being offset by the document scroll. */
+.top-nav{position:sticky !important;top:0 !important;left:0 !important;right:0 !important;width:100% !important;margin:0 !important;height:var(--nav-height);display:flex;align-items:center;z-index:10010;background:#042029 !important;backdrop-filter:none;border-top:0;border-right:0;border-left:0;border-bottom:1px solid rgba(255,255,255,0.04);box-shadow:none;transform:none !important;will-change:auto}
 .top-nav .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:0 16px;width:100%}
 .top-nav .nav-left{display:flex;align-items:center;gap:12px}
 .top-nav .nav-logo img{width:32px;height:auto;display:block}
@@ -822,4 +911,83 @@ svg{transition:color 160ms ease,fill 160ms ease,transform 160ms ease}
     grid-template-columns:1fr;
   }
 
+}
+/* Shader canvas fixed to viewport so it always fills available space */
+html,body{height:auto;min-height:100%}
+#bg-canvas{position:fixed;left:0;top:0;right:0;bottom:0;width:100vw;height:100vh;z-index:-2;pointer-events:auto;display:block}
+
+/* Top bar: reserve space for language and volume controls */
+.landing-top{position:fixed;left:0;right:0;top:0;height:var(--nav-height);display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:8px 18px;z-index:60;pointer-events:auto;background:#042029 !important;border:0;border-top:0;border-bottom:0;box-shadow:none;backdrop-filter:none}
+/* Give landing a top padding to avoid overlap with fixed bar */
+#landing{position:relative;padding-top:0;min-height:100vh}
+
+/* Ensure overlay/content stack above shader */
+.landing-overlay{position:absolute;inset:0;z-index:5;pointer-events:none}
+.landing-content{position:relative;z-index:70}
+
+/* Center CTA button hover/active styling */
+.landing-cta .btn-primary{transition:transform 180ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms ease, background 160ms ease}
+.landing-cta .btn-primary:hover{transform:translateY(-6px) scale(1.04);box-shadow:0 18px 64px rgba(20,184,176,0.22);filter:brightness(1.04)}
+.landing-cta .btn-primary:active{transform:translateY(-2px) scale(0.99);box-shadow:0 10px 36px rgba(20,184,176,0.18)}
+
+/* Make language button and sound toggle visually grouped */
+.lang-select, #landing-sound-toggle{margin-left:8px}
+
+/* Ensure language and sound/music controls align and share sizing across pages */
+.lang-select, .sound-toggle, .music-toggle{display:inline-flex;align-items:center;justify-content:center;height:36px;padding:6px;border-radius:8px}
+.landing-top .lang-select, .landing-top .sound-toggle{margin-right:8px}
+.top-nav .nav-right .lang-select{margin-left:6px}
+.top-nav .music-toggle{width:36px;height:36px;margin-left:6px}
+
+
+/* =========================================
+   FULLSCREEN LANDING
+   ========================================= */
+
+html,
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow-x: hidden;
+}
+
+html {
+    min-height: 100%;
+    background: var(--page-bg);
+}
+
+body {
+    min-height: 100vh;
+    background: var(--page-bg);
+    overflow-y: auto;
+}
+
+/* Shader background */
+#bg-canvas {
+	position: fixed;
+	inset: 0;
+	width: 100vw;
+	height: 100vh;
+	display: block;
+	margin: 0;
+	padding: 0;
+	z-index: -2;
+	pointer-events: auto;
+}
+
+/* Fullscreen landing */
+main#landing {
+    position: relative;
+    width: 100%;
+    max-width: none;
+    height: 100vh;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
