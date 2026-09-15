@@ -111,7 +111,7 @@ const I18N = {
     vision_title: 'An adventure that grows as the player disconnects',
     vision_lead: 'GrowTale turns reduced passive mobile use into progress within an RPG universe, combining entertainment, digital wellbeing and social impact.',
     // blocks
-    block_impact_title: 'IMPACT & INVESTMENT',
+    block_impact_title: 'PROYECT AND GROWTH',
     block_impact_sub: 'An entertainment proposal designed to address a real digital wellbeing challenge.',
     block_game_title: 'THE VIDEO GAME',
     block_game_sub: 'Discover the mechanics, challenges and universe that turn disconnection into progress.',
@@ -145,7 +145,7 @@ const I18N = {
     vision_title: 'Una aventura que crece cuando el jugador desconecta',
     vision_lead: 'GrowTale transforma la reducción del uso pasivo del móvil en progreso dentro de un universo RPG, combinando entretenimiento, bienestar digital e impacto social.',
     // blocks
-    block_impact_title: 'IMPACTO E INVERSIÓN',
+    block_impact_title: 'PROYECTO Y CRECIMIENTO',
     block_impact_sub: 'Una propuesta de entretenimiento diseñada para abordar un reto real de bienestar digital.',
     block_game_title: 'EL VIDEOJUEGO',
     block_game_sub: 'Descubre las mecánicas, los retos y el universo que convierten la desconexión en progreso.',
