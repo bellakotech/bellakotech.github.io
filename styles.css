@@ -447,7 +447,11 @@ svg{transition:color 160ms ease,fill 160ms ease,transform 160ms ease}
 
 /* Slight accent bars for product area headings */
 .product-section h2::before, .universe-section h2::before{content:"";display:inline-block;width:36px;height:6px;margin-right:10px;background:linear-gradient(90deg,var(--turquoise),rgba(20,184,176,0.6));vertical-align:middle;border-radius:4px}
-.validators{display:flex;gap:12px}
+.validators{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
 .validator{flex:1;padding:12px}
 .diff-grid{display:flex;gap:12px}
 .status-list{list-style:none;padding:0;margin:0}
@@ -762,6 +766,10 @@ svg{transition:color 160ms ease,fill 160ms ease,transform 160ms ease}
   border:1px solid rgba(20,184,176,.2);
   padding:1.5rem;
   border-radius:16px;
+  min-height:240px;
+display:flex;
+flex-direction:column;
+justify-content:flex-start;
 }
 .validation-seal{
   display:inline-block;
@@ -866,21 +874,14 @@ svg{transition:color 160ms ease,fill 160ms ease,transform 160ms ease}
   }
 
 }
+
+
 @media (max-width:768px){
 
   .team-section .member-card{
     min-height:auto;
     height:auto;
   }
-
-  .team-section .member-meta .bio-short{
-    display:block;
-    overflow:visible;
-    -webkit-line-clamp:unset;
-    line-clamp:unset;
-  }
-
- @media (max-width:768px){
 
   .team-section .member-meta .bio-short{
     display:none;
@@ -890,13 +891,17 @@ svg{transition:color 160ms ease,fill 160ms ease,transform 160ms ease}
     display:block;
   }
 
+  .team-section .view-profile{
+    display:none;
+  }
+
 }
 
   .team-section .view-profile{
     display:none;
   }
 
-}
+
 @media (max-width:900px){
 
   .gallery-grid{
@@ -990,4 +995,25 @@ main#landing {
     align-items: center;
     justify-content: center;
     overflow: hidden;
+}
+.impact-grid{
+  display:grid;
+  grid-template-columns:28% 72%;
+  gap:32px;
+  width:min(1500px,96%);
+  margin:0 auto;
+}
+
+.impact-grid .investor-section{
+  margin:0;
+}
+@media (max-width:900px){
+
+  .impact-grid{
+    grid-template-columns:1fr;
+  }
+
+}
+.validation-card h3{
+  min-height:70px;
 }
