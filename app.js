@@ -176,55 +176,135 @@ function translatePage(code){
   })
 }
 
-// Music control: floating toggle that saves preference in localStorage.
-document.addEventListener('DOMContentLoaded', ()=>{
-  const audio = document.getElementById('theme-audio')
-  const btn = document.getElementById('music-toggle')
-  if(!audio || !btn) return
-  const STORAGE_KEY = 'growtale_music'
-  audio.loop = true
-  audio.volume = 0.6
+// Control de música de proyecto.html
+document.addEventListener('DOMContentLoaded', () => {
+  const audio = document.getElementById('theme-audio');
+  const button = document.getElementById('music-toggle');
 
-  const setButtonState = (on)=>{
-    btn.classList.toggle('on', !!on)
-    btn.setAttribute('aria-pressed', on ? 'true' : 'false')
-    btn.title = on ? 'Música activada (clic para pausar)' : 'Música desactivada (clic para reproducir)'
+  if (!audio || !button) return;
+
+  const STORAGE_KEY = 'growtale_music';
+
+  audio.loop = true;
+  audio.volume = 0.6;
+
+  /*
+   * La música está activada por defecto.
+   * Solo estará desactivada si el usuario guardó "off".
+   */
+  let soundEnabled =
+    localStorage.getItem(STORAGE_KEY) !== 'off';
+
+  function updateButton() {
+    const playing = !audio.paused;
+
+    button.classList.toggle('on', playing);
+    button.setAttribute(
+      'aria-pressed',
+      playing ? 'true' : 'false'
+    );
+
+    button.setAttribute(
+      'aria-label',
+      playing ? 'Desactivar música' : 'Activar música'
+    );
+
+    button.title =
+      playing
+        ? 'Desactivar música'
+        : 'Activar música';
   }
 
-  // Initialize from saved preference. IMPORTANT: do NOT autoplay — user must activate manually.
- const saved = localStorage.getItem(STORAGE_KEY)
- const prefOn = saved === 'on'
-
-if (prefOn) {
-  audio.play()
-    .then(() => {
-      setButtonState(true)
-    })
-    .catch(() => {
-      setButtonState(false)
-    })
-} else {
-  setButtonState(false)
-}
-
-
-  btn.addEventListener('click', async ()=>{
-    if(audio.paused){
-      try{
-        await audio.play()
-        setButtonState(true)
-        localStorage.setItem(STORAGE_KEY, 'on')
-      }catch(err){
-        console.warn('Reproducción de audio bloqueada:', err)
-      }
-    } else {
-      audio.pause()
-      setButtonState(false)
-      localStorage.setItem(STORAGE_KEY, 'off')
+  async function startMusic() {
+    if (!soundEnabled) {
+      audio.pause();
+      updateButton();
+      return;
     }
-  })
-})
 
+    try {
+      await audio.play();
+      updateButton();
+    } catch (error) {
+      /*
+       * El navegador ha bloqueado el sonido automático.
+       * Se iniciará con el primer clic dentro de esta página.
+       */
+      audio.pause();
+      updateButton();
+      console.info(
+        'El navegador espera una interacción para reproducir la música.'
+      );
+    }
+  }
+
+  button.addEventListener('click', async () => {
+    if (!audio.paused) {
+      soundEnabled = false;
+      audio.pause();
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        'off'
+      );
+
+      updateButton();
+      return;
+    }
+
+    soundEnabled = true;
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      'on'
+    );
+
+    await startMusic();
+  });
+
+  audio.addEventListener('play', updateButton);
+  audio.addEventListener('pause', updateButton);
+  audio.addEventListener('error', updateButton);
+
+  /*
+   * Intento inicial.
+   */
+  startMusic();
+
+  /*
+   * Si el navegador bloquea el intento inicial,
+   * cualquier primer clic dentro de proyecto.html
+   * inicia la música.
+   */
+  async function unlockMusic(event) {
+    if (!soundEnabled || !audio.paused) return;
+
+    /*
+     * No arrancar si el clic es precisamente para apagar
+     * la música.
+     */
+    if (
+      event.target === button ||
+      button.contains(event.target)
+    ) {
+      return;
+    }
+
+    await startMusic();
+
+    if (!audio.paused) {
+      document.removeEventListener(
+        'pointerdown',
+        unlockMusic
+      );
+    }
+  }
+
+  document.addEventListener(
+    'pointerdown',
+    unlockMusic
+  );
+});
 // Additional interactions: claim buttons and simple map zoom
 document.addEventListener('click', (e)=>{
   if(e.target.matches('.claim')){
@@ -278,15 +358,25 @@ document.addEventListener('DOMContentLoaded', ()=>{
   })
 
   // Discover button: ensure it navigates to proyecto.html (default link exists in markup)
- const discover = document.getElementById('discover-btn')
+const discover = document.getElementById('discover-btn')
 
 if (discover) {
-  discover.addEventListener('click', () => {
+  discover.addEventListener('click', async (e) => {
 
     localStorage.setItem(
       'growtale_music',
       'on'
     )
+
+    const audio = document.getElementById('theme-audio')
+
+    if(audio){
+      try{
+        await audio.play()
+      }catch(err){
+        console.log(err)
+      }
+    }
 
   })
 }
