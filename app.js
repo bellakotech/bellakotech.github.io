@@ -848,3 +848,25 @@ document.addEventListener('DOMContentLoaded', ()=>{
   // initial position
   updateParallax()
 })
+document.addEventListener('DOMContentLoaded', () => {
+
+  const counter =
+    document.getElementById('screen-time-counter');
+
+  if(!counter) return;
+
+  let minutes = 462; // 7h 42m
+
+  setInterval(() => {
+
+    minutes++;
+
+    const h = Math.floor(minutes / 60);
+    const m = minutes % 60;
+
+    counter.textContent =
+      `${h}h ${m.toString().padStart(2,'0')}m`;
+
+  }, 3000);
+
+});

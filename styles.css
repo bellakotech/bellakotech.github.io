@@ -315,10 +315,49 @@ button[id="prev"],button[id="next"]{background:rgba(255,255,255,0.06);border:non
 
 /* Section icons and subtle hover effects */
 h2{position:relative;padding-left:48px;transition:color 180ms ease}
-h2::before{content:"";position:absolute;left:6px;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04);box-shadow:0 6px 18px rgba(2,6,23,0.10);display:inline-block}
-h2::after{content:"";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:12px;height:12px;border-radius:3px;background:transparent;border-left:2px solid rgba(255,255,255,0.08);border-bottom:2px solid rgba(255,255,255,0.08);transform-origin:center;}
-h2:hover::before{background:linear-gradient(180deg,rgba(20,184,176,0.12),rgba(20,184,176,0.04));border-color:rgba(20,184,176,0.9);box-shadow:0 14px 34px rgba(20,184,176,0.08)}
+h2::before{
+  content:"";
+  position:absolute;
+  left:6px;
+  top:50%;
+  transform:translateY(-50%);
 
+  width:42px;
+  height:42px;
+
+  border-radius:12px;
+
+  background:linear-gradient(
+    180deg,
+    rgba(20,184,176,.12),
+    rgba(20,184,176,.04)
+  );
+
+  border:1px solid rgba(20,184,176,.15);
+
+  box-shadow:
+    0 0 20px rgba(20,184,176,.08),
+    inset 0 1px 0 rgba(255,255,255,.08);
+
+  display:inline-block;
+
+  transition:.25s ease;
+}
+h2::after{content:"";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:12px;height:12px;border-radius:3px;background:transparent;border-left:2px solid rgba(255,255,255,0.08);border-bottom:2px solid rgba(255,255,255,0.08);transform-origin:center;}
+h2:hover::before{
+
+  transform:
+    translateY(-50%)
+    scale(1.08);
+
+  border-color:
+    rgba(20,184,176,.8);
+
+  box-shadow:
+    0 0 30px rgba(20,184,176,.25),
+    0 0 60px rgba(20,184,176,.12);
+
+}
 /* Cards elevate slightly on hover with illuminated border */
 .card, .member, .challenge.card{transition:transform 200ms ease,box-shadow 220ms ease,border-color 180ms ease}
 .card:hover, .member:hover, .challenge.card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(2,6,23,0.36);border:1px solid rgba(20,184,176,0.06)}
@@ -1075,4 +1114,34 @@ main#landing {
     font-size:1.05rem;
   }
 
+}
+.screen-time-demo{
+  margin:1.5rem 0;
+  padding:1rem;
+
+  border-radius:16px;
+
+  background:rgba(255,255,255,.04);
+
+  border:1px solid rgba(255,255,255,.08);
+
+  text-align:center;
+
+  max-width:320px;
+}
+
+.screen-time-icon{
+  font-size:2rem;
+  margin-bottom:.3rem;
+}
+
+.screen-time-label{
+  font-size:.85rem;
+  color:var(--text-muted);
+}
+
+.screen-time-counter{
+  font-size:1.8rem;
+  font-weight:800;
+  color:#fff;
 }
