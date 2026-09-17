@@ -189,8 +189,17 @@ h2{font-size:calc(1rem * 1.18)}
 /* 5) Animated underline for H2 */
 h2{position:relative;overflow:visible}
 h2::after{content:'';position:absolute;left:0;bottom:-6px;height:3px;width:0;background:linear-gradient(90deg,var(--turquoise),rgba(20,184,176,0.7));transition:width 260ms ease}
-h2:hover::after{width:48px}
+h2:hover::after{width:180px}
+h2{
+  transform-origin:left center;
+  transition:
+    color .25s ease,
+    transform .25s ease;
+}
 
+h2:hover{
+  transform:scaleX(1.15);
+}
 /* Keep animations subtle and under 300ms */
 .block-sep .block-icon, h2::after{transition-duration:260ms}
 
@@ -314,36 +323,37 @@ button[id="prev"],button[id="next"]{background:rgba(255,255,255,0.06);border:non
 .site-footer, .site-footer a, .site-footer p, .site-footer div{color:var(--text-light)}
 
 /* Section icons and subtle hover effects */
-h2{position:relative;padding-left:48px;transition:color 180ms ease}
+h2{
+  position:relative;
+  padding-left:0;
+  transition:
+    color .25s ease,
+    transform .25s ease;
+}
 h2::before{
+  display:none;
+}
+h2::after{
   content:"";
+
   position:absolute;
-  left:6px;
-  top:50%;
-  transform:translateY(-50%);
 
-  width:42px;
-  height:42px;
+  left:0;
+  bottom:-2px;
 
-  border-radius:12px;
+  width:0;
+  height:3px;
+
+  border-radius:999px;
 
   background:linear-gradient(
-    180deg,
-    rgba(20,184,176,.12),
-    rgba(20,184,176,.04)
+    90deg,
+    var(--turquoise),
+    rgba(20,184,176,.25)
   );
 
-  border:1px solid rgba(20,184,176,.15);
-
-  box-shadow:
-    0 0 20px rgba(20,184,176,.08),
-    inset 0 1px 0 rgba(255,255,255,.08);
-
-  display:inline-block;
-
-  transition:.25s ease;
+  transition:width .25s ease;
 }
-h2::after{content:"";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:12px;height:12px;border-radius:3px;background:transparent;border-left:2px solid rgba(255,255,255,0.08);border-bottom:2px solid rgba(255,255,255,0.08);transform-origin:center;}
 h2:hover::before{
 
   transform:
