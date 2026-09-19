@@ -1155,3 +1155,165 @@ main#landing {
   font-weight:800;
   color:#fff;
 }
+.advantage-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:20px;
+}
+
+.advantage-mini{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  padding:14px;
+
+  min-height:90px;
+
+  border-radius:12px;
+
+  background:rgba(20,184,176,.08);
+
+  border:1px solid rgba(20,184,176,.12);
+
+  text-align:center;
+
+  transition:.2s ease;
+}
+
+.advantage-mini:hover{
+  transform:translateY(-3px);
+}
+
+.advantage-mini span{
+  font-size:1.8rem;
+  margin-bottom:6px;
+}
+
+.advantage-mini p{
+  margin:0;
+  color:#fff;
+  font-size:.9rem;
+  font-weight:700;
+}
+.roadmap{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+
+  margin-top:24px;
+
+  position:relative;
+}
+
+.roadmap::before{
+  display:none;
+}
+
+.roadmap-step{
+
+  position:relative;
+  z-index:1;
+
+  text-align:center;
+
+  padding:20px;
+
+  border-radius:16px;
+
+  background:rgba(255,255,255,.04);
+
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.roadmap-icon{
+  font-size:2rem;
+  margin-bottom:10px;
+}
+
+.roadmap-status{
+  display:inline-block;
+
+  margin-top:12px;
+
+  padding:6px 10px;
+
+  border-radius:999px;
+
+  background:rgba(20,184,176,.15);
+
+  color:#8df0d8;
+
+  font-size:.85rem;
+  font-weight:700;
+}
+
+.milestones-strip{
+
+  display:flex;
+
+  flex-wrap:wrap;
+
+  justify-content:center;
+
+  gap:10px;
+
+  margin-top:24px;
+}
+
+.milestone-card{
+  padding:10px 14px;
+  border-radius:999px;
+  background:rgba(20,184,176,.08);
+  border:1px solid rgba(20,184,176,.12);
+  color:var(--text-light);
+  font-size:.85rem;
+  white-space:nowrap;
+}
+.ask-grid{
+  display:grid;
+
+  grid-template-columns:repeat(3,1fr);
+
+  gap:18px;
+
+  margin-top:24px;
+}
+
+.ask-card{
+
+  padding:20px;
+
+  border-radius:16px;
+
+  text-align:center;
+
+  background:rgba(20,184,176,.08);
+
+  border:1px solid rgba(20,184,176,.12);
+
+  transition:.25s ease;
+}
+
+.ask-card:hover{
+  transform:translateY(-4px);
+}
+
+.ask-icon{
+  font-size:2rem;
+  margin-bottom:10px;
+}
+
+.ask-card h3{
+  margin:8px 0;
+}
+
+@media(max-width:900px){
+
+  .ask-grid{
+    grid-template-columns:1fr;
+  }
+
+}
