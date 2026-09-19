@@ -1203,14 +1203,26 @@ main#landing {
   font-weight:700;
 }
 .roadmap{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:18px;
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  gap:5px;
+
+  flex-wrap:wrap;
 
   margin-top:24px;
-
-  position:relative;
 }
+.roadmap-arrow{
+
+  font-size:2rem;
+
+  color:var(--turquoise);
+
+  opacity:.8;
+}
+
 
 .roadmap::before{
   display:none;
@@ -1218,18 +1230,28 @@ main#landing {
 
 .roadmap-step{
 
-  position:relative;
-  z-index:1;
+  width:220px;
+
+  padding:18px;
 
   text-align:center;
-
-  padding:20px;
 
   border-radius:16px;
 
   background:rgba(255,255,255,.04);
 
   border:1px solid rgba(255,255,255,.08);
+}
+@media(max-width:900px){
+
+  .roadmap{
+    flex-direction:column;
+  }
+
+  .roadmap-arrow{
+    transform:rotate(90deg);
+  }
+
 }
 
 .roadmap-icon{
