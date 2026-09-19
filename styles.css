@@ -1157,9 +1157,13 @@ main#landing {
 }
 .advantage-grid{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-  margin-top:20px;
+  grid-template-columns:repeat(3,1fr);
+
+  gap:16px;
+
+  max-width:900px;
+
+  margin:24px auto 0;
 }
 
 .advantage-mini{
