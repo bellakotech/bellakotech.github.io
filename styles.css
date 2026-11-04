@@ -1245,3 +1245,29 @@ textarea.form-control{min-height:140px;resize:vertical}
 /* Equipo: el botón se oculta si la bio ya cabe entera */
 .team-section .view-profile[hidden]{display:none}
 
+
+/* =========================================
+   Portada: intro (primera visita) y transición de salida
+   ========================================= */
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes leaveContent{to{opacity:0;transform:scale(1.08);filter:blur(6px)}}
+@media (prefers-reduced-motion: no-preference){
+  /* El botón tiene su propio pulso, así que la aparición va en su contenedor */
+  .landing-cta{animation:fadeUp 700ms cubic-bezier(.2,.9,.2,1) 640ms both}
+
+  /* Intro: los elementos aparecen cuando el pulso del fondo ya se ha expandido */
+  html.intro .landing-logo{animation:popIn 900ms cubic-bezier(.2,.9,.2,1) 800ms both}
+  html.intro .landing-tagline{animation:fadeUp 800ms cubic-bezier(.2,.9,.2,1) 1150ms both}
+  html.intro .landing-cta{animation:fadeUp 800ms cubic-bezier(.2,.9,.2,1) 1450ms both}
+  html.intro .landing-top{animation:fadeIn 700ms ease 1700ms both}
+
+  /* Salida al pulsar "Descubre GrowTale" */
+  html.leaving .landing-content{animation:leaveContent 600ms cubic-bezier(.5,0,.75,0) both}
+  html.leaving .landing-top{opacity:0;transition:opacity 300ms ease}
+  html.leaving #custom-cursor{opacity:0;transition:opacity 300ms ease}
+  /* sin la capa oscura, el último fotograma coincide con el fondo de proyecto.html */
+  html.leaving .landing-overlay{opacity:0;transition:opacity 600ms ease}
+
+  /* Llegada a proyecto.html */
+  html.arrive body{animation:fadeIn 700ms ease both}
+}

@@ -1,6 +1,8 @@
 // Fondo WebGL de la portada: vapor turquesa que reacciona al ratón y al tacto como humo/agua.
 // - Al mover el puntero se deja una estela que arremolina el vapor (más intensa cuanto más rápido).
 // - Al hacer clic o tocar se generan ondas que se expanden como en el agua.
+// - Primera visita: el sistema "se enciende" con un pulso radial desde el centro.
+// - Al pulsar "Descubre GrowTale" el vapor se acerca y se ilumina (transición de salida).
 (function(){
   const canvas = document.getElementById('bg-canvas')
   if(!canvas) return
@@ -18,6 +20,8 @@
   uniform float u_time;
   uniform vec4 u_trail[${TRAIL}];     // xy: posición (uv), z: intensidad, w: sentido del giro
   uniform vec4 u_ripples[${RIPPLES}]; // xy: posición (uv), z: edad (s), w: intensidad
+  uniform float u_reveal;             // 0..1 avance del pulso de encendido
+  uniform float u_exit;               // 0..1 avance de la transición de salida
 
   vec3 mod289(vec3 x){return x - floor(x * (1.0/289.0)) * 289.0;}
   vec2 mod289(vec2 x){return x - floor(x * (1.0/289.0)) * 289.0;}
@@ -52,6 +56,9 @@
     vec2 p = (uv * res - 0.5*res) / min(res.x,res.y);
     float t = u_time;
 
+    // Salida: zoom hacia el centro, como si entrásemos en el vapor
+    p *= 1.0 - 0.55 * u_exit * u_exit;
+
     vec2 disp = vec2(0.0);
     float wake = 0.0;   // densidad de la estela: aclara el humo removido
     float crest = 0.0;  // brillo en las crestas de las ondas
@@ -79,6 +86,13 @@
       crest += max(wave, 0.0) * 0.9;
     }
 
+    // Pulso de encendido: frente circular que se expande desde el centro
+    vec2 dc = (uv - 0.5) * vec2(aspect, 1.0);
+    float distC2 = length(dc) + 1e-5;
+    float front = u_reveal * (0.5 * length(vec2(aspect, 1.0)) + 0.2); // llega a las esquinas
+    float pulse = exp(-pow((distC2 - front) * 14.0, 2.0)) * (1.0 - u_reveal);
+    disp += (dc / distC2) * pulse * 0.06;
+
     vec2 q0 = p + disp;
     float q = fbm(q0 + vec2(0.0, t * 0.095));
     float r = fbm(q0 * 1.8 - vec2(t * 0.15, -t * 0.04) + q * 0.9);
@@ -96,6 +110,14 @@
     color += 0.06 * vec3(0.9, 1.0, 0.95) * pow(glow, 2.0);
     color += crest * vec3(0.45, 0.85, 0.78) * 0.35;
     color *= mix(0.94, 1.18, vign);
+
+    // Lo que el pulso aún no ha alcanzado está apagado; el frente brilla
+    float lit = smoothstep(front + 0.02, front - 0.12, distC2);
+    color = color * lit + pulse * vec3(0.55, 1.0, 0.9) * 0.9;
+
+    // Salida: el vapor se ilumina y se funde con el fondo de la web
+    color = mix(color, vec3(0.55, 0.95, 0.85), smoothstep(0.2, 0.7, u_exit) * 0.55);
+    color = mix(color, vec3(0.016, 0.125, 0.161), smoothstep(0.65, 1.0, u_exit));
     gl_FragColor = vec4(color, 1.0);
   }`;
 
@@ -113,6 +135,8 @@
   const u_res = gl.getUniformLocation(prog,'u_resolution')
   const u_trail = gl.getUniformLocation(prog,'u_trail')
   const u_ripples = gl.getUniformLocation(prog,'u_ripples')
+  const u_reveal = gl.getUniformLocation(prog,'u_reveal')
+  const u_exit = gl.getUniformLocation(prog,'u_exit')
 
   const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -164,6 +188,15 @@
     window.addEventListener('pointerup', e=>{ if(e.pointerType !== 'mouse') last = null }, {passive:true})
   }
 
+  // Encendido solo en la primera visita de la sesión (lo decide el <head> de index.html)
+  const REVEAL_MS = 1600, EXIT_MS = 750
+  const easeOut = k => 1 - Math.pow(1 - k, 3)
+  let revealStart = document.documentElement.classList.contains('intro') ? null : -Infinity
+  let exitStart = null
+  document.addEventListener('growtale:leave', ()=>{ exitStart = performance.now() })
+  // Al volver con el botón "atrás" (bfcache) se restaura el estado normal
+  window.addEventListener('pageshow', e=>{ if(e.persisted){ exitStart = null; requestAnimationFrame(frame) } })
+
   const start = performance.now()
   let prev = start
   function frame(){
@@ -174,6 +207,9 @@
     for(let i=0;i<TRAIL;i++) trail[i*4+2] *= Math.pow(0.12, dt)
     for(let i=0;i<RIPPLES;i++){ ripples[i*4+2] += dt; if(ripples[i*4+2] > 3) ripples[i*4+3] = 0 }
 
+    if(revealStart === null) revealStart = now
+    gl.uniform1f(u_reveal, easeOut(Math.min(1, (now - revealStart) / REVEAL_MS)))
+    gl.uniform1f(u_exit, exitStart === null ? 0 : Math.min(1, (now - exitStart) / EXIT_MS))
     gl.uniform1f(u_time, (now - start) / 1000)
     gl.uniform2f(u_res, canvas.width, canvas.height)
     gl.uniform4fv(u_trail, trail)

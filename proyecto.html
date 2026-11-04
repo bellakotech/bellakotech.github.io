@@ -25,7 +25,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=20261104f">
+    <!-- Entrada suave al llegar desde el botón "Descubre GrowTale" de la portada -->
+    <script>try{if(sessionStorage.getItem('growtale_enter')){document.documentElement.classList.add('arrive');sessionStorage.removeItem('growtale_enter')}}catch(e){}</script>
+    <link rel="stylesheet" href="styles.css?v=20261104h">
   </head>
   <body>
     <a class="skip-link" href="#main" data-i18n="skip_to_content">Saltar al contenido</a>
@@ -586,7 +588,7 @@
       <div class="cursor-inner"></div>
     </div>
 
-    <script src="app.js?v=20261104f" defer></script>
-    <script src="cursor.js?v=20261104f" defer></script>
+    <script src="app.js?v=20261104h" defer></script>
+    <script src="cursor.js?v=20261104h" defer></script>
   </body>
 </html>

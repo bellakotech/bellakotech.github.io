@@ -587,6 +587,28 @@ function initParallax(){
   update()
 }
 
+// Portada: al pulsar "Descubre GrowTale" el contenido se desvanece, el fondo se ilumina
+// (shader.js escucha growtale:leave) y después se navega; proyecto.html entra con un fundido.
+function initCoverTransition(){
+  const btn = document.getElementById('discover-btn')
+  if(!btn) return
+  const root = document.documentElement
+  const LEAVE_MS = 750
+
+  btn.addEventListener('click', e=>{
+    // Respetar abrir en pestaña nueva y la preferencia de reducir movimiento
+    if(e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0 || prefersReducedMotion()) return
+    e.preventDefault()
+    if(root.classList.contains('leaving')) return
+    root.classList.add('leaving')
+    storage.set('growtale_enter', '1', sessionStorage)
+    document.dispatchEvent(new CustomEvent('growtale:leave'))
+    setTimeout(()=>{ window.location.href = btn.href }, LEAVE_MS)
+  })
+  // Al volver con "atrás" el navegador puede restaurar la página tal cual: la reseteamos
+  window.addEventListener('pageshow', e=>{ if(e.persisted) root.classList.remove('leaving') })
+}
+
 function initScreenTimeCounter(){
   const counter = document.getElementById('screen-time-counter')
   if(!counter || prefersReducedMotion()) return
@@ -615,4 +637,5 @@ document.addEventListener('DOMContentLoaded', ()=>{
   initContact()
   initParallax()
   initScreenTimeCounter()
+  initCoverTransition()
 })
