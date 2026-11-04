@@ -109,9 +109,42 @@ const I18N_EN = {
   challenge3_reward: 'Reward: Book of power',
   // universo
   universe_title: 'The GrowTale universe',
-  map_title: 'World map',
-  map_text: 'Explore regions and discover unique challenges.',
-  map_alt: 'GrowTale world map',
+  map_title: 'Mindveil, the Realm of Compulsion',
+  map_text: 'A brain-shaped island. Tap each place to discover what awaits you.',
+  map_alt: 'Map of Mindveil: a brain-shaped island',
+  region_theme: 'Theme',
+  region_optional: 'Optional',
+  act_prologue: 'Prologue',
+  act_1: 'Act I',
+  act_2: 'Act II',
+  act_3: 'Act III',
+  region_fuente: 'The Source',
+  region_fuente_text: 'Where souls awaken. Here Liria finds you and your journey through the Realms of Being begins.',
+  region_fuente_theme: 'waking up and becoming aware of your habits',
+  region_ciudad: 'Vigilaris City',
+  region_ciudad_text: 'The hordes took it while its guards were distracted. Today its streets are empty and its people have taken refuge in the church.',
+  region_ciudad_theme: 'distractions have consequences',
+  region_castillo: 'Vigilaris Castle',
+  region_castillo_text: 'Locked tight while the city falls. What is the royal family hiding behind its walls?',
+  region_castillo_theme: 'shutting yourself away solves nothing',
+  region_hushgrove: 'Hushgrove Village',
+  region_hushgrove_text: 'A village with its mill and a council that must decide how to resist the monsters.',
+  region_hushgrove_theme: 'community: nobody moves forward alone',
+  region_laberinto: 'The Labyrinth of Mirrors',
+  region_laberinto_text: 'Corridors that reflect your own image back at you: the Hall of Distortions, the Corridor of Vanity and the Heart of the Labyrinth.',
+  region_laberinto_theme: 'self-image and comparison',
+  region_foco: 'Focus Training Grounds',
+  region_foco_text: 'Those who want to master their attention train here, under the demanding eye of the Focus Masters.',
+  region_foco_theme: 'mindful attention',
+  region_mercado: 'The Sensory Market',
+  region_mercado_text: 'The Streets of Temptation and the Avenue of Sighs: a great bazaar designed so you never want to leave.',
+  region_mercado_theme: 'instant gratification',
+  region_ojo: 'Chamber of the Fractured Eye',
+  region_ojo_text: 'A stone structure by the summit waterfalls. Few dare to look at what it holds.',
+  region_ojo_theme: 'what we would rather not see',
+  region_tiempo: 'Room of Time',
+  region_tiempo_text: 'At the very top of the realm, where time no longer flows the same way. The end of the Realm of Compulsion.',
+  region_tiempo_theme: 'the value of your time',
   // ventaja
   advantage_title: 'Our advantage',
   advantage_subtitle: 'Creativity, technology and education in a single experience.',
@@ -218,8 +251,8 @@ const I18N_EN = {
 // Textos generados desde JS (no están en el HTML)
 const STRINGS = {
   es: {
-    music_on: 'Desactivar música',
-    music_off: 'Activar música',
+    music_on: 'Silenciar',
+    music_off: 'Activar sonido',
     view_profile: 'Ver perfil completo',
     hide_profile: 'Ocultar perfil',
     participation_required: 'Selecciona al menos una forma de participación.',
@@ -232,8 +265,8 @@ const STRINGS = {
     mail_message: 'Mensaje'
   },
   en: {
-    music_on: 'Turn music off',
-    music_off: 'Turn music on',
+    music_on: 'Mute',
+    music_off: 'Turn sound on',
     view_profile: 'View full profile',
     hide_profile: 'Hide profile',
     participation_required: 'Please choose at least one way to get involved.',
@@ -249,6 +282,80 @@ const STRINGS = {
 
 const currentLang = () => (document.documentElement.lang === 'en' ? 'en' : 'es')
 const t = key => STRINGS[currentLang()][key] || STRINGS.es[key] || key
+
+/* -----------------------------------------
+   Sonidos de interfaz (los del juego: carpeta GrowTale_UI Samples)
+   Web Audio: suenan al instante y se pueden solapar. Los navegadores no dejan
+   reproducir audio hasta la primera interacción, así que se cargan entonces.
+   El botón de sonido silencia música y efectos a la vez.
+   ----------------------------------------- */
+const SFX = {
+  hover: 0.16, button: 0.55, tap: 0.6, tap2: 0.4, 'toggle-on': 0.45, 'toggle-off': 0.5,
+  'modal-open': 0.4, 'modal-close': 0.3, 'nav-transition': 0.5, 'nav-transition-2': 0.5,
+  success: 0.4, error: 0.35
+}
+let sfxCtx = null
+const sfxBuffers = {}
+const sfxEnabled = () => storage.get(MUSIC_KEY) !== 'off'
+
+function unlockSfx(){
+  if(sfxCtx) return
+  const AC = window.AudioContext || window.webkitAudioContext
+  if(!AC) return
+  sfxCtx = new AC()
+  Object.keys(SFX).forEach(name=>{
+    fetch(`assets/audio/ui/${name}.mp3`)
+      .then(r=> r.arrayBuffer())
+      .then(data=> new Promise((ok, ko)=> sfxCtx.decodeAudioData(data, ok, ko)))
+      .then(buf=>{ sfxBuffers[name] = buf })
+      .catch(()=>{})
+  })
+}
+
+// force: suena aunque el sonido esté desactivado (p. ej. el "clic" al silenciar)
+function playSfx(name, force){
+  if(!sfxCtx || (!force && !sfxEnabled())) return
+  const buf = sfxBuffers[name]
+  if(!buf) return
+  if(sfxCtx.state === 'suspended') sfxCtx.resume()
+  const src = sfxCtx.createBufferSource()
+  const gain = sfxCtx.createGain()
+  gain.gain.value = SFX[name]
+  src.buffer = buf
+  src.connect(gain).connect(sfxCtx.destination)
+  src.start()
+}
+
+function initSfx(){
+  ;['pointerdown', 'keydown', 'touchstart'].forEach(ev=>
+    document.addEventListener(ev, unlockSfx, { capture: true, once: true, passive: true }))
+
+  // Hover: solo con ratón y solo al entrar en un elemento nuevo
+  const HOVER = '.btn, .nav-links a, .nav-logo, .nav-toggle, .lang-switch, #music-toggle, .member-link, .map-spot, ' +
+    '.gallery-item img, .map-wrapper img, .lb-prev, .lb-next, .lb-close, .contact-dialog-close, .back-to-cover'
+  let lastHover = 0
+  document.addEventListener('pointerover', e=>{
+    if(e.pointerType !== 'mouse') return
+    const el = e.target.closest && e.target.closest(HOVER)
+    if(!el || (e.relatedTarget && el.contains(e.relatedTarget))) return
+    const now = performance.now()
+    if(now - lastHover < 70) return
+    lastHover = now
+    playSfx('hover')
+  }, { passive: true })
+
+  // Clics. Los pop-ups, la música y el formulario reproducen su propio sonido.
+  document.addEventListener('click', e=>{
+    const el = e.target.closest && e.target.closest('a, button')
+    if(!el) return
+    if(el.id === 'discover-btn') return playSfx('nav-transition')
+    if(el.matches('a[href="index.html"]')) return playSfx('nav-transition-2')
+    if(el.matches('#music-toggle, [data-open-contact], [data-close-contact], .lb-close, [type="submit"]')) return
+    if(el.matches('.lang-switch, .nav-toggle')) return playSfx('tap2')
+    if(el.matches('.nav-links a, .member-link, .lb-prev, .lb-next, .contact-alt a, .map-spot')) return playSfx('tap')
+    playSfx('button')
+  }, true)
+}
 
 const I18N_ATTRS = ['aria-label', 'title', 'alt', 'content']
 
@@ -379,10 +486,12 @@ function initMusic(){
       enabled = true
       storage.set(MUSIC_KEY, 'on')
       play()
+      playSfx('toggle-on')
     } else {
       enabled = false
       storage.set(MUSIC_KEY, 'off')
       audio.pause()
+      playSfx('toggle-off', true)
     }
   })
 
@@ -500,8 +609,10 @@ function initLightbox(){
     lightbox.setAttribute('aria-hidden', 'false')
     document.body.style.overflow = 'hidden'
     lightbox.querySelector('.lb-close').focus()
+    playSfx('modal-open')
   }
   const close = ()=>{
+    playSfx('modal-close')
     lightbox.classList.replace('lightbox-visible', 'lightbox-hidden')
     lightbox.setAttribute('aria-hidden', 'true')
     document.body.style.overflow = ''
@@ -544,10 +655,12 @@ function initContact(){
     success.hidden = true
     dialog.showModal()
     form.querySelector('input').focus()
+    playSfx('modal-open')
   }
   // Cierre animado: la clase "closing" reproduce la salida y después se cierra de verdad
   const close = ()=>{
     if(!dialog.open || dialog.classList.contains('closing')) return
+    playSfx('modal-close')
     if(prefersReducedMotion()){ dialog.close(); return }
     dialog.classList.add('closing')
     const done = ()=>{ dialog.classList.remove('closing'); dialog.close() }
@@ -571,7 +684,7 @@ function initContact(){
   form.addEventListener('submit', e=>{
     e.preventDefault()
     checkParticipation()
-    if(!form.reportValidity()) return
+    if(!form.reportValidity()){ playSfx('error'); return }
 
     const field = name=> String(new FormData(form).get(name) || '').trim()
     const interests = participation.filter(o=> o.checked).map(o=> o.closest('label').textContent.trim())
@@ -587,6 +700,7 @@ function initContact(){
     success.hidden = false
     success.focus()
     form.reset()
+    playSfx('success')
   })
 
   // Los enlaces antiguos a contacto.html redirigen a proyecto.html#contacto
@@ -668,6 +782,22 @@ function initBackToCover(){
   window.addEventListener('pageshow', e=>{ if(e.persisted) root.classList.remove('leaving-project') })
 }
 
+// Mapa interactivo de Mindveil: la tarjeta de un lugar solo cambia al pulsarlo
+// (al pasar el ratón por encima solo se ve su nombre).
+function initWorldMap(){
+  const map = document.querySelector('.world-map')
+  if(!map) return
+  const spots = Array.from(map.querySelectorAll('.map-spot'))
+  const cards = Array.from(map.querySelectorAll('.region-card'))
+
+  const select = region=>{
+    cards.forEach(c=> c.hidden = c.dataset.region !== region)
+    spots.forEach(s=> s.setAttribute('aria-pressed', s.dataset.region === region ? 'true' : 'false'))
+  }
+  spots.forEach(spot=> spot.addEventListener('click', ()=> select(spot.dataset.region)))
+  select('fuente')
+}
+
 function initScreenTimeCounter(){
   const counter = document.getElementById('screen-time-counter')
   if(!counter || prefersReducedMotion()) return
@@ -688,6 +818,7 @@ if(!location.hash && 'scrollRestoration' in history){
 }
 
 document.addEventListener('DOMContentLoaded', ()=>{
+  initSfx()
   initLanguage()
   initMusic()
   initNav()
@@ -697,5 +828,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   initParallax()
   initScreenTimeCounter()
   initCoverTransition()
+  initWorldMap()
   initBackToCover()
 })

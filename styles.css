@@ -1269,11 +1269,7 @@ textarea.form-control{min-height:140px;resize:vertical}
   html.intro .landing-top{animation:fadeIn 700ms ease 1700ms both}
 
   /* Salida al pulsar "Descubre GrowTale" */
-  html.leaving .landing-content{animation:leaveContent 600ms cubic-bezier(.5,0,.75,0) both}
-  html.leaving .landing-top{opacity:0;transition:opacity 300ms ease}
   html.leaving #custom-cursor{opacity:0;transition:opacity 300ms ease}
-  /* sin la capa oscura, el último fotograma coincide con el fondo de proyecto.html */
-  html.leaving .landing-overlay{opacity:0;transition:opacity 600ms ease}
 
   /* Llegada a proyecto.html */
   html.arrive body{animation:fadeIn 700ms ease both}
@@ -1370,3 +1366,139 @@ textarea.form-control{min-height:140px;resize:vertical}
   .lb-image, .lb-caption{transition:transform 260ms ease,opacity 260ms ease}
   .lightbox-hidden .lb-image{transform:scale(.94);opacity:0}
 }
+
+/* =========================================
+   Guía de estilo del juego ("UI ELEMENTS - GrowTale"): tipografías y botones
+   Poppins = interfaz y texto · Fredoka = títulos y textos "de juego"
+   ========================================= */
+:root{
+  --font-ui:'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-game:'Fredoka', 'Poppins', system-ui, sans-serif;   /* diálogos */
+  --btn-teal:#2aa1af;      --btn-teal-pressed:#a5d6d0;   /* Secondary (principal en la web) */
+  --btn-deep:#0e4957;      --btn-deep-pressed:#092533;   /* Primary 2 (secundario en la web) */
+  --btn-gold:#a58749;      --btn-gold-pressed:#d7c178;   /* Success / Important */
+  --btn-red:#bf4039;       --btn-red-pressed:#762723;    /* Danger */
+}
+body, button, input, select, textarea{font-family:var(--font-ui)}
+/* En el juego, Poppins es la tipografía de títulos e interfaz; Fredoka solo se usa en los diálogos */
+h1,h2,h3,h4,h5,h6,.block-title,.step-title,.contact-kicker{font-family:var(--font-ui)}
+.landing-tagline,.validation-quote{font-family:var(--font-game)}
+h1, h2, .block-title{font-weight:600}
+h3, h4{font-weight:500}
+.landing-tagline{font-weight:500;letter-spacing:.01em;font-size:22px}
+@media (max-width:700px){ .landing-tagline{font-size:17px} }
+
+/* Botones: rectángulo redondeado plano, Poppins Medium, estado "pulsado" con otro tono */
+.btn{font-family:var(--font-ui);font-weight:500;font-size:16px;line-height:1.2;padding:12px 24px;border:0;border-radius:12px;
+  box-shadow:none;text-align:center;backdrop-filter:none;
+  transition:background-color 150ms ease,color 150ms ease,transform 150ms ease,filter 150ms ease}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.1);box-shadow:none}
+.btn:active{transform:translateY(1px);filter:none}
+.btn:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.btn-primary{background:var(--btn-teal);color:#fff}
+.btn-primary:active{background:var(--btn-teal-pressed);color:var(--btn-deep)}
+.btn-secondary{background:var(--btn-deep);color:#fff;border:0}
+.btn-secondary:active{background:var(--btn-deep-pressed)}
+.btn-important{background:var(--btn-gold);color:#fff}
+.btn-important:active{background:var(--btn-gold-pressed);color:#3b2d10}
+.btn-danger{background:var(--btn-red);color:#fff}
+.btn-danger:active{background:var(--btn-red-pressed)}
+/* Variantes con estilos propios anteriores */
+.landing-cta .btn-primary{font-size:18px;padding:14px 28px}
+#how .btn-primary, #product .btn-primary, #challenges .btn-primary, #universe .btn-primary{box-shadow:none}
+.team-section .member-card .view-profile{background:var(--btn-deep);border:0;color:#fff}
+.team-section .member-card .view-profile:active{background:var(--btn-deep-pressed)}
+
+/* =========================================
+   Barra superior idéntica en portada y proyecto
+   (mismo ancho, márgenes y color, sin depender del fondo que haya detrás)
+   ========================================= */
+.landing-top, .top-nav{background:rgba(2,7,10,.8) !important}
+.top-nav .nav-inner{max-width:none;padding:0 16px}
+
+/* =========================================
+   Transición portada -> proyecto: siempre igual
+   Las animaciones de intro/regreso (con "fill") tapaban la salida según la visita,
+   así que la salida se declara al final para que siempre tenga prioridad.
+   ========================================= */
+@media (prefers-reduced-motion: no-preference){
+  html.leaving .landing-content{animation:leaveContent 600ms cubic-bezier(.5,0,.75,0) both}
+  html.leaving .landing-top{animation:fadeOut 300ms ease forwards}
+  html.leaving .landing-overlay{animation:fadeOut 600ms ease forwards}
+}
+
+/* =========================================
+   Mapa interactivo de Mindveil (sección Universo)
+   ========================================= */
+.world-map{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(260px,1fr);gap:32px;align-items:center;margin-top:20px}
+.world-map-stage{position:relative;aspect-ratio:1/1;display:grid;place-items:center;overflow:hidden;isolation:isolate;border-radius:24px;
+  background:radial-gradient(circle at 50% 48%, #0a8fc4 0%, #007dad 42%, #015a85 75%, #023b5a 100%);
+  box-shadow:inset 0 0 90px rgba(0,18,36,.55), 0 30px 80px rgba(2,6,23,.5);border:1px solid rgba(255,255,255,.08)}
+/* Ondas del mar: dos capas de un patrón SVG que se desplazan a distinta velocidad */
+.world-sea, .world-sea::after{position:absolute;inset:-60px;pointer-events:none;z-index:-1;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60'%3E%3Cpath d='M8 22 q8 -7 16 0 M68 52 q8 -7 16 0' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size:120px 60px;opacity:.22}
+.world-sea::after{content:"";inset:0;background-size:180px 90px;opacity:.6}
+.world-island{position:relative;width:90%}
+.world-island img{display:block;width:100%;height:auto;filter:drop-shadow(0 18px 28px rgba(0,30,60,.45))}
+
+/* Nodos: rombo (como en la guía de UI) desplazado encima o debajo de su lugar,
+   unido a él por una línea con un punto, para no tapar la ilustración */
+.map-spot{--spot:var(--btn-teal);--spot-ring:rgba(42,161,175,.35);--dy:-34px;
+  position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,calc(-50% + var(--dy)));
+  width:38px;height:38px;padding:0;border:0;background:none;cursor:pointer;z-index:2}
+.map-spot[data-dir="down"]{--dy:34px}
+.map-spot-source{--spot:#44d17f;--spot-ring:rgba(68,209,127,.35)}
+.map-spot-optional{--spot:#a184e6;--spot-ring:rgba(161,132,230,.35)}
+.map-spot::before{content:"";position:absolute;inset:10px;border-radius:4px;transform:rotate(45deg);background:var(--spot);border:2px solid #fff;
+  box-shadow:0 0 0 4px var(--spot-ring),0 4px 12px rgba(0,0,0,.5);transition:transform 200ms ease,filter 200ms ease,box-shadow 200ms ease}
+.map-spot::after{content:"";position:absolute;left:50%;width:8px;margin-left:-4px;height:34px;top:50%;z-index:-1;pointer-events:none;
+  background:linear-gradient(rgba(255,255,255,.8),rgba(255,255,255,.8)) center top/2px calc(100% - 6px) no-repeat,
+             radial-gradient(circle,#fff 2.5px,transparent 3px) center bottom/8px 8px no-repeat}
+.map-spot[data-dir="down"]::after{top:auto;bottom:50%;
+  background:linear-gradient(rgba(255,255,255,.8),rgba(255,255,255,.8)) center bottom/2px calc(100% - 6px) no-repeat,
+             radial-gradient(circle,#fff 2.5px,transparent 3px) center top/8px 8px no-repeat}
+.map-spot:hover::before, .map-spot:focus-visible::before{transform:rotate(45deg) scale(1.18);filter:brightness(1.2)}
+.map-spot[aria-pressed="true"]::before{transform:rotate(45deg) scale(1.3);box-shadow:0 0 0 4px rgba(255,255,255,.85),0 0 18px var(--spot),0 4px 12px rgba(0,0,0,.5)}
+.map-spot:focus-visible{outline:none}
+.map-spot-label{position:absolute;left:50%;bottom:calc(100% + 2px);transform:translate(-50%,4px);white-space:nowrap;padding:4px 10px;border-radius:8px;
+  background:rgba(3,12,18,.88);color:#fff;font:500 12px/1.3 var(--font-ui);opacity:0;pointer-events:none;transition:opacity 180ms ease,transform 180ms ease}
+.map-spot[data-dir="down"] .map-spot-label{bottom:auto;top:calc(100% + 2px);transform:translate(-50%,-4px)}
+.map-spot:hover .map-spot-label, .map-spot:focus-visible .map-spot-label{opacity:1;transform:translate(-50%,0)}
+
+/* Tarjeta de la región (estilo de los modales del juego) */
+.region-card{position:relative;text-align:center;padding:32px 26px 24px;border-radius:18px;border:2px solid #127d86;
+  background:linear-gradient(180deg,#0b2733,#071820);box-shadow:0 24px 60px rgba(2,6,23,.5)}
+.region-card::before{content:"";position:absolute;top:-14px;left:50%;width:26px;height:26px;border-radius:4px;transform:translateX(-50%) rotate(45deg);
+  background:var(--btn-deep);border:2px solid #127d86}
+.region-chapter{margin:0 0 8px;font:600 12px/1 var(--font-ui);letter-spacing:.14em;text-transform:uppercase;color:var(--btn-teal)}
+.region-card h4{margin:0 0 10px;font:600 22px/1.2 var(--font-ui);color:#fff}
+.region-card p{color:var(--text-muted)}
+.region-theme{margin:16px 0 0;padding-top:14px;border-top:1px solid rgba(255,255,255,.08);font-size:14px}
+.region-theme strong{color:var(--btn-gold-pressed);font-weight:500}
+.region-card-source{border-color:#2f9e5a}
+.region-card-source::before{border-color:#2f9e5a;background:#0f3b26}
+.region-card-source .region-chapter{color:#44d17f}
+.region-card-optional{border-color:#7a5cc0}
+.region-card-optional::before{border-color:#7a5cc0;background:#2a1f45}
+.region-card-optional .region-chapter{color:#b9a0f0}
+.region-optional{display:inline-block;margin-left:8px;padding:3px 8px;border-radius:999px;background:rgba(161,132,230,.18);color:#d5c6fa;letter-spacing:.08em;font-size:10px;vertical-align:1px}
+
+@media (prefers-reduced-motion: no-preference){
+  .world-sea{animation:seaDrift 60s linear infinite}
+  .world-sea::after{animation:seaDrift 40s linear infinite reverse}
+  .world-island{animation:islandFloat 8s ease-in-out infinite}
+  .map-spot::before{animation:spotPulse 2.6s ease-out infinite}
+  .region-card:not([hidden]){animation:regionIn 320ms cubic-bezier(.2,.9,.2,1)}
+}
+@keyframes seaDrift{to{transform:translate(120px,60px)}}
+@keyframes islandFloat{50%{transform:translateY(-6px)}}
+@keyframes spotPulse{50%{box-shadow:0 0 0 8px var(--spot-ring),0 4px 12px rgba(0,0,0,.5)}}
+@keyframes regionIn{from{opacity:0;transform:translateY(8px)}}
+
+@media (max-width:900px){
+  .world-map{grid-template-columns:1fr;gap:28px}
+  .map-spot{width:34px;height:34px}
+}
+/* El nodo seleccionado mantiene su halo fijo en lugar del pulso */
+.map-spot[aria-pressed="true"]::before{animation:none}

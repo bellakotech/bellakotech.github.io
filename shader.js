@@ -10,7 +10,6 @@
 // - Primera visita: el sistema "se enciende" con un pulso radial desde el centro.
 // - Al volver del proyecto la transición de salida se reproduce a la inversa.
 // - El color oscila entre verde y azul.
-// Con ?debug en la URL aparece un panel para ajustar los efectos (se recuerda hasta ?debug=0).
 (function(){
   const canvas = document.getElementById('bg-canvas')
   if(!canvas) return
@@ -21,19 +20,8 @@
   const CLICKS = 4   // ondas de clic simultáneas
   const SIM_BASE = 128
 
-  // Parámetros ajustables (1 = valor por defecto)
-  const DEFAULTS = { smoke: 1, light: 1, buttonBoost: 1.4, buttonSpeed: 5.5, waveSpeed: 1, colorSpeed: 0.9 }
-  const FX_KEY = 'growtale_fx_tuning_v2'
-  const DEBUG_KEY = 'growtale_debug'
-  const debugParam = new URLSearchParams(location.search).get('debug')
-  try{
-    if(debugParam === '0') localStorage.removeItem(DEBUG_KEY)
-    else if(debugParam !== null) localStorage.setItem(DEBUG_KEY, '1')
-  }catch(e){}
-  let DEBUG = false
-  try{ DEBUG = localStorage.getItem(DEBUG_KEY) === '1' }catch(e){}
-  const fx = Object.assign({}, DEFAULTS)
-  if(DEBUG){ try{ Object.assign(fx, JSON.parse(localStorage.getItem(FX_KEY) || '{}')) }catch(e){} }
+  // Ajustes de los efectos (1 = valor de referencia)
+  const fx = { smoke: 1, light: 1, buttonBoost: 1.4, buttonSpeed: 5.5, waveSpeed: 1, colorSpeed: 0.9 }
 
   const vert = `attribute vec2 a_pos; varying vec2 v_uv; void main(){ v_uv = a_pos * 0.5 + 0.5; gl_Position = vec4(a_pos,0.0,1.0); }`;
 
@@ -324,11 +312,8 @@
   const FLOW_MAX = 7
   let flowSpeed = 1, flowTime = 0, leaving = false
 
-  const isDebugUI = e => e.target && e.target.closest && e.target.closest('#fx-debug')
-
   if(!reducedMotion){
     window.addEventListener('pointermove', e=>{
-      if(isDebugUI(e)) return
       const [u, v] = toUV(e.clientX, e.clientY)
       mouse.tx = u; mouse.ty = v; mouse.target = 1
       if(press.down){ press.x = u; press.y = v } // si se arrastra, la presión sigue al puntero
@@ -348,7 +333,6 @@
 
     // Clic en dos tiempos: pulsar contrae el humo; soltar lanza la onda donde esté el puntero
     window.addEventListener('pointerdown', e=>{
-      if(isDebugUI(e)) return
       const [u, v] = toUV(e.clientX, e.clientY)
       press.down = true; press.x = u; press.y = v
     }, {passive:true})
@@ -430,9 +414,11 @@
     mouse.boost += (mouse.boostTarget - mouse.boost) * (1 - Math.exp(-dt * 5))
     press.amount += ((press.down ? 1 : 0) - press.amount) * (1 - Math.exp(-dt * (press.down ? 5 : 12)))
 
-    // El vapor acelera progresivamente sobre el botón y de golpe al pulsarlo
-    const flowTarget = leaving ? FLOW_MAX : 1 + mouse.boost * (fx.buttonSpeed - 1)
-    flowSpeed += (flowTarget - flowSpeed) * (1 - Math.exp(-dt * (leaving ? 4 : 2.2)))
+    // El vapor acelera enseguida al entrar en el botón (~0,3 s), frena despacio al salir
+    // y llega al máximo al pulsarlo
+    const flowTarget = leaving ? FLOW_MAX : 1 + mouse.boostTarget * (fx.buttonSpeed - 1)
+    const flowRate = leaving ? 4 : (flowTarget > flowSpeed ? 7 : 1.8)
+    flowSpeed += (flowTarget - flowSpeed) * (1 - Math.exp(-dt * flowRate))
     flowTime += dt * flowSpeed
 
     for(let i=0;i<CLICKS;i++){ clicks[i*4+2] += dt; if(clicks[i*4+2] > 2.5) clicks[i*4+3] = 0 }
@@ -466,43 +452,4 @@
   }
   requestAnimationFrame(frame)
 
-  // ---------- Panel de ajuste (solo en modo debug) ----------
-  if(DEBUG){
-    const SLIDERS = [
-      ['smoke', 'Soplo del cursor', 0, 3, 0.05],
-      ['light', 'Linterna', 0, 2.5, 0.05],
-      ['buttonBoost', 'Linterna sobre el botón', 0, 4, 0.1],
-      ['buttonSpeed', 'Velocidad del vapor sobre el botón', 1, 10, 0.1],
-      ['waveSpeed', 'Velocidad de la onda', 0.4, 2.5, 0.05],
-      ['colorSpeed', 'Velocidad del color', 0.05, 2.5, 0.05]
-    ]
-    const panel = document.createElement('div')
-    panel.id = 'fx-debug'
-    panel.style.cssText = 'position:fixed;left:12px;bottom:12px;z-index:99990;padding:12px 14px;border-radius:12px;' +
-      'background:rgba(2,10,14,.85);border:1px solid rgba(255,255,255,.12);color:#e6f7f4;font:12px/1.4 system-ui,sans-serif;' +
-      'display:grid;gap:8px;min-width:230px;backdrop-filter:blur(6px)'
-    panel.innerHTML = '<strong data-toggle style="letter-spacing:.08em;cursor:pointer" title="Plegar / desplegar">FX DEBUG ▾</strong>' +
-      '<div data-body style="display:grid;gap:8px">' +
-      SLIDERS.map(([k, label, min, max, step])=>
-        `<label style="display:grid;gap:2px">${label}: <span data-v="${k}">${fx[k].toFixed(2)}</span>` +
-        `<input type="range" data-k="${k}" min="${min}" max="${max}" step="${step}" value="${fx[k]}"></label>`).join('') +
-      `<div style="opacity:.6">Simulación de humo: ${sim ? 'activa' : 'no disponible'}</div>` +
-      '<button type="button" data-reset style="font:inherit;padding:4px;border-radius:6px;cursor:pointer">Restablecer</button></div>'
-    const save = ()=>{ try{ localStorage.setItem(FX_KEY, JSON.stringify(fx)) }catch(e){} }
-    const show = k=> panel.querySelector(`[data-v="${k}"]`).textContent = fx[k].toFixed(2)
-    panel.addEventListener('input', e=>{
-      const k = e.target.dataset.k
-      if(!k) return
-      fx[k] = Number(e.target.value); show(k); save()
-    })
-    panel.querySelector('[data-reset]').addEventListener('click', ()=>{
-      Object.assign(fx, DEFAULTS); save()
-      panel.querySelectorAll('[data-k]').forEach(el=>{ el.value = fx[el.dataset.k]; show(el.dataset.k) })
-    })
-    panel.querySelector('[data-toggle]').addEventListener('click', ()=>{
-      const body = panel.querySelector('[data-body]')
-      body.style.display = body.style.display === 'none' ? 'grid' : 'none'
-    })
-    document.body.appendChild(panel)
-  }
 })();

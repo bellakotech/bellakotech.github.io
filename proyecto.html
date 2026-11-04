@@ -24,10 +24,10 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Poppins:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <!-- Entrada suave al llegar desde el botón "Descubre GrowTale" de la portada -->
     <script>try{if(sessionStorage.getItem('growtale_enter')){document.documentElement.classList.add('arrive');sessionStorage.removeItem('growtale_enter')}}catch(e){}</script>
-    <link rel="stylesheet" href="styles.css?v=20261104m">
+    <link rel="stylesheet" href="styles.css?v=20261104t">
   </head>
   <body>
     <a class="skip-link" href="#main" data-i18n="skip_to_content">Saltar al contenido</a>
@@ -250,10 +250,87 @@
         <div class="container">
           <h2 data-i18n="universe_title">Universo GrowTale</h2>
           <section id="map" class="map">
-            <h3 class="section-subtitle" data-i18n="map_title">Mapa del mundo</h3>
-            <p class="muted" data-i18n="map_text">Explora regiones y descubre retos únicos.</p>
-            <div class="map-wrapper compact">
-              <img src="assets/images/mapa.webp" alt="Mapa del mundo de GrowTale" data-i18n-alt="map_alt" width="2000" height="1392" loading="lazy">
+            <h3 class="section-subtitle" data-i18n="map_title">Mindveil, el Reino de la Compulsión</h3>
+            <p class="muted" data-i18n="map_text">Una isla con forma de cerebro. Toca cada lugar para descubrir qué te espera.</p>
+
+            <!-- Mapa interactivo: el mar animado va por CSS; los puntos usan % sobre la imagen -->
+            <div class="world-map">
+              <div class="world-map-stage">
+                <div class="world-sea" aria-hidden="true"></div>
+                <div class="world-island">
+                  <img src="assets/images/map/mindveil-1400.webp"
+                       srcset="assets/images/map/mindveil-800.webp 800w, assets/images/map/mindveil-1400.webp 1400w"
+                       sizes="(max-width: 900px) 92vw, 640px"
+                       alt="Mapa de Mindveil: una isla con forma de cerebro" data-i18n-alt="map_alt"
+                       width="1400" height="1328" loading="lazy">
+                  <button type="button" class="map-spot map-spot-source" data-region="fuente" data-dir="up" style="--x:81.5%;--y:89.3%" aria-pressed="true"><span class="map-spot-label" data-i18n="region_fuente">La Fuente</span></button>
+                  <button type="button" class="map-spot" data-region="ciudad" data-dir="down" style="--x:60.5%;--y:68.2%" aria-pressed="false"><span class="map-spot-label" data-i18n="region_ciudad">Ciudad Vigilaris</span></button>
+                  <button type="button" class="map-spot" data-region="castillo" data-dir="up" style="--x:65.5%;--y:64.0%" aria-pressed="false"><span class="map-spot-label" data-i18n="region_castillo">Castillo Vigilaris</span></button>
+                  <button type="button" class="map-spot" data-region="hushgrove" data-dir="up" style="--x:31.0%;--y:59.3%" aria-pressed="false"><span class="map-spot-label" data-i18n="region_hushgrove">Aldea Hushgrove</span></button>
+                  <button type="button" class="map-spot" data-region="laberinto" data-dir="up" style="--x:34.0%;--y:29.5%" aria-pressed="false"><span class="map-spot-label" data-i18n="region_laberinto">El Laberinto de Espejos</span></button>
+                  <button type="button" class="map-spot map-spot-optional" data-region="foco" data-dir="down" style="--x:44%;--y:52.2%" aria-pressed="false"><span class="map-spot-label" data-i18n="region_foco">Campo de Entrenamiento del Foco</span></button>
+                  <button type="button" class="map-spot" data-region="mercado" data-dir="down" style="--x:59.0%;--y:21.9%" aria-pressed="false"><span class="map-spot-label" data-i18n="region_mercado">El Mercado Sensorial</span></button>
+                  <button type="button" class="map-spot map-spot-optional" data-region="ojo" data-dir="up" style="--x:71.1%;--y:19.0%" aria-pressed="false"><span class="map-spot-label" data-i18n="region_ojo">Cámara del Ojo Fracturado</span></button>
+                  <button type="button" class="map-spot" data-region="tiempo" data-dir="down" style="--x:50.6%;--y:7.9%" aria-pressed="false"><span class="map-spot-label" data-i18n="region_tiempo">Habitación del Tiempo</span></button>
+                </div>
+              </div>
+
+              <div class="region-panel" aria-live="polite">
+                <article class="region-card region-card-source" data-region="fuente">
+                  <p class="region-chapter"><span data-i18n="act_prologue">Prólogo</span></p>
+                  <h4 data-i18n="region_fuente">La Fuente</h4>
+                  <p data-i18n="region_fuente_text">El lugar donde las almas despiertan. Aquí Liria te encuentra y comienza tu viaje por los Reinos del Ser.</p>
+                  <p class="region-theme"><span data-i18n="region_theme">Tema</span>: <strong data-i18n="region_fuente_theme">despertar y tomar conciencia de tus hábitos</strong></p>
+                </article>
+                <article class="region-card" data-region="ciudad" hidden>
+                  <p class="region-chapter"><span data-i18n="act_1">Acto I</span></p>
+                  <h4 data-i18n="region_ciudad">Ciudad Vigilaris</h4>
+                  <p data-i18n="region_ciudad_text">Las hordas la tomaron mientras sus guardias estaban distraídos. Hoy sus calles están vacías y sus vecinos, refugiados en la iglesia.</p>
+                  <p class="region-theme"><span data-i18n="region_theme">Tema</span>: <strong data-i18n="region_ciudad_theme">las distracciones tienen consecuencias</strong></p>
+                </article>
+                <article class="region-card" data-region="castillo" hidden>
+                  <p class="region-chapter"><span data-i18n="act_1">Acto I</span></p>
+                  <h4 data-i18n="region_castillo">Castillo Vigilaris</h4>
+                  <p data-i18n="region_castillo_text">Cerrado a cal y canto mientras la ciudad cae. ¿Qué esconde la familia real tras sus muros?</p>
+                  <p class="region-theme"><span data-i18n="region_theme">Tema</span>: <strong data-i18n="region_castillo_theme">aislarse no resuelve los problemas</strong></p>
+                </article>
+                <article class="region-card" data-region="hushgrove" hidden>
+                  <p class="region-chapter"><span data-i18n="act_2">Acto II</span></p>
+                  <h4 data-i18n="region_hushgrove">Aldea Hushgrove</h4>
+                  <p data-i18n="region_hushgrove_text">Un pueblo con su molino y un consejo que debe decidir cómo resistir a los monstruos.</p>
+                  <p class="region-theme"><span data-i18n="region_theme">Tema</span>: <strong data-i18n="region_hushgrove_theme">comunidad: nadie avanza solo</strong></p>
+                </article>
+                <article class="region-card" data-region="laberinto" hidden>
+                  <p class="region-chapter"><span data-i18n="act_2">Acto II</span></p>
+                  <h4 data-i18n="region_laberinto">El Laberinto de Espejos</h4>
+                  <p data-i18n="region_laberinto_text">Pasillos que te devuelven tu propia imagen: la Sala de las Distorsiones, el Pasillo de la Vanidad y el Corazón del Laberinto.</p>
+                  <p class="region-theme"><span data-i18n="region_theme">Tema</span>: <strong data-i18n="region_laberinto_theme">autoimagen y comparación</strong></p>
+                </article>
+                <article class="region-card region-card-optional" data-region="foco" hidden>
+                  <p class="region-chapter"><span data-i18n="act_2">Acto II</span> <span class="region-optional" data-i18n="region_optional">Opcional</span></p>
+                  <h4 data-i18n="region_foco">Campo de Entrenamiento del Foco</h4>
+                  <p data-i18n="region_foco_text">Aquí entrenan quienes quieren dominar su atención, bajo la exigente mirada de los Maestros del Foco.</p>
+                  <p class="region-theme"><span data-i18n="region_theme">Tema</span>: <strong data-i18n="region_foco_theme">atención plena</strong></p>
+                </article>
+                <article class="region-card" data-region="mercado" hidden>
+                  <p class="region-chapter"><span data-i18n="act_3">Acto III</span></p>
+                  <h4 data-i18n="region_mercado">El Mercado Sensorial</h4>
+                  <p data-i18n="region_mercado_text">Las Calles de la Tentación y la Avenida del Suspiro: un gran bazar diseñado para que nunca quieras marcharte.</p>
+                  <p class="region-theme"><span data-i18n="region_theme">Tema</span>: <strong data-i18n="region_mercado_theme">la gratificación instantánea</strong></p>
+                </article>
+                <article class="region-card region-card-optional" data-region="ojo" hidden>
+                  <p class="region-chapter"><span data-i18n="act_3">Acto III</span> <span class="region-optional" data-i18n="region_optional">Opcional</span></p>
+                  <h4 data-i18n="region_ojo">Cámara del Ojo Fracturado</h4>
+                  <p data-i18n="region_ojo_text">Una construcción de piedra junto a las cascadas de la cumbre. Pocos se atreven a mirar lo que guarda.</p>
+                  <p class="region-theme"><span data-i18n="region_theme">Tema</span>: <strong data-i18n="region_ojo_theme">lo que preferimos no ver</strong></p>
+                </article>
+                <article class="region-card" data-region="tiempo" hidden>
+                  <p class="region-chapter"><span data-i18n="act_3">Acto III</span></p>
+                  <h4 data-i18n="region_tiempo">Habitación del Tiempo</h4>
+                  <p data-i18n="region_tiempo_text">En lo más alto del reino, donde el tiempo deja de correr igual. El final del Reino de la Compulsión.</p>
+                  <p class="region-theme"><span data-i18n="region_theme">Tema</span>: <strong data-i18n="region_tiempo_theme">el valor de tu tiempo</strong></p>
+                </article>
+              </div>
             </div>
           </section>
         </div>
@@ -579,7 +656,7 @@
       <div class="cursor-inner"></div>
     </div>
 
-    <script src="app.js?v=20261104m" defer></script>
-    <script src="cursor.js?v=20261104m" defer></script>
+    <script src="app.js?v=20261104t" defer></script>
+    <script src="cursor.js?v=20261104t" defer></script>
   </body>
 </html>
