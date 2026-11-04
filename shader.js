@@ -127,8 +127,11 @@
   let click = [0,0,0]
   let motion = [0,0]
 
-  function resize(){ const dpr = Math.max(1, window.devicePixelRatio || 1); const w = Math.max(1, window.innerWidth); const h = Math.max(1, window.innerHeight); canvas.width = Math.max(1, Math.floor(w * dpr)); canvas.height = Math.max(1, Math.floor(h * dpr)); canvas.style.width = w + 'px'; canvas.style.height = h + 'px'; gl.viewport(0,0,canvas.width,canvas.height) }
-  window.addEventListener('resize', resize); resize()
+  const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  // El vapor es difuso: renderizar a media resolución ahorra mucha GPU sin pérdida visible
+  function resize(){ const dpr = Math.min(2, Math.max(1, window.devicePixelRatio || 1)) * 0.5; const w = Math.max(1, window.innerWidth); const h = Math.max(1, window.innerHeight); canvas.width = Math.max(1, Math.floor(w * dpr)); canvas.height = Math.max(1, Math.floor(h * dpr)); canvas.style.width = w + 'px'; canvas.style.height = h + 'px'; gl.viewport(0,0,canvas.width,canvas.height) }
+  window.addEventListener('resize', ()=>{ resize(); if(reducedMotion) requestAnimationFrame(frame) }); resize()
 
   function updateMouse(e){ let x=0,y=0,z=0; const rect = canvas.getBoundingClientRect(); if(e.touches && e.touches[0]){ x=e.touches[0].clientX - rect.left; y=e.touches[0].clientY - rect.top; z=0.95 } else { x = (e.clientX || e.pageX) - rect.left; y = (e.clientY || e.pageY) - rect.top; z = 1.0 }
     mouse[0] = x; mouse[1]= y; mouse[2] = z }
@@ -141,12 +144,8 @@
     click[1] = Math.max(0, Math.min(canvas.height, (canvas.clientHeight - cy) * dpr));
     click[2] = 1.6; // strength
   }
-  canvas.addEventListener('click', clickHandle, {passive:true}); canvas.addEventListener('touchend', clickHandle, {passive:true});
-  // In case other DOM layers intercept clicks, also listen globally and forward to shader
-  window.addEventListener('click', clickHandle, {passive:true});
+  // Escuchamos en window porque otras capas del DOM quedan por encima del canvas
   window.addEventListener('pointerdown', clickHandle, {passive:true});
-  window.addEventListener('touchend', clickHandle, {passive:true});
-  document.addEventListener('click', clickHandle, {passive:true});
 
   window.addEventListener('deviceorientation', (ev)=>{
     if(ev.gamma == null) return
@@ -168,7 +167,7 @@
     if(click[2] > 0.0) click[2] = Math.max(0, click[2] - dt * 1.6);
     gl.uniform3f(u_click, click[0], click[1], click[2]);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
-    requestAnimationFrame(frame)
+    if(!reducedMotion) requestAnimationFrame(frame)
   }
   requestAnimationFrame(frame)
 

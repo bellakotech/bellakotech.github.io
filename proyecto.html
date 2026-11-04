@@ -3,182 +3,156 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>GrowTale — Página oficial</title>
-    <link rel="stylesheet" href="styles.css?v=20260902-2200">
+    <title data-i18n="meta_title_project">GrowTale — Página oficial</title>
+    <meta name="description" content="GrowTale es un RPG de fantasía que convierte hábitos saludables, como desconectar del móvil, en progreso dentro del juego. Proyecto de bienestar digital con aval profesional." data-i18n-content="meta_description">
+    <meta name="theme-color" content="#042029">
+    <link rel="canonical" href="https://bellakotech.github.io/proyecto.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="GrowTale">
+    <meta property="og:title" content="GrowTale — Página oficial">
+    <meta property="og:description" content="Un RPG de fantasía que convierte hábitos saludables en progreso. Proyecto de bienestar digital con aval profesional.">
+    <meta property="og:url" content="https://bellakotech.github.io/proyecto.html">
+    <meta property="og:image" content="https://bellakotech.github.io/assets/images/og-image.jpg">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:locale:alternate" content="en_GB">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" href="assets/images/icons/icon-32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="assets/images/icons/icon-180.png">
+    <link rel="manifest" href="manifest.json">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <!-- Game-friendly rounded fonts: priority order Nunito, Quicksand, M+PLUS Rounded 1c, Varela Round -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700;800&family=Quicksand:wght@300;400;500;700&family=M+PLUS+Rounded+1c:wght@300;400;500;700&family=Varela+Round&display=swap" rel="stylesheet">
-    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=20261104e">
   </head>
   <body>
-    <!-- Top navigation (fixed) -->
-    <nav class="top-nav" role="navigation" aria-label="Principal">
+    <a class="skip-link" href="#main" data-i18n="skip_to_content">Saltar al contenido</a>
+
+    <nav class="top-nav" aria-label="Principal" data-i18n-aria-label="main_nav">
       <div class="nav-inner container-lg">
         <div class="nav-left">
-          <a href="index.html" class="nav-logo" aria-label="Volver a la portada">
-            <img src="assets/images/logo.svg" alt="GrowTale" />
+          <a href="index.html" class="nav-logo" aria-label="Volver a la portada" data-i18n-aria-label="back_to_cover">
+            <img src="assets/images/logo.svg" alt="GrowTale" width="32" height="32">
           </a>
         </div>
 
-        <button class="nav-toggle" aria-expanded="false" aria-label="Abrir menú">☰</button>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menú" data-i18n-aria-label="open_menu">☰</button>
 
-        <ul class="nav-links" role="menubar">
-          <li><a href="#problem" data-nav="impacto" data-i18n="nav_impact">Impacto</a></li>
-          <li><a href="#how" data-nav="videojuego" data-i18n="nav_game">Videojuego</a></li>
-          <li><a href="#universe" data-nav="universo" data-i18n="nav_universe">Universo</a></li>
-          <li><a href="#team" data-nav="equipo" data-i18n="nav_team">Equipo</a></li>
-          <li><a href="#contact" data-nav="contacto" data-i18n="nav_contact">Contacto</a></li>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#problem" data-i18n="nav_impact">Impacto</a></li>
+          <li><a href="#how" data-i18n="nav_game">Videojuego</a></li>
+          <li><a href="#universe" data-i18n="nav_universe">Universo</a></li>
+          <li><a href="#team" data-i18n="nav_team">Equipo</a></li>
+          <li><a href="#contact" data-i18n="nav_contact">Contacto</a></li>
         </ul>
 
         <div class="nav-right">
           <a href="index.html" class="back-to-cover nav-back" data-i18n="back_to_cover">Volver a portada</a>
-          <!--DESCOMENTAR PARA IDIOMA<div class="lang-select" id="lang-select" aria-haspopup="true" aria-expanded="false">
-            <button id="lang-select-btn" class="lang-btn" aria-label="Seleccionar idioma" title="Idioma">ES</button>
-            <ul class="lang-menu" role="menu" aria-label="Seleccionar idioma">
-              <li role="menuitem" data-lang="es">Español</li>
-              <li role="menuitem" data-lang="en">English</li>
+          <div class="lang-select" id="lang-select">
+            <button class="lang-btn" aria-haspopup="true" aria-expanded="false" aria-controls="lang-menu" aria-label="Seleccionar idioma" data-i18n-aria-label="select_language">ES</button>
+            <ul class="lang-menu" id="lang-menu" role="menu">
+              <li role="menuitemradio" data-lang="es" lang="es">Español</li>
+              <li role="menuitemradio" data-lang="en" lang="en">English</li>
             </ul>
-          </div>-->
-          <!-- music toggle will be moved here by markup (id preserved) -->
+          </div>
+          <button id="music-toggle" class="music-toggle" aria-pressed="false" aria-label="Activar música" title="Activar música">
+            <svg class="icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 9v6h4l5 4V5L9 9H5z" fill="currentColor"/>
+              <path d="M16.5 8.5a4.5 4.5 0 010 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <svg class="icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 9v6h4l5 4V5L9 9H5z" fill="currentColor"/>
+              <path d="M18 6l-6 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
         </div>
       </div>
     </nav>
-    <!-- VISIÓN: sustituye al hero para introducir el proyecto de forma humana -->
-    <section id="vision" class="vision-section">
+
+    <!-- VISIÓN -->
+    <header id="vision" class="vision-section">
       <div class="container vision-grid">
-        <div class="vision-image" aria-hidden="true">
-          <img src="assets/images/icono_vision.png" alt="Personaje GrowTale" loading="lazy">
+        <div class="vision-image">
+          <img src="assets/images/icono_vision.webp" alt="" width="220" height="220" fetchpriority="high">
         </div>
         <div class="vision-copy">
           <h1 data-i18n="vision_title">Una aventura que crece cuando el jugador desconecta</h1>
-          <p class="lead" data-i18n="vision_lead">GrowTale transforma la reducción del uso del móvil en progreso dentro de un universo RPG, combinando entretenimiento, bienestar digital e impacto social</p>
+          <p class="lead" data-i18n="vision_lead">GrowTale convierte hábitos saludables, como desconectar del móvil, en progreso dentro de un universo RPG.</p>
           <div class="hero-ctas">
             <a class="btn btn-primary" href="#product" data-i18n="view_product">Ver producto</a>
             <a class="btn btn-secondary" href="#contact" data-i18n="contact">Contacto</a>
-            <a href="docs/GrowTale_PitchDeck.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-      📄 Pitch Deck</a>
+            <a class="btn btn-secondary" href="docs/GrowTale_PitchDeck.pdf" target="_blank" rel="noopener">📄 Pitch Deck</a>
           </div>
         </div>
       </div>
-    </section>
+    </header>
 
-    <main>
-      <!-- Trailer removed: se utiliza en la portada (index.html) -->
+    <main id="main">
 
-      <!-- El Problema (3) -->
-      <!-- BLOCK: IMPACTO E INVERSIÓN -->
+      <!-- BLOQUE: OBJETIVOS Y CRECIMIENTO -->
       <div class="block-sep" data-block="impacto">
         <div class="block-inner container">
           <div class="block-icon" aria-hidden="true">⚖️</div>
           <div class="block-text">
-            <h2 class="block-title" data-i18n="block_impact_title">PROYECTO Y CRECIMIENTO</h2>
+            <h2 class="block-title" data-i18n="block_impact_title">OBJETIVOS Y CRECIMIENTO</h2>
             <p class="block-sub" data-i18n="block_impact_sub">Estamos construyendo una nueva forma de mejorar nuestra relación con la tecnología a través del videojuego</p>
           </div>
           <div class="block-deco" aria-hidden="true"></div>
         </div>
       </div>
+
       <div class="impact-grid">
-      <section id="problem" class="investor-section">
-        <div class="container">
-          <h2 data-i18n="problem_title">El problema</h2>
-          <p class="problem-subtitle">
-  Recuperar la atención se ha vuelto un reto diario.
-</p>
-          <p>
-  El móvil forma parte de nuestro día a día, pero las interrupciones
-  constantes hacen que sea más difícil estudiar, concentrarse,
-  descansar y dedicar tiempo a otras actividades.
-</p>
+        <!-- El problema -->
+        <section id="problem" class="investor-section">
+          <div class="container">
+            <h2 data-i18n="problem_title">El problema</h2>
+            <p class="problem-subtitle" data-i18n="problem_subtitle">Recuperar la atención se ha vuelto un reto diario.</p>
+            <p data-i18n="problem_p1">El móvil forma parte de nuestro día a día, pero las interrupciones constantes hacen que sea más difícil estudiar, concentrarse, descansar y dedicar tiempo a otras actividades.</p>
+            <p data-i18n="problem_p2">Muchas herramientas nos muestran cuánto utilizamos el teléfono. Sin embargo, conocer el problema no siempre es suficiente para cambiar nuestros hábitos.</p>
+            <div class="screen-time-demo">
+              <div class="screen-time-label" data-i18n="screen_time_label">Tiempo de pantalla hoy</div>
+              <div class="screen-time-counter" id="screen-time-counter">7h 42m</div>
+            </div>
+            <p class="problem-highlight" data-i18n="problem_highlight">GrowTale transforma ese reto en una aventura</p>
+          </div>
+        </section>
 
-<p>
-  Muchas herramientas nos muestran cuánto utilizamos el teléfono.
-  Sin embargo, conocer el problema no siempre es suficiente para
-  cambiar nuestros hábitos.
-</p>
-<div class="screen-time-demo">
+        <!-- Validación profesional -->
+        <section id="validation" class="investor-section">
+          <div class="container">
+            <h2 data-i18n="validation_title">Validación profesional</h2>
+            <div class="validation-seal" data-i18n="validation_seal">✅ Evaluación profesional independiente</div>
 
-  <div class="screen-time-icon"></div>
+            <div class="validators">
+              <div class="validation-card">
+                <h3 data-i18n="validation_wellbeing_title">🧘 Bienestar digital</h3>
+                <p data-i18n="validation_wellbeing_text">Reduce el uso pasivo del móvil mediante mecánicas de refuerzo positivo</p>
+              </div>
+              <div class="validation-card">
+                <h3 data-i18n="validation_ethics_title">🌱 Diseño ético</h3>
+                <p data-i18n="validation_ethics_text">Sin adicción artificial ni sistemas diseñados para generar dependencia</p>
+              </div>
+              <div class="validation-card">
+                <h3 data-i18n="validation_potential_title">🚀 Potencial de aplicación</h3>
+                <ul>
+                  <li data-i18n="validation_potential_education">Educación</li>
+                  <li data-i18n="validation_potential_prevention">Prevención psicosocial</li>
+                </ul>
+              </div>
+            </div>
 
-  <div class="screen-time-label">
-    Tiempo de pantalla hoy
-  </div>
-
-  <div class="screen-time-counter" id="screen-time-counter">
-    7h 42m
-  </div>
-
-</div>
-<p class="problem-highlight">
-  GrowTale transforma ese reto en una aventura
-</p>
-
-        </div>
-      </section>
-
-      <!-- Validación profesional (4) -->
-    <section id="validation" class="investor-section">
-  <div class="container">
-
-    <h2>Validación profesional</h2>
-
-    <div class="validation-seal">
-✅ Evaluación profesional independiente
-</div>
-
-    <div class="validators">
-      <div class="validation-card">
-        <h3>🧘 Bienestar digital</h3>
-
-        <p>
-      Reduce el uso pasivo del móvil mediante mecánicas de refuerzo positivo
-        </p>
+            <blockquote class="validation-quote" data-i18n="validation_quote">“GrowTale presenta una propuesta innovadora y socialmente pertinente dentro del bienestar digital y la prevención psicosocial.”</blockquote>
+            <div class="validator-author">
+              <p data-i18n="validation_author">Valoración profesional independiente del ámbito del Trabajo Social.</p>
+              <a href="docs/AnalisisMdm.pdf" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="validation_download">📄 Descargar informe completo</a>
+            </div>
+          </div>
+        </section>
       </div>
 
-      <div class="validation-card">
-        <h3>🌱 Diseño ético</h3>
-
-<p>
-  Sin adicción artificial ni sistemas diseñados para generar dependencia
-</p>
-      </div>
-
-      <div class="validation-card">
-        <h3>🚀 Potencial de aplicación</h3>
-      <ul>
-  
-  <li>Educación</li>
-  <li>Prevención psicosocial</li>
-</ul>
-      </div>
-
-    </div>
-
-    <blockquote class="validation-quote">
-      "GrowTale presenta una propuesta innovadora y socialmente pertinente dentro del bienestar digital y la prevención psicosocial."
-       </blockquote>
-<div class="validator-author">
-  <p>
-    Valoración profesional independiente del ámbito del Trabajo Social.
-  </p>
-
-  <a href="docs/AnalisisMdm.pdf"
-     target="_blank"
-     rel="noopener noreferrer"
-     class="btn btn-primary">
-
-    📄 Descargar informe completo
-
-  </a>
-
-</div>
-  </div>
-</section>
-</div>
-
-      <!-- Cómo funciona (5) -->
-      <!-- BLOCK: EL VIDEOJUEGO -->
+      <!-- BLOQUE: EL VIDEOJUEGO -->
       <div class="block-sep block-sep-immersive" data-block="videojuego">
         <div class="block-inner container">
           <div class="block-icon" aria-hidden="true">🜚</div>
@@ -189,545 +163,455 @@
           <div class="block-deco" aria-hidden="true"></div>
         </div>
       </div>
+
+      <!-- Cómo funciona -->
       <section id="how" class="how">
-        <h2>Cómo funciona</h2>
-        <p>Convierte menos tiempo frente a aplicaciones distractoras en progreso dentro de GrowTale.</p>
+        <h2 data-i18n="how_title">Cómo funciona</h2>
+        <p data-i18n="how_lead">Convierte menos tiempo frente a aplicaciones distractoras en progreso dentro de GrowTale.</p>
         <div class="steps">
           <div class="step">
-            <div><h2>🎲 Elige tu reto</h2></div>
-            <p>Clasifica las aplicaciones que quieres evitar y define tus objetivos.</p>
-<figure class="gallery-item"><img src="assets/images/comofunciona1.webp" alt="Captura 1" loading="lazy"></figure>
+            <h3 class="step-title" data-i18n="how_step1_title">🎲 Elige tu reto</h3>
+            <p data-i18n="how_step1_text">Clasifica las aplicaciones que quieres evitar y define tus objetivos.</p>
+            <figure class="gallery-item"><img src="assets/images/comofunciona1.webp" alt="Pantalla de GrowTale para elegir retos" data-i18n-alt="how_step1_alt" width="468" height="768" loading="lazy"></figure>
           </div>
           <div class="step">
-            <div><h2>🎯 Dedica tiempo a lo que importa  </h2></div>
-            <p>Cumple retos reales y recibe recursos para avanzar.</p>
-<figure class="gallery-item"><img src="assets/images/comofunciona2.png" alt="Captura 2" loading="lazy"></figure>
+            <h3 class="step-title" data-i18n="how_step2_title">🎯 Dedica tiempo a lo que importa</h3>
+            <p data-i18n="how_step2_text">Cumple retos reales y recibe recursos para avanzar.</p>
+            <figure class="gallery-item"><img src="assets/images/comofunciona2.webp" alt="Pantalla de GrowTale con un reto en curso" data-i18n-alt="how_step2_alt" width="424" height="708" loading="lazy"></figure>
           </div>
           <div class="step">
-            <div><h2>🌱 Haz crecer tu mundo </h2></div>
-            <p>Desbloquea nuevas zonas y haz crecer tu aventura.</p>
-<figure class="gallery-item"><img src="assets/images/comofunciona3.png" alt="Captura 3" loading="lazy"></figure>
-
+            <h3 class="step-title" data-i18n="how_step3_title">🌱 Haz crecer tu mundo</h3>
+            <p data-i18n="how_step3_text">Desbloquea nuevas zonas y haz crecer tu aventura.</p>
+            <figure class="gallery-item"><img src="assets/images/comofunciona3.webp" alt="Pantalla de GrowTale con el mundo creciendo" data-i18n-alt="how_step3_alt" width="367" height="615" loading="lazy"></figure>
           </div>
         </div>
       </section>
 
-      
-
-      <!-- Producto (7) -->
+      <!-- Producto -->
       <section id="product" class="product-section">
         <div class="container">
-          <h2>Producto</h2>
-          <!-- Galería -->
+          <h2 data-i18n="product_title">Producto</h2>
+
           <section id="gallery" class="gallery">
-            <h3 class="section-subtitle">Galería</h3>
+            <h3 class="section-subtitle" data-i18n="gallery_title">Galería</h3>
             <div class="gallery-grid">
               <figure class="gallery-item">
-                <img src="assets/images/captura1.png" alt="Captura 1" loading="lazy">
-                <figcaption>Habilidades</figcaption>
+                <img src="assets/images/captura1.webp" alt="Pantalla de habilidades de GrowTale" data-i18n-alt="gallery_skills_alt" width="319" height="679" loading="lazy">
+                <figcaption data-i18n="gallery_skills">Habilidades</figcaption>
               </figure>
-
               <figure class="gallery-item">
-                <img src="assets/images/captura2.png" alt="Captura 2" loading="lazy">
-                <figcaption>Combate</figcaption>
+                <img src="assets/images/captura2.webp" alt="Pantalla de combate de GrowTale" data-i18n-alt="gallery_combat_alt" width="487" height="757" loading="lazy">
+                <figcaption data-i18n="gallery_combat">Combate</figcaption>
               </figure>
-
               <figure class="gallery-item">
-                <img src="assets/images/captura3.png" alt="Captura 3" loading="lazy">
-                <figcaption>Personaje</figcaption>
+                <img src="assets/images/captura3.webp" alt="Pantalla de personaje de GrowTale" data-i18n-alt="gallery_character_alt" width="900" height="1078" loading="lazy">
+                <figcaption data-i18n="gallery_character">Personaje</figcaption>
               </figure>
             </div>
           </section>
 
-          <!-- Retos diarios -->
           <section id="challenges" class="challenges">
-            <h3 class="section-subtitle">Retos diarios</h3>
+            <h3 class="section-subtitle" data-i18n="challenges_title">Retos diarios</h3>
             <div class="challenge-list compact">
               <article class="challenge card">
-                <h4>Concentración de 30 min</h4>
-                <p>Evita apps distractoras durante 30 minutos y gana semillas.</p>
+                <h4 data-i18n="challenge1_title">Concentración de 30 min</h4>
+                <p data-i18n="challenge1_text">Evita apps distractoras durante 30 minutos y gana semillas.</p>
                 <div class="challenge-meta">
-                  <span class="badge">Reto diario</span>
-                  <span class="reward">Recompensa: Semillas</span>
+                  <span class="badge" data-i18n="challenge1_badge">Reto diario</span>
+                  <span class="reward" data-i18n="challenge1_reward">Recompensa: Semillas</span>
                 </div>
               </article>
               <article class="challenge card">
-                <h4>Paseo al aire libre</h4>
-                <p>Pasa 20 minutos fuera del móvil y desbloquea una zona en el mapa.</p>
+                <h4 data-i18n="challenge2_title">Paseo al aire libre</h4>
+                <p data-i18n="challenge2_text">Pasa 20 minutos fuera del móvil y desbloquea una zona en el mapa.</p>
                 <div class="challenge-meta">
-                  <span class="badge">Reto de bienestar</span>
-                  <span class="reward">Recompensa: Desbloqueo de región</span>
+                  <span class="badge" data-i18n="challenge2_badge">Reto de bienestar</span>
+                  <span class="reward" data-i18n="challenge2_reward">Recompensa: Desbloqueo de región</span>
                 </div>
               </article>
-              
-
-<article class="challenge card">
-
-  <h4>Aprendizaje</h4>
-
-  <p>
-    Completa un objetivo de estudio o lectura.
-  </p>
-
-  <div class="challenge-meta">
-
-    <span class="badge">
-      Reto de Aprendizaje
-    </span>
-
-    <span class="reward">
-     Recompensa: Libro de poder
-    </span>
-
-  </div>
-
-</article>
+              <article class="challenge card">
+                <h4 data-i18n="challenge3_title">Aprendizaje</h4>
+                <p data-i18n="challenge3_text">Completa un objetivo de estudio o lectura.</p>
+                <div class="challenge-meta">
+                  <span class="badge" data-i18n="challenge3_badge">Reto de aprendizaje</span>
+                  <span class="reward" data-i18n="challenge3_reward">Recompensa: Libro de poder</span>
+                </div>
+              </article>
             </div>
           </section>
         </div>
       </section>
 
-      <!-- Universo GrowTale (8) -->
+      <!-- Universo GrowTale -->
       <section id="universe" class="universe-section">
         <div class="container">
-          <h2>Universo GrowTale</h2>
-          <!-- Mapa (mantener id) -->
+          <h2 data-i18n="universe_title">Universo GrowTale</h2>
           <section id="map" class="map">
-            <h3 class="section-subtitle">Mapa del mundo</h3>
-            <p class="muted">Explora regiones y descubre retos únicos.</p>
-              <div class="map-wrapper compact">
-                <img src="assets/images/mapa.jpg" alt="Mapa del mundo de GrowTale">
-              </div>
+            <h3 class="section-subtitle" data-i18n="map_title">Mapa del mundo</h3>
+            <p class="muted" data-i18n="map_text">Explora regiones y descubre retos únicos.</p>
+            <div class="map-wrapper compact">
+              <img src="assets/images/mapa.webp" alt="Mapa del mundo de GrowTale" data-i18n-alt="map_alt" width="2000" height="1392" loading="lazy">
+            </div>
           </section>
         </div>
       </section>
-      <!-- Estado del proyecto (9) -->
-      <!-- BLOCK: PROYECTO E INVERSIÓN -->
+
+      <!-- BLOQUE: PROYECTO E INVERSIÓN -->
       <div class="block-sep" data-block="proyecto">
         <div class="block-inner container">
           <div class="block-icon" aria-hidden="true">🏗️</div>
           <div class="block-text">
-              <h2 class="block-title" data-i18n="block_project_title">PROYECTO E INVERSIÓN</h2>
-              <p class="block-sub" data-i18n="block_project_sub">Conoce el estado de desarrollo, la oportunidad y el equipo responsable de GrowTale.</p>
-            </div>
+            <h2 class="block-title" data-i18n="block_project_title">PROYECTO E INVERSIÓN</h2>
+            <p class="block-sub" data-i18n="block_project_sub">Conoce el estado de desarrollo, la oportunidad y el equipo responsable de GrowTale.</p>
+          </div>
           <div class="block-deco" aria-hidden="true"></div>
         </div>
       </div>
-      <!-- Diferenciación (moved here) -->
-     <section id="differentiation" class="investor-section">
 
-  <div class="container">
-
-    <h2>Nuestra ventaja</h2>
-
-    <p class="problem-subtitle">
-      Creatividad, tecnología y educación en una misma experiencia.
-    </p>
-
-  <div class="advantage-grid">
-       <div class="advantage-mini">
-    <span>🎨</span>
-    <p>Universo propio</p>
-  </div>
-
-  <div class="advantage-mini">
-    <span>🎵</span>
-    <p>Música original</p>
-  </div>
-
-  <div class="advantage-mini">
-    <span>🎮</span>
-    <p>Diseño responsable</p>
-  </div>
-
-  <div class="advantage-mini">
-    <span>🧘</span>
-    <p>Bienestar digital</p>
-  </div>
-
-  <div class="advantage-mini">
-    <span>👥</span>
-    <p>Equipo experto</p>
-  </div>
-
-  <div class="advantage-mini">
-    <span>⚙️</span>
-    <p>Sistemas principales implementados</p>
-  </div>
-
-   
-
-</div>
-
-    
-
-    <p class="problem-highlight">
-     La tecnología puede imitarse.
-La experiencia y la comunidad son mucho más difíciles de replicar.
-    </p>
-
-  </div>
-
-</section>
-<section id="status" class="investor-section">
-
-
-  <div class="container">
-
-    <h2>Estado del proyecto</h2>
-
-    <p class="problem-subtitle">
-      De la idea a una experiencia real.
-    </p>
-
-    <div class="roadmap">
-
-  <div class="roadmap-step completed">
-    <div class="roadmap-icon">✅</div>
-
-    <h3>Idea</h3>
-
-    <p>Concepto, propósito y universo</p>
-
-    <span class="roadmap-status">
-      Completado
-    </span>
-  </div>
-
-  <div class="roadmap-arrow">
-    ➜
-  </div>
-
-  <div class="roadmap-step completed">
-    <div class="roadmap-icon">✅</div>
-
-    <h3>Prototipo</h3>
-
-    <p>Primera versión funcional para jugar</p>
-
-    <span class="roadmap-status">
-      Completado
-    </span>
-  </div>
-
-  <div class="roadmap-arrow">
-    ➜
-  </div>
-
-  <div class="roadmap-step progress">
-    <div class="roadmap-icon">🔃</div>
-
-    <h3>Pilotos</h3>
-
-    <p>Validación con centros y AMPAs</p>
-
-    <span class="roadmap-status">
-      En preparación
-    </span>
-  </div>
-
-  <div class="roadmap-arrow">
-    ➜
-  </div>
-
-  <div class="roadmap-step next">
-    <div class="roadmap-icon">🚀</div>
-
-    <h3>Mercado</h3>
-
-    <p>Primera versión comercial completa</p>
-
-    <span class="roadmap-status">
-      Siguiente hito
-    </span>
-  </div>
-
-</div>
-
-    
-
-  </div>
-
-</section>
-      
+      <!-- Nuestra ventaja -->
+      <section id="differentiation" class="investor-section">
+        <div class="container">
+          <h2 data-i18n="advantage_title">Nuestra ventaja</h2>
+          <p class="problem-subtitle" data-i18n="advantage_subtitle">Creatividad, tecnología y educación en una misma experiencia.</p>
+          <div class="advantage-grid">
+            <div class="advantage-mini"><span aria-hidden="true">🎨</span><p data-i18n="advantage_universe">Universo propio</p></div>
+            <div class="advantage-mini"><span aria-hidden="true">🎵</span><p data-i18n="advantage_music">Música original</p></div>
+            <div class="advantage-mini"><span aria-hidden="true">🎮</span><p data-i18n="advantage_design">Diseño responsable</p></div>
+            <div class="advantage-mini"><span aria-hidden="true">🧘</span><p data-i18n="advantage_wellbeing">Bienestar digital</p></div>
+            <div class="advantage-mini"><span aria-hidden="true">👥</span><p data-i18n="advantage_team">Equipo experto</p></div>
+            <div class="advantage-mini"><span aria-hidden="true">⚙️</span><p data-i18n="advantage_systems">Sistemas principales implementados</p></div>
+          </div>
+          <p class="problem-highlight" data-i18n="advantage_highlight">La tecnología puede imitarse. La experiencia y la comunidad son mucho más difíciles de replicar.</p>
+        </div>
       </section>
 
-      <!-- Mercado (10) -->
+      <!-- Estado del proyecto -->
+      <section id="status" class="investor-section">
+        <div class="container">
+          <h2 data-i18n="status_title">Estado del proyecto</h2>
+          <p class="problem-subtitle" data-i18n="status_subtitle">De la idea a una experiencia real.</p>
+          <ol class="roadmap">
+            <li class="roadmap-step completed">
+              <div class="roadmap-icon" aria-hidden="true">✅</div>
+              <h3 data-i18n="status_idea">Idea</h3>
+              <p data-i18n="status_idea_text">Concepto, propósito y universo</p>
+              <span class="roadmap-status" data-i18n="status_done">Completado</span>
+            </li>
+            <li class="roadmap-arrow" aria-hidden="true">➜</li>
+            <li class="roadmap-step completed">
+              <div class="roadmap-icon" aria-hidden="true">✅</div>
+              <h3 data-i18n="status_prototype">Prototipo</h3>
+              <p data-i18n="status_prototype_text">Primera versión funcional para jugar</p>
+              <span class="roadmap-status" data-i18n="status_done">Completado</span>
+            </li>
+            <li class="roadmap-arrow" aria-hidden="true">➜</li>
+            <li class="roadmap-step progress">
+              <div class="roadmap-icon" aria-hidden="true">🔃</div>
+              <h3 data-i18n="status_pilots">Pilotos</h3>
+              <p data-i18n="status_pilots_text">Validación con centros y AMPAs</p>
+              <span class="roadmap-status" data-i18n="status_in_progress">En preparación</span>
+            </li>
+            <li class="roadmap-arrow" aria-hidden="true">➜</li>
+            <li class="roadmap-step next">
+              <div class="roadmap-icon" aria-hidden="true">🚀</div>
+              <h3 data-i18n="status_market">Mercado</h3>
+              <p data-i18n="status_market_text">Primera versión comercial completa</p>
+              <span class="roadmap-status" data-i18n="status_next">Siguiente hito</span>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Mercado -->
       <section id="market" class="investor-section">
         <div class="container">
-          <h2>Mercado</h2>
+          <h2 data-i18n="market_title">Mercado</h2>
           <div class="validators">
-
-  <div class="validation-card">
-
-    <h3>🏫 Centros y AMPAs</h3>
-
-    <p>
-      Programas para trabajar concentración,
-      bienestar digital y hábitos saludables.
-    </p>
-
-  </div>
-
-  <div class="validation-card">
-
-    <h3>👨‍👩‍👧 Familias</h3>
-
-    <p>
-      Herramientas positivas para acompañar
-      el uso de la tecnología.
-    </p>
-
-  </div>
-
-  <div class="validation-card">
-
-    <h3>👩 Usuarios individuales</h3>
-
-    <p>
-      Personas que quieren reducir distracciones
-      mediante una experiencia atractiva.
-    </p>
-
-  </div>
-
-</div>
+            <div class="validation-card">
+              <h3 data-i18n="market_schools_title">🏫 Centros y AMPAs</h3>
+              <p data-i18n="market_schools_text">Programas para trabajar concentración, bienestar digital y hábitos saludables.</p>
+            </div>
+            <div class="validation-card">
+              <h3 data-i18n="market_families_title">👨‍👩‍👧 Familias</h3>
+              <p data-i18n="market_families_text">Herramientas positivas para acompañar el uso de la tecnología.</p>
+            </div>
+            <div class="validation-card">
+              <h3 data-i18n="market_users_title">👩 Usuarios individuales</h3>
+              <p data-i18n="market_users_text">Personas que quieren reducir distracciones mediante una experiencia atractiva.</p>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- Equipo (11) - Collage revisado para transmitir credibilidad e inversión -->
+      <!-- Equipo -->
       <section id="team" class="team-section investor-section">
         <div class="container">
-          <h2>Equipo</h2>
-          <p class="muted">Equipo técnico y creativo con experiencia en producto, AAA y operaciones — preparado para ejecutar y escalar.</p>
+          <h2 data-i18n="team_title">Equipo</h2>
+          <p class="muted" data-i18n="team_lead">Equipo técnico y creativo con experiencia en producto, AAA y operaciones — preparado para ejecutar y escalar.</p>
 
-          <div class="team-collage" role="list">
-            <article class="member-card" role="listitem">
-              <figure class="avatar-wrap">
-                <div class="avatar-initials" aria-hidden="true">DR</div>
-              </figure>
+          <ul class="team-collage">
+            <li class="member-card">
+              <div class="avatar-wrap"><img class="avatar" src="assets/images/team/daniel.webp" alt="" width="88" height="88" loading="lazy"></div>
               <div class="member-meta">
-                <h4>Daniel Robledo</h4>
-                <div class="role">CPO y Director de Producto</div>
-                <p class="bio-short">Technical Producer Producto en Foundever y anterior Director de Producto en BrytSpace. Ingeniero y gestor que combina su pasión por la tecnología y la psicología para mejorar la salud mental mediante software.</p>
-                <div class="bio-full" aria-hidden="true">
-                  <p>Technical Producer Producto en Foundever y anterior Director de Producto en BrytSpace. Ingeniero y gestor que combina su pasión por la tecnología y la psicología para mejorar la salud mental mediante software.</p>
-                  <ul class="exp-list"><li>Director de Producto — BrytSpace</li><li>Technical Producer — Foundever</li></ul>
-                </div>
-                <button class="btn view-profile" data-i18n="view_profile">Ver perfil completo</button>
+                <h3 class="member-name">Daniel Robledo</h3>
+                <div class="role" data-i18n="role_daniel">CPO y Director de Producto</div>
+                <p class="bio-short" data-i18n="bio_daniel">Technical Producer en Foundever y anterior Director de Producto en BrytSpace. Ingeniero y gestor que combina su pasión por la tecnología y la psicología para mejorar la salud mental mediante software.</p>
+                <ul class="bio-full exp-list" id="exp-daniel">
+                  <li data-i18n="exp_daniel_1">Director de Producto — BrytSpace</li>
+                  <li data-i18n="exp_daniel_2">Technical Producer — Foundever</li>
+                </ul>
+                <a class="member-link" href="https://www.linkedin.com/in/danielcrobledo/" target="_blank" rel="noopener" aria-label="Daniel Robledo · LinkedIn">LinkedIn ↗</a>
+                <button class="btn view-profile" aria-expanded="false" aria-controls="exp-daniel">Ver perfil completo</button>
               </div>
-            </article>
+            </li>
 
-            <article class="member-card" role="listitem">
-              <figure class="avatar-wrap">
-                <div class="avatar-initials" aria-hidden="true">CS</div>
-              </figure>
+            <li class="member-card">
+              <div class="avatar-wrap"><img class="avatar" src="assets/images/team/charlie.webp" alt="" width="88" height="88" loading="lazy"></div>
               <div class="member-meta">
-                <h4>Charlie Sánchez</h4>
-                <div class="role">Director Creativo</div>
-                <p class="bio-short">Senior Game Designer en Gameloft Barcelona, profesor en U-Tad y fundador de Beast Arts. Especialista en gamificación con más de siete años de experiencia.</p>
-                <div class="bio-full" aria-hidden="true">
-                  <p>Senior Game Designer en Gameloft Barcelona, profesor en U-Tad y fundador de Beast Arts. Especialista en gamificación con más de siete años de experiencia.</p>
-                  <ul class="exp-list"><li>Senior Game Designer — Gameloft</li><li>Profesor — U-Tad</li></ul>
-                </div>
-                <button class="btn view-profile">Ver perfil completo</button>
+                <h3 class="member-name">Charlie Sánchez</h3>
+                <div class="role" data-i18n="role_charlie">Director Creativo</div>
+                <p class="bio-short" data-i18n="bio_charlie">Senior Game Designer en Gameloft Barcelona, profesor en U-Tad y fundador de Beast Arts. Especialista en gamificación con más de siete años de experiencia.</p>
+                <ul class="bio-full exp-list" id="exp-charlie">
+                  <li>Senior Game Designer — Gameloft</li>
+                  <li data-i18n="exp_charlie_2">Profesor — U-Tad</li>
+                </ul>
+                <a class="member-link" href="https://www.linkedin.com/in/charliesnchez/" target="_blank" rel="noopener" aria-label="Charlie Sánchez · LinkedIn">LinkedIn ↗</a>
+                <button class="btn view-profile" aria-expanded="false" aria-controls="exp-charlie">Ver perfil completo</button>
               </div>
-            </article>
+            </li>
 
-            <article class="member-card" role="listitem">
-              <figure class="avatar-wrap">
-                <div class="avatar-initials" aria-hidden="true">RM</div>
-              </figure>
+            <li class="member-card">
+              <div class="avatar-wrap"><img class="avatar" src="assets/images/team/sergio.webp" alt="" width="88" height="88" loading="lazy"></div>
               <div class="member-meta">
-                <h4>Raquel Mas</h4>
-                <div class="role">Programadora Full-Stack</div>
-                <p class="bio-short">Ex-desarrolladora de gameplay y sistemas en Pendulo Studios. Especialista en Unity, Unreal Engine e interfaces.</p>
-                <div class="bio-full" aria-hidden="true">
-                  <p>Ex-desarrolladora de gameplay y sistemas en Pendulo Studios. Especialista en Unity, Unreal Engine e interfaces.</p>
-                  <ul class="exp-list"><li>Gameplay Developer — Péndulo Studios</li></ul>
-                </div>
-                <button class="btn view-profile">Ver perfil completo</button>
+                <h3 class="member-name">Sergio Ruiz</h3>
+                <div class="role" data-i18n="role_sergio">Business & Operaciones</div>
+                <p class="bio-short" data-i18n="bio_sergio">Ingeniero de Apoyo al Ciclo de Vida en Navantia. Formado en la Universidad de Málaga, aporta método y visión de ingeniería al desarrollo de GrowTale.</p>
+                <ul class="bio-full exp-list" id="exp-sergio">
+                  <li data-i18n="exp_sergio_1">Ingeniero de Apoyo al Ciclo de Vida — Navantia</li>
+                </ul>
+                <a class="member-link" href="https://www.linkedin.com/in/sergio-ruiz-p%C3%A9rez-536897249/" target="_blank" rel="noopener" aria-label="Sergio Ruiz · LinkedIn">LinkedIn ↗</a>
+                <button class="btn view-profile" aria-expanded="false" aria-controls="exp-sergio">Ver perfil completo</button>
               </div>
-            </article>
+            </li>
 
-            <article class="member-card" role="listitem">
-              <figure class="avatar-wrap">
-                <div class="avatar-initials" aria-hidden="true">DM</div>
-              </figure>
+            <li class="member-card">
+              <div class="avatar-wrap"><img class="avatar" src="assets/images/team/raquel.webp" alt="" width="88" height="88" loading="lazy"></div>
               <div class="member-meta">
-                <h4>David Muñoz</h4>
-                <div class="role">Programador Full-Stack y DevSecOps</div>
-                <p class="bio-short">Programador de rig e IT en Huhaa Studios. Graduado en Ingeniería Industrial y experto en sistemas y backend.</p>
-                <div class="bio-full" aria-hidden="true">
-                  <p>Programador de rig e IT en Huhaa Studios. Graduado en Ingeniería Industrial y experto en sistemas y backend.</p>
-                  <ul class="exp-list"><li>DevOps — Huhaa Studios</li></ul>
-                </div>
-                <button class="btn view-profile">Ver perfil completo</button>
+                <h3 class="member-name">Raquel Mas</h3>
+                <div class="role" data-i18n="role_raquel">Programadora Full-Stack</div>
+                <p class="bio-short" data-i18n="bio_raquel">Ex-desarrolladora de gameplay y sistemas en Péndulo Studios. Especialista en Unity, Unreal Engine e interfaces.</p>
+                <ul class="bio-full exp-list" id="exp-raquel">
+                  <li>Gameplay Developer — Péndulo Studios</li>
+                </ul>
+                <a class="member-link" href="https://www.linkedin.com/in/raquel-mas-garc%C3%ADa/" target="_blank" rel="noopener" aria-label="Raquel Mas · LinkedIn">LinkedIn ↗</a>
+                <button class="btn view-profile" aria-expanded="false" aria-controls="exp-raquel">Ver perfil completo</button>
               </div>
-            </article>
+            </li>
 
-            <article class="member-card" role="listitem">
-              <figure class="avatar-wrap">
-                <div class="avatar-initials" aria-hidden="true">RD</div>
-              </figure>
+            <li class="member-card">
+              <div class="avatar-wrap"><img class="avatar" src="assets/images/team/david.webp" alt="" width="88" height="88" loading="lazy"></div>
               <div class="member-meta">
-                <h4>Rober Díaz</h4>
-                <div class="role">Compositor y Sound Designer</div>
-                <p class="bio-short">Compositor de música para videojuegos y autor de Crónicas de un Gamer: Guía Emocional de Videojuegos.</p>
-                <div class="bio-full" aria-hidden="true">
-                  <p>Compositor de música para videojuegos y autor de Crónicas de un Gamer: Guía Emocional de Videojuegos.</p>
-                  <ul class="exp-list"><li>Compositor — Freelance</li></ul>
-                </div>
-                <button class="btn view-profile">Ver perfil completo</button>
+                <h3 class="member-name">David Muñoz</h3>
+                <div class="role" data-i18n="role_david">Programador Full-Stack y DevSecOps</div>
+                <p class="bio-short" data-i18n="bio_david">Programador de rig e IT en Huhaa Studios. Graduado en Ingeniería Industrial y experto en sistemas y backend.</p>
+                <ul class="bio-full exp-list" id="exp-david">
+                  <li>DevOps — Huhaa Studios</li>
+                </ul>
+                <a class="member-link" href="https://www.linkedin.com/in/david-mu%C3%B1oz-bernal/" target="_blank" rel="noopener" aria-label="David Muñoz · LinkedIn">LinkedIn ↗</a>
+                <button class="btn view-profile" aria-expanded="false" aria-controls="exp-david">Ver perfil completo</button>
               </div>
-            </article>
+            </li>
 
-            <article class="member-card" role="listitem">
-              <figure class="avatar-wrap">
-                <div class="avatar-initials" aria-hidden="true">IR</div>
-              </figure>
+            <li class="member-card">
+              <div class="avatar-wrap"><img class="avatar" src="assets/images/team/rober.webp" alt="" width="88" height="88" loading="lazy"></div>
               <div class="member-meta">
-                <h4>Ismael Ruiz</h4>
-                <div class="role">Concept Artist</div>
-                <p class="bio-short">Concept Artist y Diseñador Gráfico en Infinite Thread Games. Especializado en ilustración digital y concept art.</p>
-                <div class="bio-full" aria-hidden="true">
-                  <p>Concept Artist y Diseñador Gráfico en Infinite Thread Games. Especializado en ilustración digital y concept art.</p>
-                  <ul class="exp-list"><li>Concept Artist — Infinite Thread Games</li></ul>
-                </div>
-                <button class="btn view-profile">Ver perfil completo</button>
+                <h3 class="member-name">Rober “Roboo” Díaz</h3>
+                <div class="role" data-i18n="role_rober">Compositor y Sound Designer</div>
+                <p class="bio-short" data-i18n="bio_rober">Compositor de música para videojuegos y autor de “Crónicas de un Gamer: Guía Emocional de Videojuegos”.</p>
+                <ul class="bio-full exp-list" id="exp-rober">
+                  <li data-i18n="exp_rober_1">Compositor — Freelance</li>
+                </ul>
+                <a class="member-link" href="https://roboomusic.bandcamp.com/music" target="_blank" rel="noopener" aria-label="Rober “Roboo” Díaz · Bandcamp">Bandcamp ↗</a>
+                <button class="btn view-profile" aria-expanded="false" aria-controls="exp-rober">Ver perfil completo</button>
               </div>
-            </article>
+            </li>
 
-          </div>
+            <li class="member-card">
+              <div class="avatar-wrap"><img class="avatar" src="assets/images/team/ismael.webp" alt="" width="88" height="88" loading="lazy"></div>
+              <div class="member-meta">
+                <h3 class="member-name">Ismael Ruiz</h3>
+                <div class="role" data-i18n="role_ismael">Concept Artist</div>
+                <p class="bio-short" data-i18n="bio_ismael">Concept Artist y Diseñador Gráfico en Infinite Thread Games. Especializado en ilustración digital y concept art.</p>
+                <ul class="bio-full exp-list" id="exp-ismael">
+                  <li>Concept Artist — Infinite Thread Games</li>
+                </ul>
+                <a class="member-link" href="https://www.linkedin.com/in/ismael-r-artndesign/" target="_blank" rel="noopener" aria-label="Ismael Ruiz · LinkedIn">LinkedIn ↗</a>
+                <button class="btn view-profile" aria-expanded="false" aria-controls="exp-ismael">Ver perfil completo</button>
+              </div>
+            </li>
+
+            <li class="member-card">
+              <div class="avatar-wrap"><img class="avatar" src="assets/images/team/andrea.webp" alt="" width="88" height="88" loading="lazy"></div>
+              <div class="member-meta">
+                <h3 class="member-name">Andrea Calvar</h3>
+                <div class="role" data-i18n="role_andrea">Concept Artist</div>
+                <p class="bio-short" data-i18n="bio_andrea">Concept artist y estudiante de Marketing. Compagina la ilustración con la comunicación del proyecto.</p>
+                <ul class="bio-full exp-list" id="exp-andrea">
+                  <li data-i18n="exp_andrea_1">Estudiante de Marketing</li>
+                </ul>
+                <a class="member-link" href="https://www.linkedin.com/in/andrea-calvar-prieto-308182278/" target="_blank" rel="noopener" aria-label="Andrea Calvar · LinkedIn">LinkedIn ↗</a>
+                <button class="btn view-profile" aria-expanded="false" aria-controls="exp-andrea">Ver perfil completo</button>
+              </div>
+            </li>
+          </ul>
         </div>
       </section>
 
-      <!-- Qué buscamos (12) -->
-     <section id="ask" class="investor-section">
+      <!-- Qué buscamos -->
+      <section id="ask" class="investor-section">
+        <div class="container">
+          <h2 data-i18n="ask_title">Qué buscamos</h2>
+          <p class="problem-subtitle" data-i18n="ask_subtitle">Construimos GrowTale junto a personas e instituciones que compartan nuestra visión.</p>
+          <div class="ask-grid">
+            <div class="ask-card">
+              <div class="ask-icon" aria-hidden="true">💸</div>
+              <h3 data-i18n="ask_investment_title">Inversión</h3>
+              <p data-i18n="ask_investment_text">Capital para acelerar el desarrollo, validar mercado y preparar el lanzamiento.</p>
+            </div>
+            <div class="ask-card">
+              <div class="ask-icon" aria-hidden="true">🏫</div>
+              <h3 data-i18n="ask_schools_title">Centros educativos</h3>
+              <p data-i18n="ask_schools_text">Institutos, AMPAs y entidades interesadas en participar en los primeros pilotos.</p>
+            </div>
+            <div class="ask-card">
+              <div class="ask-icon" aria-hidden="true">🤝</div>
+              <h3 data-i18n="ask_partners_title">Colaboraciones</h3>
+              <p data-i18n="ask_partners_text">Partners estratégicos, instituciones, empresas y profesionales.</p>
+            </div>
+          </div>
+          <p class="problem-highlight" data-i18n="ask_highlight">Hagamos crecer GrowTale juntos</p>
+        </div>
+      </section>
 
-  <div class="container">
-
-    <h2>Qué buscamos</h2>
-
-    <p class="problem-subtitle">
-      Construimos GrowTale junto a personas e instituciones que compartan nuestra visión.
-    </p>
-
-    <div class="ask-grid">
-
-      <div class="ask-card">
-
-        <div class="ask-icon">💸</div>
-
-        <h3>Inversión</h3>
-
-        <p>
-          Capital para acelerar el desarrollo,
-          validar mercado y preparar el lanzamiento.
-        </p>
-
-      </div>
-
-      <div class="ask-card">
-
-        <div class="ask-icon">🏫</div>
-
-        <h3>Centros educativos</h3>
-
-        <p>
-          Institutos, AMPAs y entidades interesadas
-          en participar en los primeros pilotos.
-        </p>
-
-      </div>
-
-      <div class="ask-card">
-
-        <div class="ask-icon">🤝</div>
-
-        <h3>Colaboraciones</h3>
-
-        <p>
-          Partners estratégicos, instituciones,
-          empresas y profesionales.
-        </p>
-
-      </div>
-
-    </div>
-
-    <p class="problem-highlight">
-      Hagamos crecer GrowTale juntos
-    </p>
-
-  </div>
-
-</section>
-
-      <!-- Contacto (13) -->
+      <!-- Contacto -->
       <section id="contact" class="investor-section contact-section">
         <div class="container">
-          <h2>Contacto</h2>
-          <p><strong>Email:</strong> <a href="mailto:bellakotech@gmail.com">bellakotech@gmail.com</a></p>
-                    <p><strong>Pitch Deck:</strong> <a href="docs/GrowTale_PitchDeck.pdf" target="_blank">Descargar</a></p>
-                    <p><strong>Formulario de contacto:</strong> <a href="contacto.html" target="_blank">Acceder</a></p>
+          <h2 data-i18n="contact_title">Contacto</h2>
+          <p class="problem-subtitle" data-i18n="contact_subtitle">¿Centro educativo, AMPA, inversor o colaborador? Cuéntanos cómo podríamos colaborar.</p>
+          <div class="contact-actions">
+            <a class="btn btn-primary" href="mailto:bellakotech@gmail.com" data-open-contact data-i18n="contact_write">✉️ Escríbenos</a>
+            <a class="btn btn-secondary" href="docs/GrowTale_PitchDeck.pdf" target="_blank" rel="noopener">📄 Pitch Deck</a>
+          </div>
+          <p class="contact-alt"><span data-i18n="contact_alt">O directamente a</span> <a href="mailto:bellakotech@gmail.com">bellakotech@gmail.com</a></p>
         </div>
       </section>
-
-      <!-- Footer -->
-      <footer class="site-footer">
-        <div class="footer-inner">
-          <div class="footer-links">
-            <a href="#how">Cómo funciona</a>
-            <a href="#gallery">Galería</a>
-            <a href="#map">Mapa</a>
-            <a href="#challenges">Retos</a>
-          </div>
-          <div class="copyright">© GrowTale — growtale.app<br>Diseñada por José Manuel Ruiz Sánchez</div>
-        </div>
-      </footer>
-
-    <!-- Audio theme: hidden native player; controlled via music toggle -->
-    <audio id="theme-audio" preload="metadata" aria-label="Tema musical GrowTale" style="display:none;" aria-hidden="true">
-      <source src="assets/audio/theme.mp4" type="audio/mp4">
-      Tu navegador no soporta reproducción de audio.
-    </audio>
-    
-    <!-- Music toggle (keeps id for JS control) -->
-    <button id="music-toggle" class="music-toggle" aria-pressed="false" aria-label="Activar música" title="Activar música">
-      <!-- Speaker on icon -->
-      <svg class="icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M5 9v6h4l5 4V5L9 9H5z" fill="currentColor" />
-        <path d="M16.5 8.5a4.5 4.5 0 010 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <!-- Speaker off icon -->
-      <svg class="icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M5 9v6h4l5 4V5L9 9H5z" fill="currentColor" />
-        <path d="M18 6l-6 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-
     </main>
 
-    <script src="app.js?v=20260902-2200"></script>
-    <!-- Lightbox markup -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <nav class="footer-links" aria-label="Pie de página">
+          <a href="#how" data-i18n="footer_how">Cómo funciona</a>
+          <a href="#gallery" data-i18n="footer_gallery">Galería</a>
+          <a href="#map" data-i18n="footer_map">Mapa</a>
+          <a href="#challenges" data-i18n="footer_challenges">Retos</a>
+          <a href="#contact" data-i18n="footer_contact">Contacto</a>
+        </nav>
+        <div class="copyright">© GrowTale — growtale.app<br><span data-i18n="footer_credit">Diseñada por José Manuel Ruiz Sánchez</span></div>
+      </div>
+    </footer>
+
+    <!-- Pop-up de contacto -->
+    <dialog id="contact-dialog" class="contact-dialog" aria-labelledby="contact-dialog-title">
+      <div class="contact-dialog-panel">
+        <button class="contact-dialog-close" type="button" aria-label="Cerrar" data-i18n-aria-label="form_close" data-close-contact>✕</button>
+
+        <header class="contact-dialog-header">
+          <p class="contact-kicker" data-i18n="form_kicker">HABLEMOS</p>
+          <h2 id="contact-dialog-title" data-i18n="form_title">¿Quieres saber más sobre GrowTale?</h2>
+          <p data-i18n="form_intro">Cuéntanos quién eres y cómo podríamos colaborar.</p>
+        </header>
+
+        <form class="growtale-form" data-email="bellakotech@gmail.com">
+          <p class="form-help" data-i18n="form_required">Los campos marcados con * son obligatorios.</p>
+          <div class="form-grid">
+            <div class="form-field">
+              <label class="form-label" for="cf-name" data-i18n="form_name">Nombre y apellidos *</label>
+              <input class="form-control" id="cf-name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="cf-email" data-i18n="form_email">Correo electrónico *</label>
+              <input class="form-control" id="cf-email" name="email" type="email" autocomplete="email" required>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="cf-org" data-i18n="form_org">Organización</label>
+              <input class="form-control" id="cf-org" name="organization" type="text" autocomplete="organization" aria-describedby="cf-org-help">
+              <p class="form-help" id="cf-org-help" data-i18n="form_org_help">Centro educativo, AMPA, fondo de inversión, empresa o institución.</p>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="cf-role" data-i18n="form_role">Cargo o relación con la organización</label>
+              <input class="form-control" id="cf-role" name="role" type="text" autocomplete="organization-title">
+            </div>
+          </div>
+
+          <fieldset class="participation-group">
+            <legend class="form-legend" data-i18n="form_participation">¿Cómo te gustaría participar? *</legend>
+            <div class="participation-options">
+              <label class="check-option"><input type="checkbox" name="participation" value="piloto-educativo"><span data-i18n="form_opt_pilot">Participar en un piloto educativo</span></label>
+              <label class="check-option"><input type="checkbox" name="participation" value="ampa"><span data-i18n="form_opt_ampa">Colaborar como AMPA</span></label>
+              <label class="check-option"><input type="checkbox" name="participation" value="inversor"><span data-i18n="form_opt_investor">Conocer el proyecto como inversor</span></label>
+              <label class="check-option"><input type="checkbox" name="participation" value="institucional"><span data-i18n="form_opt_institutional">Explorar una colaboración institucional</span></label>
+              <label class="check-option"><input type="checkbox" name="participation" value="profesional"><span data-i18n="form_opt_professional">Ofrecer una colaboración profesional</span></label>
+              <label class="check-option"><input type="checkbox" name="participation" value="prensa"><span data-i18n="form_opt_press">Prensa y comunicación</span></label>
+              <label class="check-option"><input type="checkbox" name="participation" value="otro"><span data-i18n="form_opt_other">Otro tipo de colaboración</span></label>
+            </div>
+          </fieldset>
+
+          <div class="form-field">
+            <label class="form-label" for="cf-message" data-i18n="form_message">Mensaje *</label>
+            <p class="form-help" id="cf-message-help" data-i18n="form_message_help">Cuéntanos brevemente quién eres, qué organización representas y qué te gustaría conocer o explorar con GrowTale.</p>
+            <textarea class="form-control" id="cf-message" name="message" aria-describedby="cf-message-help" required></textarea>
+          </div>
+
+          <div class="form-actions">
+            <p class="form-help" data-i18n="form_note">Al enviar se abrirá tu aplicación de correo con el mensaje preparado.</p>
+            <button class="btn btn-primary" type="submit" data-i18n="form_submit">Preparar email</button>
+          </div>
+        </form>
+
+        <div class="contact-success" role="status" tabindex="-1" hidden>
+          <h2 data-i18n="form_success_title">¡Tu email está listo!</h2>
+          <p data-i18n="form_success_text">Se ha abierto tu aplicación de correo con el mensaje. Solo tienes que pulsar enviar.</p>
+          <p><span data-i18n="form_success_fallback">Si no se abrió, escríbenos a</span> <a href="mailto:bellakotech@gmail.com">bellakotech@gmail.com</a></p>
+          <button class="btn btn-secondary" type="button" data-close-contact data-i18n="form_success_close">Volver a la web</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Lightbox -->
     <div id="lightbox" aria-hidden="true" class="lightbox-hidden">
       <div class="lightbox-backdrop" data-lb-close></div>
-      <div class="lightbox-panel" role="dialog" aria-modal="true" aria-label="Imagen ampliada">
-        <button class="lb-close" aria-label="Cerrar (Esc)" data-lb-close>✕</button>
-        <button class="lb-prev" aria-label="Anterior">‹</button>
+      <div class="lightbox-panel" role="dialog" aria-modal="true" aria-label="Imagen ampliada" data-i18n-aria-label="lightbox_label">
+        <button class="lb-close" aria-label="Cerrar (Esc)" data-i18n-aria-label="lightbox_close" data-lb-close>✕</button>
+        <button class="lb-prev" aria-label="Anterior" data-i18n-aria-label="lightbox_prev">‹</button>
         <div class="lb-content">
-          <img class="lb-image" src="" alt="" />
+          <img class="lb-image" alt="">
           <div class="lb-caption"></div>
         </div>
-        <button class="lb-next" aria-label="Siguiente">›</button>
+        <button class="lb-next" aria-label="Siguiente" data-i18n-aria-label="lightbox_next">›</button>
       </div>
     </div>
-    <!-- Custom animated cursor (desktop only) -->
+
+    <audio id="theme-audio" preload="auto" hidden>
+      <source src="assets/audio/theme.m4a" type="audio/mp4">
+    </audio>
+
+    <!-- Cursor animado (solo escritorio) -->
     <div id="custom-cursor" aria-hidden="true">
       <div class="cursor-outer"></div>
       <div class="cursor-inner"></div>
     </div>
-    <script src="cursor.js?v=20260902-2200" defer></script>
+
+    <script src="app.js?v=20261104e" defer></script>
+    <script src="cursor.js?v=20261104e" defer></script>
   </body>
 </html>

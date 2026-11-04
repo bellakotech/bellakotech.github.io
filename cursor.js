@@ -1,14 +1,17 @@
 (function(){
-  const canUseCustom = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  if (!canUseCustom) return;
+  // Solo en escritorio con ratón y si el usuario no pide reducir animaciones
+  const mq = q => window.matchMedia && window.matchMedia(q).matches
+  if (!mq('(hover: hover) and (pointer: fine)') || mq('(prefers-reduced-motion: reduce)')) return
 
   const el = document.getElementById('custom-cursor');
   if (!el) return;
   // enable global class so CSS can hide native cursor except in form controls
   document.documentElement.classList.add('has-custom-cursor');
   el.style.display = 'block';
-  const outer = el.querySelector('.cursor-outer');
-  const inner = el.querySelector('.cursor-inner');
+
+  const lerp = (a,b,n) => (1-n)*a + n*b;
+
+  // #custom-cursor es position:fixed, así que trabajamos en coordenadas de viewport
   let mouseX = window.innerWidth / 2;
   let mouseY = window.innerHeight / 2;
   let posX = mouseX;
@@ -16,35 +19,30 @@
   let isDown = false;
   let isDragging = false;
   let lastDownPos = {x:0,y:0};
-  let targetX = mouseX;
-  let targetY = mouseY;
+  let rafId = 0;
 
-  const lerp = (a,b,n) => (1-n)*a + n*b;
+  // El bucle solo corre mientras el cursor no ha alcanzado al ratón
+  function render(){
+    posX = lerp(posX, mouseX, 0.18);
+    posY = lerp(posY, mouseY, 0.18);
+    el.style.transform = `translate3d(${posX}px, ${posY}px, 0) translate(-50%, -50%)`;
+    if (Math.abs(mouseX - posX) > 0.1 || Math.abs(mouseY - posY) > 0.1) {
+      rafId = requestAnimationFrame(render);
+    } else {
+      rafId = 0;
+    }
+  }
+  const wake = () => { if (!rafId) rafId = requestAnimationFrame(render); };
 
-  // use pointermove for better cross-browser consistency
   window.addEventListener('pointermove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    targetX = mouseX;
-    targetY = mouseY + getScrollY();
+    if (isDown && !isDragging && Math.hypot(e.clientX - lastDownPos.x, e.clientY - lastDownPos.y) > 8) {
+      isDragging = true;
+      el.classList.add('cursor--dragging');
+    }
+    wake();
   }, {passive:true});
-
-  const getScrollY = () => {
-    const root = document.scrollingElement || document.documentElement || document.body;
-    return root ? (root.scrollTop || window.scrollY || 0) : (window.scrollY || 0);
-  };
-
-  // Keep the custom cursor aligned with both mouse movement and page scrolling.
-  function syncNow(){
-    targetX = mouseX;
-    targetY = mouseY + getScrollY();
-  }
-  window.addEventListener('scroll', () => {
-    syncNow();
-  }, {passive:true});
-  window.addEventListener('resize', () => {
-    syncNow();
-  });
 
   window.addEventListener('pointerdown', (e) => {
     if (e.button !== 0) return;
@@ -63,70 +61,27 @@
     }
   });
 
-  window.addEventListener('pointermove', (e) => {
-    if (isDown) {
-      const dx = e.clientX - lastDownPos.x;
-      const dy = e.clientY - lastDownPos.y;
-      if (!isDragging && Math.hypot(dx,dy) > 8) {
-        isDragging = true;
-        el.classList.add('cursor--dragging');
-      }
-    }
-  }, {passive:true});
-
   const hoverSelector = 'a, button, label, [role="button"], .btn, .clickable';
   document.addEventListener('pointerover', (e) => {
-    try {
-      if (e.target && e.target.closest && e.target.closest(hoverSelector)) {
-        el.classList.add('cursor--hover');
-      }
-    } catch (err) {}
+    if (e.target.closest && e.target.closest(hoverSelector)) el.classList.add('cursor--hover');
   }, {passive:true});
-
   document.addEventListener('pointerout', (e) => {
-    try {
-      // If the relatedTarget is still inside a clickable, keep hover
-      const related = e.relatedTarget;
-      if (!related || !related.closest || !related.closest(hoverSelector)) {
-        el.classList.remove('cursor--hover');
-      }
-    } catch (err) {}
+    const related = e.relatedTarget;
+    if (!related || !related.closest || !related.closest(hoverSelector)) el.classList.remove('cursor--hover');
   }, {passive:true});
 
-  // Pause custom cursor (show native) when focusing form controls
-  function pauseForNative(){
-    el.style.display = 'none';
-    document.documentElement.classList.add('custom-cursor-paused');
-  }
-  function resumeCustom(){
-    el.style.display = 'block';
-    document.documentElement.classList.remove('custom-cursor-paused');
-  }
-
+  // Volver al cursor nativo en formularios y en ventanas modales (<dialog> se pinta
+  // en una capa superior y taparía el cursor personalizado)
+  const pause = () => document.documentElement.classList.add('custom-cursor-paused');
+  const resume = () => {
+    if (!document.querySelector('dialog[open]')) document.documentElement.classList.remove('custom-cursor-paused');
+  };
   document.addEventListener('focusin', (e) => {
     const t = e.target;
-    if (!t) return;
-    const tag = t.tagName;
-    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || t.isContentEditable) {
-      pauseForNative();
-    }
+    if (t && (t.matches('input, textarea, select') || t.isContentEditable || t.closest('dialog[open]'))) pause();
   });
-  document.addEventListener('focusout', (e) => {
-    resumeCustom();
-  });
+  document.addEventListener('focusout', () => setTimeout(resume));
+  document.querySelectorAll('dialog').forEach(d => d.addEventListener('close', resume));
 
-  function updateSizeOnHover(){
-    // Keep small responsiveness if needed in future
-  }
-
-  function render(){
-    targetY = mouseY + getScrollY();
-    posX = lerp(posX, targetX, 0.08);
-    posY = lerp(posY, targetY, 0.08);
-    el.style.transform = `translate3d(${posX}px, ${posY}px, 0) translate(-50%, -50%)`;
-    requestAnimationFrame(render);
-  }
-
-  requestAnimationFrame(render);
+  wake();
 })();
-

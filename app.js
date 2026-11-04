@@ -1,872 +1,646 @@
-document.addEventListener('DOMContentLoaded',()=>{
-  const resetScrollPosition = () => {
-    const root = document.scrollingElement || document.documentElement || document.body
-    if (root) root.scrollTop = 0
-    if (document.documentElement) document.documentElement.scrollTop = 0
-    if (document.body) document.body.scrollTop = 0
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
-  }
-
-  if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual'
-  }
-
-  // reset browser-restored scroll before the user can interact
-  resetScrollPosition()
-  requestAnimationFrame(resetScrollPosition)
-  setTimeout(resetScrollPosition, 50)
-  setTimeout(resetScrollPosition, 150)
-  setTimeout(resetScrollPosition, 300)
-
-  // Remove images whose src fails to load, then initialize carousel with existing images
-  const carouselEl = document.getElementById('carousel')
-  const thumbsEl = document.querySelector('.thumbnails')
-
-  const testImage = src => new Promise(resolve=>{
-    const img = new Image()
-    img.onload = ()=> resolve({src, ok:true})
-    img.onerror = ()=> resolve({src, ok:false})
-    img.src = src
-  })
-
-  const removeInvalid = async ()=>{
-    if(!carouselEl) return
-    const imgs = Array.from(carouselEl.querySelectorAll('img'))
-    const thumbs = thumbsEl ? Array.from(thumbsEl.querySelectorAll('img')) : []
-    const srcs = imgs.map(i=>i.getAttribute('src'))
-    const results = await Promise.all(srcs.map(testImage))
-    results.forEach((r, i)=>{
-      if(!r.ok){
-        // remove carousel img
-        const el = imgs[i]
-        if(el) el.remove()
-        // also remove matching thumbnail (same src)
-        thumbs.forEach(t=>{ if(t.getAttribute('src')===r.src) t.remove() })
-      }
-    })
-  }
-
-  removeInvalid().then(()=>{
-    const imgs = Array.from(document.querySelectorAll('#carousel img'))
-    const thumbs = Array.from(document.querySelectorAll('.thumbnails img'))
-    let idx=0
-
-  const clampIndex = i => {
-    if(imgs.length === 0) return 0
-    return (i + imgs.length) % imgs.length
-  }
-
-  const show = i=>{
-    const n = clampIndex(i)
-    imgs.forEach((img, j)=>{
-      img.classList.toggle('visible', j===n)
-      img.classList.toggle('hidden', j!==n)
-    })
-    thumbs.forEach((t, j)=>{
-      t.classList.toggle('active', j===n)
-      if(j===n) t.setAttribute('aria-current','true')
-      else t.removeAttribute('aria-current')
-    })
-    idx = n
-  }
-
-    const prevBtn = document.getElementById('prev')
-    const nextBtn = document.getElementById('next')
-    if(prevBtn) prevBtn.addEventListener('click',()=>{ show(idx-1) })
-    if(nextBtn) nextBtn.addEventListener('click',()=>{ show(idx+1) })
-
-    // hide navigation if not needed
-    if(imgs.length <= 1){ if(prevBtn) prevBtn.style.display='none'; if(nextBtn) nextBtn.style.display='none' }
-
-  // thumbnail click handlers
-    // normalize thumbnail indices after any removals
-    thumbs.forEach((t,i)=> t.dataset.index = i)
-    thumbs.forEach(t=>{
-      t.addEventListener('click', (e)=>{
-        const i = parseInt(t.dataset.index || '0', 10)
-        show(i)
-      })
-    })
-
-  // initialize
-  show(0)
-})
-})
-// Simple translations map and helper to update text nodes with `data-i18n` keys
-const I18N = {
-  en: {
-    discover: 'Discover GrowTale',
-    back_to_cover: 'Back to cover',
-    view_profile: 'View full profile',
-    hide_profile: 'Hide profile',
-    view_product: 'View product',
-    contact: 'Contact',
-    // nav
-    nav_impact: 'Impact',
-    nav_game: 'Game',
-    nav_universe: 'Universe',
-    nav_team: 'Team',
-    nav_contact: 'Contact',
-    // vision
-    vision_title: 'An adventure that grows as the player disconnects',
-    vision_lead: 'GrowTale turns reduced passive mobile use into progress within an RPG universe, combining entertainment, digital wellbeing and social impact.',
-    // blocks
-    block_impact_title: 'PROYECT AND GROWTH',
-    block_impact_sub: 'An entertainment proposal designed to address a real digital wellbeing challenge.',
-    block_game_title: 'THE VIDEO GAME',
-    block_game_sub: 'Discover the mechanics, challenges and universe that turn disconnection into progress.',
-    block_project_title: 'PROJECT & INVESTMENT',
-    block_project_sub: 'Learn the development status, the opportunity and the team behind GrowTale.',
-    block_project_title: 'PROJECT & INVESTMENT',
-    block_project_sub: 'Learn the development status, the opportunity and the team behind GrowTale.',
-    problem_title: 'The problem',
-    problem_screen_label: 'High screen time:',
-    problem_screen_text: 'Young users spend too much time on distracting apps.',
-    problem_distraction_label: 'Digital distraction:',
-    problem_distraction_text: 'Loss of concentration and emotional wellbeing.',
-    problem_need_label: 'Need:',
-    problem_need_text: 'Tools that combine entertainment with reduced passive mobile use.'
-
-  },
-  es: {
-    discover: 'Descubre GrowTale',
-    back_to_cover: 'Volver a portada',
-    view_profile: 'Ver perfil completo',
-    hide_profile: 'Ocultar perfil',
-    view_product: 'Ver producto',
-    contact: 'Contacto',
-    // nav
-    nav_impact: 'Impacto',
-    nav_game: 'Videojuego',
-    nav_universe: 'Universo',
-    nav_team: 'Equipo',
-    nav_contact: 'Contacto',
-    // vision
-    vision_title: 'Una aventura que crece cuando el jugador desconecta',
-    vision_lead: 'GrowTale transforma la reducción del uso pasivo del móvil en progreso dentro de un universo RPG, combinando entretenimiento, bienestar digital e impacto social.',
-    // blocks
-    block_impact_title: 'PROYECTO Y CRECIMIENTO',
-    block_impact_sub: 'Una propuesta de entretenimiento diseñada para abordar un reto real de bienestar digital.',
-    block_game_title: 'EL VIDEOJUEGO',
-    block_game_sub: 'Descubre las mecánicas, los retos y el universo que convierten la desconexión en progreso.',
-    block_project_title: 'PROYECTO E INVERSIÓN',
-    block_project_sub: 'Conoce el estado de desarrollo, la oportunidad y el equipo responsable de GrowTale.',
-    problem_title: 'El problema',
-    problem_screen_label: 'Tiempo de pantalla elevado:',
-    problem_screen_text: 'Usuarios jóvenes pasan demasiado tiempo en apps distractoras.',
-    problem_distraction_label: 'Distracción digital:',
-    problem_distraction_text: 'Pérdida de concentración y bienestar emocional.',
-    problem_need_label: 'Necesidad:',
-    problem_need_text: 'Herramientas que integren diversión y reducción del uso pasivo del móvil.'
-  }
-}
-
-function translatePage(code){
-  const lang = I18N[code] ? code : 'es'
-  const map = I18N[lang]
-  document.querySelectorAll('[data-i18n]').forEach(el=>{
-    const key = el.getAttribute('data-i18n')
-    if(key && map[key]) el.textContent = map[key]
-  })
-  // update profile buttons according to expanded state
-  document.querySelectorAll('.view-profile').forEach(btn=>{
-    const card = btn.closest('.member-card')
-    const expanded = card && card.classList.contains('expanded')
-    btn.textContent = expanded ? (map.hide_profile || map.view_profile) : (map.view_profile || map.hide_profile)
-  })
-}
-
-// Control de música de proyecto.html
-document.addEventListener('DOMContentLoaded', () => {
-  const audio = document.getElementById('theme-audio');
-  const button = document.getElementById('music-toggle');
-
-  if (!audio || !button) return;
-
-  const STORAGE_KEY = 'growtale_music';
-
-  audio.loop = true;
-  audio.volume = 0.6;
-
-  /*
-   * La música está activada por defecto.
-   * Solo estará desactivada si el usuario guardó "off".
-   */
-  let soundEnabled =
-    localStorage.getItem(STORAGE_KEY) !== 'off';
-
-  function updateButton() {
-    const playing = !audio.paused;
-
-    button.classList.toggle('on', playing);
-    button.setAttribute(
-      'aria-pressed',
-      playing ? 'true' : 'false'
-    );
-
-    button.setAttribute(
-      'aria-label',
-      playing ? 'Desactivar música' : 'Activar música'
-    );
-
-    button.title =
-      playing
-        ? 'Desactivar música'
-        : 'Activar música';
-  }
-
-  async function startMusic() {
-    if (!soundEnabled) {
-      audio.pause();
-      updateButton();
-      return;
-    }
-
-    try {
-      await audio.play();
-      updateButton();
-    } catch (error) {
-      /*
-       * El navegador ha bloqueado el sonido automático.
-       * Se iniciará con el primer clic dentro de esta página.
-       */
-      audio.pause();
-      updateButton();
-      console.info(
-        'El navegador espera una interacción para reproducir la música.'
-      );
-    }
-  }
-
-  button.addEventListener('click', async () => {
-    if (!audio.paused) {
-      soundEnabled = false;
-      audio.pause();
-
-      localStorage.setItem(
-        STORAGE_KEY,
-        'off'
-      );
-
-      updateButton();
-      return;
-    }
-
-    soundEnabled = true;
-
-    localStorage.setItem(
-      STORAGE_KEY,
-      'on'
-    );
-
-    await startMusic();
-  });
-
-  audio.addEventListener('play', updateButton);
-  audio.addEventListener('pause', updateButton);
-  audio.addEventListener('error', updateButton);
-
-  /*
-   * Intento inicial.
-   */
-  startMusic();
-
-  /*
-   * Si el navegador bloquea el intento inicial,
-   * cualquier primer clic dentro de proyecto.html
-   * inicia la música.
-   */
-  async function unlockMusic(event) {
-    if (!soundEnabled || !audio.paused) return;
-
-    /*
-     * No arrancar si el clic es precisamente para apagar
-     * la música.
-     */
-    if (
-      event.target === button ||
-      button.contains(event.target)
-    ) {
-      return;
-    }
-
-    await startMusic();
-
-    if (!audio.paused) {
-      document.removeEventListener(
-        'pointerdown',
-        unlockMusic
-      );
-    }
-  }
-
-  document.addEventListener(
-    'pointerdown',
-    unlockMusic
-  );
-});
-// Additional interactions: claim buttons and simple map zoom
-document.addEventListener('click', (e)=>{
-  if(e.target.matches('.claim')){
-    e.target.textContent = 'Aceptado';
-    e.target.disabled = true;
-    e.target.style.opacity = 0.9;
-    alert('¡Reto aceptado! Buen trabajo.');
-  }
-});
-
-document.addEventListener('DOMContentLoaded',()=>{
-  const map = document.querySelector('.map-wrapper img');
-  if(map){
-    map.style.transition = 'transform 300ms ease';
-    map.addEventListener('click', ()=>{
-      map.classList.toggle('zoomed');
-      if(map.classList.contains('zoomed')) map.style.transform = 'scale(1.05)';
-      else map.style.transform = 'scale(1)';
-    });
-  }
-});
-
-// Landing cover: sound toggle for trailer video (muted by default to allow autoplay)
-document.addEventListener('DOMContentLoaded', ()=>{
-  const vid = document.getElementById('landing-video')
-  const btn = document.getElementById('landing-sound-toggle')
-  const STORAGE_KEY = 'growtale_trailer_sound'
-  if(!vid || !btn) return
-
-  // Ensure video is muted initially unless user previously enabled
-  const saved = localStorage.getItem(STORAGE_KEY)
-  const wasOn = saved === 'on'
-  vid.muted = !wasOn
-  btn.classList.toggle('on', wasOn)
-  btn.setAttribute('aria-pressed', wasOn ? 'true' : 'false')
-
-  // Ensure video starts at 0 when ready
-  const setStart = ()=>{
-    try{ if(typeof vid.currentTime === 'number') vid.currentTime = 0 }catch(e){}
-  }
-  if(vid.readyState >= 1) setStart(); else vid.addEventListener('loadedmetadata', setStart)
-
-  btn.addEventListener('click', ()=>{
-    const nowOn = !btn.classList.contains('on')
-    btn.classList.toggle('on', nowOn)
-    btn.setAttribute('aria-pressed', nowOn ? 'true' : 'false')
-    vid.muted = !nowOn
-    try{ localStorage.setItem(STORAGE_KEY, nowOn ? 'on' : 'off') }catch(e){}
-    // If enabling sound, try to play to ensure audio context is ready
-    if(nowOn){ vid.play().catch(()=>{}) }
-  })
-
-  // Discover button: ensure it navigates to proyecto.html (default link exists in markup)
-const discover = document.getElementById('discover-btn')
-
-if (discover) {
-  discover.addEventListener('click', async (e) => {
-
-    localStorage.setItem(
-      'growtale_music',
-      'on'
-    )
-
-    const audio = document.getElementById('theme-audio')
-
-    if(audio){
-      try{
-        await audio.play()
-      }catch(err){
-        console.log(err)
-      }
-    }
-
-  })
-}
-})
-
-// Diagnostic checks for landing visibility and resource loading
-document.addEventListener('DOMContentLoaded', async ()=>{
-  const diag = (msg, ...args)=> console.info('[LANDING DIAG]', msg, ...args)
-  const vid = document.getElementById('landing-video')
-  const overlay = document.querySelector('.landing-overlay')
-  const content = document.querySelector('.landing-content')
-  const logo = document.querySelector('.landing-logo')
-  const tagline = document.querySelector('.landing-tagline')
-
-  diag('elements presence', { vid: !!vid, overlay: !!overlay, content: !!content, logo: !!logo, tagline: !!tagline })
-
-  const cs = el => el ? getComputedStyle(el) : null
-  if(overlay && content){
-    const o = cs(overlay)
-    const c = cs(content)
-    diag('computed', { overlayZ: o && o.zIndex, overlayOpacity: o && o.opacity, contentZ: c && c.zIndex })
-    try{
-      const oz = parseInt((o && o.zIndex) || 0, 10)
-      const cz = parseInt((c && c.zIndex) || 0, 10)
-      if(!isFinite(cz) || cz <= oz){
-        content.style.zIndex = (oz + 10).toString()
-        diag('adjusted content zIndex to', content.style.zIndex)
-      }
-    }catch(e){ diag('z-index check error', e) }
-  }
-
-  ;[content, logo, tagline].forEach(el=>{
-    if(!el) return
-    const s = cs(el)
-    const hidden = s && (s.display === 'none' || s.visibility === 'hidden' || parseFloat(s.opacity) === 0)
-    diag('visibility', el.className || el.tagName, { display: s && s.display, visibility: s && s.visibility, opacity: s && s.opacity, hidden })
-  })
-
-  // Check resources via HEAD
-  async function headCheck(url){
-    try{ const r = await fetch(url, { method:'HEAD' }); return r.ok ? null : `HEAD ${r.status}` }catch(e){ return e.message }
-  }
-
-  if(logo && logo.getAttribute('src')){
-    const res = await headCheck(logo.getAttribute('src'))
-    diag('logo check', logo.getAttribute('src'), res)
-  }
-
-  if(vid){
-    const srcEl = vid.querySelector('source')
-    const videoUrl = srcEl ? srcEl.getAttribute('src') : vid.getAttribute('src')
-    if(videoUrl){
-      const res = await headCheck(videoUrl)
-      diag('video check', videoUrl, res)
-    }
-    vid.addEventListener('error', (ev)=>{ diag('video element error', ev); console.error('Video element error', ev) })
-    diag('video readyState', vid.readyState)
-  }
-
-  const imgs = Array.from(document.querySelectorAll('#carousel img, .thumbnails img'))
-  for(const img of imgs){
-    const url = img.getAttribute('src')
-    const res = await headCheck(url)
-    diag('image check', url, res)
-  }
-
-  diag('landing diagnostics complete')
-})
-
-  // Lightbox: open gallery images in modal with navigation
-  document.addEventListener('DOMContentLoaded', ()=>{
-      const lightbox = document.getElementById('lightbox')
-    if(!lightbox) return
-    const lbImage = lightbox.querySelector('.lb-image')
-    const lbCaption = lightbox.querySelector('.lb-caption')
-    const btnClose = lightbox.querySelector('[data-lb-close]')
-    const btnNext = lightbox.querySelector('.lb-next')
-    const btnPrev = lightbox.querySelector('.lb-prev')
-
-    const items = Array.from(document.querySelectorAll('.gallery-item'))
-    const imgs = items.map(it=>{
-      const img = it.querySelector('img')
-      return { src: img ? img.getAttribute('src') : '', alt: img ? (img.getAttribute('alt')||'') : '', caption: it.querySelector('figcaption') ? it.querySelector('figcaption').textContent.trim() : '' }
-    }).filter(i=>i.src)
-    if(imgs.length === 0) return
-
-    let current = 0
-    const show = i=>{
-      current = (i + imgs.length) % imgs.length
-      lbImage.src = imgs[current].src
-      lbImage.alt = imgs[current].alt || imgs[current].caption || 'Imagen'
-      lbCaption.textContent = imgs[current].caption || ''
-    }
-
-    const open = idx=>{
-      show(idx)
-      lightbox.classList.remove('lightbox-hidden')
-      lightbox.classList.add('lightbox-visible')
-      lightbox.setAttribute('aria-hidden','false')
-      document.body.style.overflow = 'hidden'
-      // focus close for accessibility
-      const c = lightbox.querySelector('.lb-close')
-      if(c) c.focus()
-    }
-    const close = ()=>{
-      lightbox.classList.remove('lightbox-visible')
-      lightbox.classList.add('lightbox-hidden')
-      lightbox.setAttribute('aria-hidden','true')
-      document.body.style.overflow = ''
-      lbImage.src = ''
-    }
-
-    // attach click handlers to open
-    items.forEach((it, idx)=>{
-      const img = it.querySelector('img')
-      if(!img) return
-      img.style.cursor = 'zoom-in'
-      img.addEventListener('click', (e)=>{ e.preventDefault(); open(idx) })
-    })
-
-    // Team profile toggle for mobile / keyboard
-    document.addEventListener('DOMContentLoaded', ()=>{
-      const toggles = Array.from(document.querySelectorAll('.team-section .view-profile'))
-      if(toggles.length === 0) return
-      toggles.forEach(btn=>{
-        btn.addEventListener('click', (e)=>{
-          const card = btn.closest('.member-card')
-          if(!card) return
-          card.classList.toggle('expanded')
-          const expanded = card.classList.contains('expanded')
-          // Use translations for button text
-          const lang = document.documentElement.lang || localStorage.getItem('growtale_lang') || 'es'
-          const map = I18N[lang] || I18N['es']
-          btn.textContent = expanded ? (map.hide_profile || map.view_profile) : (map.view_profile || map.hide_profile)
-          // ensure aria
-          card.setAttribute('aria-expanded', expanded ? 'true' : 'false')
-        })
-      })
-    })
-
-    // Language selector: save choice to localStorage, toggle menu, apply lang to <html>
-    document.addEventListener('DOMContentLoaded', ()=>{
-      const SELECTOR_ID = 'growtale_lang'
-      const sel = document.getElementById('lang-select')
-      if(!sel) return
-      const btn = sel.querySelector('#lang-select-btn')
-      const menu = sel.querySelector('.lang-menu')
-      const options = Array.from(menu.querySelectorAll('li'))
-
-      const applyLang = (code)=>{
-        try{ document.documentElement.lang = code }catch(e){}
-        if(btn) btn.textContent = code === 'en' ? 'EN' : 'ES'
-        // apply translations when language changes
-        translatePage(code)
-      }
-
-      // init from localStorage
-      const saved = localStorage.getItem(SELECTOR_ID) || (navigator.language && navigator.language.startsWith('en') ? 'en' : 'es')
-      applyLang(saved)
-
-      // set selected aria
-      options.forEach(o=> o.setAttribute('aria-checked', o.dataset.lang === saved ? 'true' : 'false'))
-
-      // toggle menu
-      const closeMenu = ()=>{ sel.classList.remove('open'); sel.setAttribute('aria-expanded','false') }
-      const openMenu = ()=>{ sel.classList.add('open'); sel.setAttribute('aria-expanded','true'); menu.querySelector('[data-lang]') && menu.querySelector('[data-lang]').focus()
-      }
-
-      btn.addEventListener('click', (e)=>{ e.stopPropagation(); if(sel.classList.contains('open')) closeMenu(); else openMenu() })
-
-      options.forEach(opt=>{
-        opt.tabIndex = 0
-        opt.addEventListener('click', ()=>{
-          const code = opt.dataset.lang
-          localStorage.setItem(SELECTOR_ID, code)
-          applyLang(code)
-          options.forEach(o=> o.setAttribute('aria-checked', o===opt ? 'true' : 'false'))
-          closeMenu()
-        })
-        opt.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); opt.click() } })
-      })
-
-      // click outside to close
-      document.addEventListener('click', (e)=>{ if(!sel.contains(e.target)) closeMenu() })
-      // escape to close
-      document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeMenu() })
-    })
-
-    // controls
-    if(btnClose) btnClose.addEventListener('click', close)
-    if(lightbox.querySelector('[data-lb-close]')){
-      lightbox.querySelectorAll('[data-lb-close]').forEach(el=> el.addEventListener('click', close))
-    }
-    if(btnNext) btnNext.addEventListener('click', ()=> show(current+1))
-    if(btnPrev) btnPrev.addEventListener('click', ()=> show(current-1))
-
-    // backdrop click to close
-    const backdrop = lightbox.querySelector('.lightbox-backdrop')
-    if(backdrop) backdrop.addEventListener('click', close)
-
-    // keyboard navigation
-    document.addEventListener('keydown', (e)=>{
-      if(lightbox.classList.contains('lightbox-visible')){
-        if(e.key === 'Escape') { close(); return }
-        if(e.key === 'ArrowRight') { show(current+1); return }
-        if(e.key === 'ArrowLeft') { show(current-1); return }
-      }
-    })
-  })
-
-// Navigation behavior: mobile toggle, smooth close on select/outside, and active link highlighting
-document.addEventListener('DOMContentLoaded', ()=>{
-  const scrollRoot = document.scrollingElement || document.documentElement || document.body
-  document.documentElement.style.overflow = 'auto'
-  document.documentElement.style.overflowY = 'auto'
-  document.documentElement.style.height = 'auto'
-  document.body.style.overflow = 'auto'
-  document.body.style.overflowY = 'auto'
-  document.body.style.height = 'auto'
-  document.body.style.paddingTop = '0'
-  scrollRoot.style.overflow = 'auto'
-  scrollRoot.style.overflowY = 'auto'
-  scrollRoot.style.height = 'auto'
-  scrollRoot.style.paddingTop = '0'
-
-  const nav = document.querySelector('.top-nav')
-  if(nav){
-    nav.style.position = ''
-    nav.style.top = ''
-    nav.style.left = ''
-    nav.style.right = ''
-    nav.style.zIndex = ''
-    nav.style.transform = ''
-    nav.style.width = ''
-  }
-  if(!nav) return
-  const toggle = nav.querySelector('.nav-toggle')
-  const links = Array.from(nav.querySelectorAll('.nav-links a'))
-  const navLinksContainer = nav.querySelector('.nav-links')
-
-  // Move music toggle into nav-right if present elsewhere
-  const musicToggle = document.getElementById('music-toggle')
-  const navRight = nav.querySelector('.nav-right')
-  if(musicToggle && navRight && !navRight.contains(musicToggle)){
-    navRight.appendChild(musicToggle)
-  }
-
-  // Toggle mobile menu
-  if(toggle){
-    toggle.addEventListener('click', ()=>{
-      const open = navLinksContainer.classList.toggle('open')
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false')
-    })
-  }
-
-  // Close menu when clicking outside
-  document.addEventListener('click', (e)=>{
-    if(!nav.contains(e.target) && navLinksContainer.classList.contains('open')){
-      navLinksContainer.classList.remove('open')
-      if(toggle) toggle.setAttribute('aria-expanded','false')
-    }
-  })
-
-  // Smooth scroll is handled by CSS, but ensure menu closes on link click
-  links.forEach(a=>{
-    a.addEventListener('click', (e)=>{
-      // close mobile menu
-      if(navLinksContainer.classList.contains('open')){
-        navLinksContainer.classList.remove('open')
-        if(toggle) toggle.setAttribute('aria-expanded','false')
-      }
-    })
-  })
-
-  // Highlight link for visible section
-  const sections = links.map(a=> document.querySelector(a.getAttribute('href')) ).filter(Boolean)
-  const obs = new IntersectionObserver((entries)=>{
-    entries.forEach(en=>{
-      if(!en.target) return
-      const id = '#' + en.target.id
-      const link = nav.querySelector('.nav-links a[href="'+id+'"]')
-      if(en.isIntersecting && link){
-        nav.querySelectorAll('.nav-links a').forEach(l=> l.classList.remove('active'))
-        link.classList.add('active')
-      }
-    })
-  },{threshold:0.45})
-  sections.forEach(s=> obs.observe(s))
-})
 /* =========================================
-   SELECTOR DE IDIOMA GROWTALE
+   GrowTale — interacciones compartidas por index.html y proyecto.html
    ========================================= */
 
-function initGrowTaleLanguage() {
-  const languageSelector = document.getElementById('lang-select');
-  const languageButton = document.getElementById('lang-select-btn');
+const LANG_KEY = 'growtale_lang'
+const MUSIC_KEY = 'growtale_music'
+const MUSIC_TIME_KEY = 'growtale_music_time'
+const MUSIC_VOLUME = 0.3
 
-  if (!languageSelector || !languageButton) {
-    return;
+const prefersReducedMotion = () =>
+  window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+const storage = {
+  get(key, area = localStorage){ try{ return area.getItem(key) }catch(e){ return null } },
+  set(key, value, area = localStorage){ try{ area.setItem(key, value) }catch(e){} }
+}
+
+/* -----------------------------------------
+   Traducciones
+   El español es el texto del propio HTML (se guarda al cargar);
+   aquí solo vive el inglés. Atributos traducibles:
+   data-i18n (texto), data-i18n-aria-label, data-i18n-title,
+   data-i18n-alt, data-i18n-content.
+   ----------------------------------------- */
+const I18N_EN = {
+  // meta
+  meta_title_cover: 'GrowTale — Turn healthy habits into an adventure',
+  meta_title_project: 'GrowTale — Official site',
+  meta_description: 'GrowTale is a fantasy RPG that turns healthy habits, like putting your phone down, into in-game progress. A professionally validated digital wellbeing project.',
+  // comunes
+  select_language: 'Select language',
+  discover: 'Discover GrowTale',
+  cover_tagline: 'Turn healthy habits into progress in a fantasy RPG',
+  back_to_cover: 'Back to cover',
+  open_menu: 'Open menu',
+  main_nav: 'Main',
+  skip_to_content: 'Skip to content',
+  // nav
+  nav_impact: 'Impact',
+  nav_game: 'Game',
+  nav_universe: 'Universe',
+  nav_team: 'Team',
+  nav_contact: 'Contact',
+  // visión
+  vision_title: 'An adventure that grows as the player disconnects',
+  vision_lead: 'GrowTale turns healthy habits, like putting your phone down, into progress in an RPG universe.',
+  view_product: 'View product',
+  contact: 'Contact',
+  // bloques
+  block_impact_title: 'GOALS & GROWTH',
+  block_impact_sub: 'We are building a new way to improve our relationship with technology through video games',
+  block_game_title: 'THE VIDEO GAME',
+  block_game_sub: 'Discover the mechanics, challenges and universe that turn disconnection into progress.',
+  block_project_title: 'PROJECT & INVESTMENT',
+  block_project_sub: 'Learn about the development status, the opportunity and the team behind GrowTale.',
+  // problema
+  problem_title: 'The problem',
+  problem_subtitle: 'Getting our attention back has become a daily challenge.',
+  problem_p1: 'Phones are part of our everyday life, but constant interruptions make it harder to study, focus, rest and make time for other activities.',
+  problem_p2: 'Many tools show us how much we use our phone. However, knowing the problem is not always enough to change our habits.',
+  screen_time_label: 'Screen time today',
+  problem_highlight: 'GrowTale turns that challenge into an adventure',
+  // validación
+  validation_title: 'Professional validation',
+  validation_seal: '✅ Independent professional assessment',
+  validation_wellbeing_title: '🧘 Digital wellbeing',
+  validation_wellbeing_text: 'Reduces passive phone use through positive reinforcement mechanics',
+  validation_ethics_title: '🌱 Ethical design',
+  validation_ethics_text: 'No artificial addiction or systems designed to create dependency',
+  validation_potential_title: '🚀 Application potential',
+  validation_potential_education: 'Education',
+  validation_potential_prevention: 'Psychosocial prevention',
+  validation_quote: '“GrowTale presents an innovative and socially relevant proposal within digital wellbeing and psychosocial prevention.”',
+  validation_author: 'Independent professional assessment from the field of Social Work.',
+  validation_download: '📄 Download full report',
+  // cómo funciona
+  how_title: 'How it works',
+  how_lead: 'Turn less time on distracting apps into progress in GrowTale.',
+  how_step1_title: '🎲 Choose your challenge',
+  how_step1_text: 'Pick the apps you want to avoid and set your goals.',
+  how_step1_alt: 'GrowTale screen for choosing challenges',
+  how_step2_title: '🎯 Spend time on what matters',
+  how_step2_text: 'Complete real challenges and earn resources to move forward.',
+  how_step2_alt: 'GrowTale screen showing an active challenge',
+  how_step3_title: '🌱 Grow your world',
+  how_step3_text: 'Unlock new areas and grow your adventure.',
+  how_step3_alt: 'GrowTale screen showing the world growing',
+  // producto
+  product_title: 'Product',
+  gallery_title: 'Gallery',
+  gallery_skills: 'Skills',
+  gallery_skills_alt: 'GrowTale skills screen',
+  gallery_combat: 'Combat',
+  gallery_combat_alt: 'GrowTale combat screen',
+  gallery_character: 'Character',
+  gallery_character_alt: 'GrowTale character screen',
+  challenges_title: 'Daily challenges',
+  challenge1_title: '30-minute focus',
+  challenge1_text: 'Avoid distracting apps for 30 minutes and earn seeds.',
+  challenge1_badge: 'Daily challenge',
+  challenge1_reward: 'Reward: Seeds',
+  challenge2_title: 'Outdoor walk',
+  challenge2_text: 'Spend 20 minutes away from your phone and unlock a map area.',
+  challenge2_badge: 'Wellbeing challenge',
+  challenge2_reward: 'Reward: Region unlock',
+  challenge3_title: 'Learning',
+  challenge3_text: 'Complete a study or reading goal.',
+  challenge3_badge: 'Learning challenge',
+  challenge3_reward: 'Reward: Book of power',
+  // universo
+  universe_title: 'The GrowTale universe',
+  map_title: 'World map',
+  map_text: 'Explore regions and discover unique challenges.',
+  map_alt: 'GrowTale world map',
+  // ventaja
+  advantage_title: 'Our advantage',
+  advantage_subtitle: 'Creativity, technology and education in a single experience.',
+  advantage_universe: 'Original universe',
+  advantage_music: 'Original music',
+  advantage_design: 'Responsible design',
+  advantage_wellbeing: 'Digital wellbeing',
+  advantage_team: 'Expert team',
+  advantage_systems: 'Core systems implemented',
+  advantage_highlight: 'Technology can be copied. Experience and community are much harder to replicate.',
+  // estado
+  status_title: 'Project status',
+  status_subtitle: 'From idea to a real experience.',
+  status_idea: 'Idea',
+  status_idea_text: 'Concept, purpose and universe',
+  status_prototype: 'Prototype',
+  status_prototype_text: 'First playable version',
+  status_pilots: 'Pilots',
+  status_pilots_text: 'Validation with schools and parent associations',
+  status_market: 'Market',
+  status_market_text: 'First complete commercial version',
+  status_done: 'Completed',
+  status_in_progress: 'In preparation',
+  status_next: 'Next milestone',
+  // mercado
+  market_title: 'Market',
+  market_schools_title: '🏫 Schools and parent associations',
+  market_schools_text: 'Programmes to work on focus, digital wellbeing and healthy habits.',
+  market_families_title: '👨‍👩‍👧 Families',
+  market_families_text: 'Positive tools to support healthy technology use.',
+  market_users_title: '👩 Individual users',
+  market_users_text: 'People who want to reduce distractions through an engaging experience.',
+  // equipo
+  team_title: 'Team',
+  team_lead: 'Technical and creative team with experience in product, AAA and operations — ready to execute and scale.',
+  view_profile: 'View full profile',
+  role_daniel: 'CPO & Head of Product',
+  bio_daniel: 'Technical Producer at Foundever and former Head of Product at BrytSpace. Engineer and manager combining his passion for technology and psychology to improve mental health through software.',
+  exp_daniel_1: 'Head of Product — BrytSpace',
+  exp_daniel_2: 'Technical Producer — Foundever',
+  role_charlie: 'Creative Director',
+  bio_charlie: 'Senior Game Designer at Gameloft Barcelona, lecturer at U-Tad and founder of Beast Arts. Gamification specialist with over seven years of experience.',
+  exp_charlie_2: 'Lecturer — U-Tad',
+  role_raquel: 'Full-Stack Developer',
+  bio_raquel: 'Former gameplay and systems developer at Péndulo Studios. Specialist in Unity, Unreal Engine and interfaces.',
+  role_david: 'Full-Stack Developer & DevSecOps',
+  bio_david: 'Rigging and IT programmer at Huhaa Studios. Industrial Engineering graduate and expert in systems and backend.',
+  role_rober: 'Composer & Sound Designer',
+  bio_rober: 'Video game music composer and author of “Crónicas de un Gamer: Guía Emocional de Videojuegos”.',
+  exp_rober_1: 'Composer — Freelance',
+  role_ismael: 'Concept Artist',
+  bio_ismael: 'Concept Artist and Graphic Designer at Infinite Thread Games. Specialised in digital illustration and concept art.',
+  role_sergio: 'Business & Operations',
+  bio_sergio: 'Life Cycle Support Engineer at Navantia. A University of Málaga graduate, he brings engineering method and vision to GrowTale’s development.',
+  exp_sergio_1: 'Life Cycle Support Engineer — Navantia',
+  role_andrea: 'Concept Artist',
+  bio_andrea: 'Concept artist and Marketing student. Combines illustration with the project’s communication.',
+  exp_andrea_1: 'Marketing student',
+  // qué buscamos
+  ask_title: 'What we are looking for',
+  ask_subtitle: 'We are building GrowTale together with people and institutions who share our vision.',
+  ask_investment_title: 'Investment',
+  ask_investment_text: 'Capital to accelerate development, validate the market and prepare the launch.',
+  ask_schools_title: 'Schools',
+  ask_schools_text: 'Secondary schools, parent associations and organisations interested in joining the first pilots.',
+  ask_partners_title: 'Partnerships',
+  ask_partners_text: 'Strategic partners, institutions, companies and professionals.',
+  ask_highlight: 'Let’s grow GrowTale together',
+  // contacto
+  contact_title: 'Contact',
+  contact_subtitle: 'School, parent association, investor or partner? Tell us how we could work together.',
+  contact_write: '✉️ Write to us',
+  contact_alt: 'Or email us directly at',
+  // formulario
+  form_kicker: 'LET’S TALK',
+  form_title: 'Want to know more about GrowTale?',
+  form_intro: 'Tell us who you are and how we could work together.',
+  form_required: 'Fields marked with * are required.',
+  form_name: 'Full name *',
+  form_email: 'Email *',
+  form_org: 'Organisation',
+  form_org_help: 'School, parent association, investment fund, company or institution.',
+  form_role: 'Position or relationship with the organisation',
+  form_participation: 'How would you like to get involved? *',
+  form_opt_pilot: 'Join an educational pilot',
+  form_opt_ampa: 'Collaborate as a parent association',
+  form_opt_investor: 'Learn about the project as an investor',
+  form_opt_institutional: 'Explore an institutional partnership',
+  form_opt_professional: 'Offer a professional collaboration',
+  form_opt_press: 'Press and media',
+  form_opt_other: 'Another kind of collaboration',
+  form_message: 'Message *',
+  form_message_help: 'Briefly tell us who you are, which organisation you represent and what you would like to explore with GrowTale.',
+  form_note: 'When you send it, your email app will open with the message ready.',
+  form_submit: 'Prepare email',
+  form_close: 'Close',
+  form_success_title: 'Your email is ready!',
+  form_success_text: 'Your email app should have opened with the message. Just press send.',
+  form_success_fallback: 'If it didn’t open, write to us at',
+  form_success_close: 'Back to the site',
+  // pie
+  footer_how: 'How it works',
+  footer_gallery: 'Gallery',
+  footer_map: 'Map',
+  footer_challenges: 'Challenges',
+  footer_contact: 'Contact',
+  footer_credit: 'Designed by José Manuel Ruiz Sánchez',
+  // lightbox
+  lightbox_label: 'Enlarged image',
+  lightbox_close: 'Close (Esc)',
+  lightbox_prev: 'Previous',
+  lightbox_next: 'Next'
+}
+
+// Textos generados desde JS (no están en el HTML)
+const STRINGS = {
+  es: {
+    music_on: 'Desactivar música',
+    music_off: 'Activar música',
+    view_profile: 'Ver perfil completo',
+    hide_profile: 'Ocultar perfil',
+    participation_required: 'Selecciona al menos una forma de participación.',
+    mail_subject: 'Contacto GrowTale',
+    mail_name: 'Nombre',
+    mail_email: 'Email',
+    mail_org: 'Organización',
+    mail_role: 'Cargo',
+    mail_interest: 'Interés',
+    mail_message: 'Mensaje'
+  },
+  en: {
+    music_on: 'Turn music off',
+    music_off: 'Turn music on',
+    view_profile: 'View full profile',
+    hide_profile: 'Hide profile',
+    participation_required: 'Please choose at least one way to get involved.',
+    mail_subject: 'GrowTale contact',
+    mail_name: 'Name',
+    mail_email: 'Email',
+    mail_org: 'Organisation',
+    mail_role: 'Position',
+    mail_interest: 'Interest',
+    mail_message: 'Message'
+  }
+}
+
+const currentLang = () => (document.documentElement.lang === 'en' ? 'en' : 'es')
+const t = key => STRINGS[currentLang()][key] || STRINGS.es[key] || key
+
+const I18N_ATTRS = ['aria-label', 'title', 'alt', 'content']
+
+function translatePage(lang){
+  const useEn = lang === 'en'
+  document.documentElement.lang = useEn ? 'en' : 'es'
+
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    if(el.dataset.i18nEs === undefined) el.dataset.i18nEs = el.textContent
+    const en = I18N_EN[el.dataset.i18n]
+    el.textContent = useEn && en ? en : el.dataset.i18nEs
+  })
+
+  I18N_ATTRS.forEach(attr=>{
+    const keyAttr = `data-i18n-${attr}`
+    const esAttr = `data-i18n-es-${attr}`
+    document.querySelectorAll(`[${keyAttr}]`).forEach(el=>{
+      if(!el.hasAttribute(esAttr)) el.setAttribute(esAttr, el.getAttribute(attr) || '')
+      const en = I18N_EN[el.getAttribute(keyAttr)]
+      el.setAttribute(attr, useEn && en ? en : el.getAttribute(esAttr))
+    })
+  })
+
+  document.dispatchEvent(new CustomEvent('growtale:langchange'))
+}
+
+/* -----------------------------------------
+   Selector de idioma
+   ----------------------------------------- */
+function initLanguage(){
+  const sel = document.getElementById('lang-select')
+  const saved = storage.get(LANG_KEY) ||
+    ((navigator.language || '').toLowerCase().startsWith('es') ? 'es' : 'en')
+  translatePage(saved)
+  if(!sel) return
+
+  const btn = sel.querySelector('.lang-btn')
+  const options = Array.from(sel.querySelectorAll('[data-lang]'))
+
+  const sync = ()=>{
+    const lang = currentLang()
+    btn.textContent = lang.toUpperCase()
+    options.forEach(o=> o.setAttribute('aria-checked', o.dataset.lang === lang ? 'true' : 'false'))
+  }
+  const close = focusBtn=>{
+    sel.classList.remove('open')
+    btn.setAttribute('aria-expanded', 'false')
+    if(focusBtn) btn.focus()
+  }
+  const open = ()=>{
+    sel.classList.add('open')
+    btn.setAttribute('aria-expanded', 'true')
+    const checked = options.find(o=> o.getAttribute('aria-checked') === 'true') || options[0]
+    checked.focus()
   }
 
-  const languageMenu = languageSelector.querySelector('.lang-menu');
-  const languageOptions = languageSelector.querySelectorAll('[data-lang]');
+  btn.addEventListener('click', e=>{
+    e.stopPropagation()
+    sel.classList.contains('open') ? close() : open()
+  })
+  options.forEach((opt, i)=>{
+    opt.tabIndex = -1
+    opt.addEventListener('click', ()=>{
+      storage.set(LANG_KEY, opt.dataset.lang)
+      translatePage(opt.dataset.lang)
+      sync()
+      close(true)
+    })
+    opt.addEventListener('keydown', e=>{
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); opt.click() }
+      if(e.key === 'ArrowDown'){ e.preventDefault(); options[(i + 1) % options.length].focus() }
+      if(e.key === 'ArrowUp'){ e.preventDefault(); options[(i - 1 + options.length) % options.length].focus() }
+    })
+  })
+  document.addEventListener('click', e=>{ if(!sel.contains(e.target)) close() })
+  sel.addEventListener('keydown', e=>{ if(e.key === 'Escape' && sel.classList.contains('open')) close(true) })
+  sync()
+}
 
-  if (!languageMenu || languageOptions.length === 0) {
-    return;
+/* -----------------------------------------
+   Música (portada y proyecto)
+   Suena por defecto a volumen bajo salvo que el usuario la apague.
+   Si el navegador bloquea el autoplay, arranca con la primera interacción.
+   La posición se conserva al pasar de una página a otra.
+   ----------------------------------------- */
+function initMusic(){
+  const audio = document.getElementById('theme-audio')
+  const button = document.getElementById('music-toggle')
+  if(!audio || !button) return
+
+  let enabled = storage.get(MUSIC_KEY) !== 'off'
+  audio.loop = true
+  audio.volume = 0
+
+  const savedTime = parseFloat(storage.get(MUSIC_TIME_KEY, sessionStorage))
+  if(savedTime > 0){
+    const restore = ()=>{ try{ audio.currentTime = savedTime }catch(e){} }
+    audio.readyState >= 1 ? restore() : audio.addEventListener('loadedmetadata', restore, { once: true })
   }
 
-  function applyLanguage(language) {
-    const selectedLanguage = I18N[language] ? language : 'es';
-
-    document.documentElement.lang = selectedLanguage;
-    languageButton.textContent =
-      selectedLanguage === 'en' ? 'EN' : 'ES';
-
-    translatePage(selectedLanguage);
-
-    languageOptions.forEach((option) => {
-      const selected = option.dataset.lang === selectedLanguage;
-
-      option.setAttribute(
-        'aria-checked',
-        selected ? 'true' : 'false'
-      );
-    });
-
-    try {
-      localStorage.setItem(
-        'growtale_lang',
-        selectedLanguage
-      );
-    } catch (error) {
-      console.warn(
-        'No se pudo guardar el idioma:',
-        error
-      );
-    }
+  const updateButton = ()=>{
+    const playing = !audio.paused
+    button.classList.toggle('on', playing)
+    button.setAttribute('aria-pressed', playing ? 'true' : 'false')
+    button.setAttribute('aria-label', playing ? t('music_on') : t('music_off'))
+    button.title = playing ? t('music_on') : t('music_off')
   }
 
-  function openLanguageMenu() {
-    languageSelector.classList.add('open');
-    languageSelector.setAttribute(
-      'aria-expanded',
-      'true'
-    );
-    languageButton.setAttribute(
-      'aria-expanded',
-      'true'
-    );
+  // Fundido de entrada con temporizador (requestAnimationFrame se pausa en pestañas ocultas)
+  let fadeTimer = 0
+  const fadeIn = ()=>{
+    clearInterval(fadeTimer)
+    const start = performance.now()
+    fadeTimer = setInterval(()=>{
+      const k = Math.min(1, (performance.now() - start) / 1500)
+      audio.volume = MUSIC_VOLUME * k
+      if(k >= 1) clearInterval(fadeTimer)
+    }, 50)
   }
 
-  function closeLanguageMenu() {
-    languageSelector.classList.remove('open');
-    languageSelector.setAttribute(
-      'aria-expanded',
-      'false'
-    );
-    languageButton.setAttribute(
-      'aria-expanded',
-      'false'
-    );
+  const play = async ()=>{
+    if(!enabled || !audio.paused) return
+    try{
+      await audio.play()
+      fadeIn()
+    }catch(e){ /* autoplay bloqueado: esperamos a la primera interacción */ }
   }
 
-  languageButton.setAttribute(
-    'aria-haspopup',
-    'true'
-  );
-
-  languageButton.setAttribute(
-    'aria-expanded',
-    'false'
-  );
-
-  languageButton.addEventListener('click', (event) => {
-    event.stopPropagation();
-
-    const isOpen =
-      languageSelector.classList.contains('open');
-
-    if (isOpen) {
-      closeLanguageMenu();
+  button.addEventListener('click', ()=>{
+    if(audio.paused){
+      enabled = true
+      storage.set(MUSIC_KEY, 'on')
+      play()
     } else {
-      openLanguageMenu();
+      enabled = false
+      storage.set(MUSIC_KEY, 'off')
+      audio.pause()
     }
-  });
+  })
 
-  languageOptions.forEach((option) => {
-    option.tabIndex = 0;
+  const unlockEvents = ['pointerdown', 'keydown', 'touchstart']
+  const unlock = e=>{
+    if(button.contains(e.target)) return
+    unlockEvents.forEach(ev=> document.removeEventListener(ev, unlock, true))
+    play()
+  }
+  unlockEvents.forEach(ev=> document.addEventListener(ev, unlock, true))
 
-    option.addEventListener('click', () => {
-      applyLanguage(option.dataset.lang);
-      closeLanguageMenu();
-      languageButton.focus();
-    });
+  audio.addEventListener('play', updateButton)
+  audio.addEventListener('pause', updateButton)
+  document.addEventListener('growtale:langchange', updateButton)
+  window.addEventListener('pagehide', ()=>{
+    storage.set(MUSIC_TIME_KEY, String(audio.currentTime || 0), sessionStorage)
+  })
 
-    option.addEventListener('keydown', (event) => {
-      if (
-        event.key === 'Enter' ||
-        event.key === ' '
-      ) {
-        event.preventDefault();
-        option.click();
-      }
-    });
-  });
+  updateButton()
+  play()
+}
 
-  document.addEventListener('click', (event) => {
-    if (!languageSelector.contains(event.target)) {
-      closeLanguageMenu();
-    }
-  });
+/* -----------------------------------------
+   Navegación: menú móvil y enlace activo
+   ----------------------------------------- */
+function initNav(){
+  const nav = document.querySelector('.top-nav')
+  if(!nav) return
+  const toggle = nav.querySelector('.nav-toggle')
+  const list = nav.querySelector('.nav-links')
+  const links = Array.from(nav.querySelectorAll('.nav-links a'))
 
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
-      closeLanguageMenu();
-      languageButton.focus();
-    }
-  });
+  const setOpen = open=>{
+    list.classList.toggle('open', open)
+    if(toggle) toggle.setAttribute('aria-expanded', open ? 'true' : 'false')
+  }
+  if(toggle) toggle.addEventListener('click', ()=> setOpen(!list.classList.contains('open')))
+  document.addEventListener('click', e=>{ if(!nav.contains(e.target)) setOpen(false) })
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'Escape' && list.classList.contains('open')){ setOpen(false); if(toggle) toggle.focus() }
+  })
+  links.forEach(a=> a.addEventListener('click', ()=> setOpen(false)))
 
-  let savedLanguage = 'es';
+  const sections = links.map(a=> document.querySelector(a.getAttribute('href'))).filter(Boolean)
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(!en.isIntersecting) return
+      links.forEach(l=>{
+        const active = l.getAttribute('href') === '#' + en.target.id
+        l.classList.toggle('active', active)
+        if(active) l.setAttribute('aria-current', 'true')
+        else l.removeAttribute('aria-current')
+      })
+    })
+  }, { rootMargin: '-40% 0px -55% 0px' })
+  sections.forEach(s=> obs.observe(s))
+}
 
-  try {
-    savedLanguage =
-      localStorage.getItem('growtale_lang') ||
-      (navigator.language
-        .toLowerCase()
-        .startsWith('en')
-        ? 'en'
-        : 'es');
-  } catch (error) {
-    savedLanguage = 'es';
+/* -----------------------------------------
+   Equipo: desplegar perfil completo
+   ----------------------------------------- */
+function initTeam(){
+  const buttons = Array.from(document.querySelectorAll('.team-section .view-profile'))
+  const sync = btn=>{
+    const expanded = btn.getAttribute('aria-expanded') === 'true'
+    btn.textContent = expanded ? t('hide_profile') : t('view_profile')
+  }
+  buttons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const expanded = btn.closest('.member-card').classList.toggle('expanded')
+      btn.setAttribute('aria-expanded', expanded ? 'true' : 'false')
+      sync(btn)
+    })
+  })
+  document.addEventListener('growtale:langchange', ()=> buttons.forEach(sync))
+}
+
+/* -----------------------------------------
+   Lightbox para galería, pasos y mapa
+   ----------------------------------------- */
+function initLightbox(){
+  const lightbox = document.getElementById('lightbox')
+  if(!lightbox) return
+  const lbImage = lightbox.querySelector('.lb-image')
+  const lbCaption = lightbox.querySelector('.lb-caption')
+  const targets = Array.from(document.querySelectorAll('.gallery-item img, .map-wrapper img'))
+  if(targets.length === 0) return
+
+  let current = 0
+  let lastFocus = null
+  const captionOf = img=>{
+    const cap = img.closest('figure') && img.closest('figure').querySelector('figcaption')
+    return cap ? cap.textContent.trim() : ''
+  }
+  const show = i=>{
+    current = (i + targets.length) % targets.length
+    const img = targets[current]
+    lbImage.src = img.currentSrc || img.src
+    lbImage.alt = img.alt
+    lbCaption.textContent = captionOf(img)
+  }
+  const open = i=>{
+    lastFocus = document.activeElement
+    show(i)
+    lightbox.classList.replace('lightbox-hidden', 'lightbox-visible')
+    lightbox.setAttribute('aria-hidden', 'false')
+    document.body.style.overflow = 'hidden'
+    lightbox.querySelector('.lb-close').focus()
+  }
+  const close = ()=>{
+    lightbox.classList.replace('lightbox-visible', 'lightbox-hidden')
+    lightbox.setAttribute('aria-hidden', 'true')
+    document.body.style.overflow = ''
+    lbImage.removeAttribute('src')
+    if(lastFocus) lastFocus.focus()
   }
 
-  applyLanguage(savedLanguage);
+  targets.forEach((img, i)=>{
+    img.tabIndex = 0
+    img.setAttribute('role', 'button')
+    img.addEventListener('click', ()=> open(i))
+    img.addEventListener('keydown', e=>{ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); open(i) } })
+  })
+  lightbox.querySelectorAll('[data-lb-close]').forEach(el=> el.addEventListener('click', close))
+  lightbox.querySelector('.lb-next').addEventListener('click', ()=> show(current + 1))
+  lightbox.querySelector('.lb-prev').addEventListener('click', ()=> show(current - 1))
+  document.addEventListener('keydown', e=>{
+    if(!lightbox.classList.contains('lightbox-visible')) return
+    if(e.key === 'Escape') close()
+    if(e.key === 'ArrowRight') show(current + 1)
+    if(e.key === 'ArrowLeft') show(current - 1)
+  })
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener(
-    'DOMContentLoaded',
-    initGrowTaleLanguage
-  );
-} else {
-  initGrowTaleLanguage();
+/* -----------------------------------------
+   Formulario de contacto (pop-up)
+   Sin servidor: al enviar abre el cliente de correo con el mensaje listo.
+   ----------------------------------------- */
+function initContact(){
+  const dialog = document.getElementById('contact-dialog')
+  if(!dialog || typeof dialog.showModal !== 'function') return
+  const form = dialog.querySelector('form')
+  const success = dialog.querySelector('.contact-success')
+  const participation = Array.from(form.querySelectorAll('input[name="participation"]'))
+  const email = form.dataset.email
+
+  const open = ()=>{
+    form.hidden = false
+    success.hidden = true
+    dialog.showModal()
+    form.querySelector('input').focus()
+  }
+  document.querySelectorAll('[data-open-contact]').forEach(btn=>
+    btn.addEventListener('click', e=>{ e.preventDefault(); open() })
+  )
+  dialog.querySelectorAll('[data-close-contact]').forEach(btn=>
+    btn.addEventListener('click', ()=> dialog.close())
+  )
+  // cerrar al pulsar fuera del panel
+  dialog.addEventListener('click', e=>{ if(e.target === dialog) dialog.close() })
+
+  const checkParticipation = ()=>{
+    const ok = participation.some(o=> o.checked)
+    participation[0].setCustomValidity(ok ? '' : t('participation_required'))
+  }
+  participation.forEach(o=> o.addEventListener('change', checkParticipation))
+
+  form.addEventListener('submit', e=>{
+    e.preventDefault()
+    checkParticipation()
+    if(!form.reportValidity()) return
+
+    const field = name=> String(new FormData(form).get(name) || '').trim()
+    const interests = participation.filter(o=> o.checked).map(o=> o.closest('label').textContent.trim())
+    const lines = [`${t('mail_name')}: ${field('name')}`, `${t('mail_email')}: ${field('email')}`]
+    if(field('organization')) lines.push(`${t('mail_org')}: ${field('organization')}`)
+    if(field('role')) lines.push(`${t('mail_role')}: ${field('role')}`)
+    lines.push(`${t('mail_interest')}: ${interests.join(', ')}`, '', `${t('mail_message')}:`, field('message'))
+    const subject = `${t('mail_subject')} — ${field('name')}${field('organization') ? ` (${field('organization')})` : ''}`
+
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`
+
+    form.hidden = true
+    success.hidden = false
+    success.focus()
+    form.reset()
+  })
+
+  // Los enlaces antiguos a contacto.html redirigen a proyecto.html#contacto
+  if(location.hash === '#contacto'){
+    const section = document.getElementById('contact')
+    if(section) section.scrollIntoView()
+    open()
+  }
 }
 
-// Parallax effect for #vision background: update CSS variable on scroll
-document.addEventListener('DOMContentLoaded', ()=>{
+/* -----------------------------------------
+   Detalles visuales
+   ----------------------------------------- */
+function initParallax(){
   const el = document.getElementById('vision')
-  if(!el) return
-  const maxShift = 88 // maximum vertical shift in px (increased for stronger parallax)
+  if(!el || prefersReducedMotion()) return
+  const maxShift = 88
   let ticking = false
 
-  function updateParallax(){
+  const update = ()=>{
+    ticking = false
     const rect = el.getBoundingClientRect()
-    // if completely outside viewport, clear variable for perf
-    if(rect.bottom < 0 || rect.top > window.innerHeight){
-      el.style.removeProperty('--vision-parallax')
-      return
-    }
-    const pct = (rect.top + rect.height/2 - window.innerHeight/2) / (window.innerHeight/2 + rect.height/2)
-    const y = Math.round(pct * maxShift)
-    el.style.setProperty('--vision-parallax', `${y}px`)
+    if(rect.bottom < 0 || rect.top > window.innerHeight) return
+    const pct = (rect.top + rect.height / 2 - window.innerHeight / 2) / (window.innerHeight / 2 + rect.height / 2)
+    el.style.setProperty('--vision-parallax', `${Math.round(pct * maxShift)}px`)
   }
-
-  function onScroll(){ if(!ticking){ requestAnimationFrame(()=>{ updateParallax(); ticking = false }); ticking = true } }
-
+  const onScroll = ()=>{ if(!ticking){ ticking = true; requestAnimationFrame(update) } }
   window.addEventListener('scroll', onScroll, { passive: true })
-  window.addEventListener('resize', ()=> updateParallax())
-  // initial position
-  updateParallax()
+  window.addEventListener('resize', onScroll)
+  update()
+}
+
+function initScreenTimeCounter(){
+  const counter = document.getElementById('screen-time-counter')
+  if(!counter || prefersReducedMotion()) return
+  let minutes = 462 // 7h 42m
+  setInterval(()=>{
+    minutes++
+    counter.textContent = `${Math.floor(minutes / 60)}h ${String(minutes % 60).padStart(2, '0')}m`
+  }, 3000)
+}
+
+/* -----------------------------------------
+   Arranque
+   ----------------------------------------- */
+// Abrir siempre arriba salvo que se llegue a una sección concreta (#ancla)
+if(!location.hash && 'scrollRestoration' in history){
+  history.scrollRestoration = 'manual'
+  window.scrollTo(0, 0)
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  initLanguage()
+  initMusic()
+  initNav()
+  initTeam()
+  initLightbox()
+  initContact()
+  initParallax()
+  initScreenTimeCounter()
 })
-document.addEventListener('DOMContentLoaded', () => {
-
-  const counter =
-    document.getElementById('screen-time-counter');
-
-  if(!counter) return;
-
-  let minutes = 462; // 7h 42m
-
-  setInterval(() => {
-
-    minutes++;
-
-    const h = Math.floor(minutes / 60);
-    const m = minutes % 60;
-
-    counter.textContent =
-      `${h}h ${m.toString().padStart(2,'0')}m`;
-
-  }, 3000);
-
-});

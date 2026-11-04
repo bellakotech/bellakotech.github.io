@@ -3,60 +3,77 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>GrowTale — Portada</title>
-    <link rel="stylesheet" href="styles.css">
+    <title data-i18n="meta_title_cover">GrowTale — Convierte hábitos saludables en una aventura</title>
+    <meta name="description" content="GrowTale es un RPG de fantasía que convierte hábitos saludables, como desconectar del móvil, en progreso dentro del juego. Proyecto de bienestar digital con aval profesional." data-i18n-content="meta_description">
+    <meta name="theme-color" content="#042029">
+    <link rel="canonical" href="https://bellakotech.github.io/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="GrowTale">
+    <meta property="og:title" content="GrowTale — Convierte hábitos saludables en una aventura">
+    <meta property="og:description" content="Un RPG de fantasía que convierte hábitos saludables en progreso. Proyecto de bienestar digital con aval profesional.">
+    <meta property="og:url" content="https://bellakotech.github.io/">
+    <meta property="og:image" content="https://bellakotech.github.io/assets/images/og-image.jpg">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:locale:alternate" content="en_GB">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" href="assets/images/icons/icon-32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="assets/images/icons/icon-180.png">
+    <link rel="manifest" href="manifest.json">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#042029">
-    <style>
-      /* Prevent scrolling on the cinematic cover page */
-      html,body{height:100%;margin:0;padding:0;border:0;background:#042029}
-      body{overflow:hidden;background-color:#042029}
-      main#landing{height:100vh}
-      </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=20261104e">
+    <link rel="prefetch" href="proyecto.html">
   </head>
-  <body>
+  <body class="cover-page">
     <canvas id="bg-canvas" aria-hidden="true"></canvas>
-    <!-- Landing: full-screen trailer background -->
-    <main id="landing" aria-label="Portada GrowTale">
-      <!--DESCOMENTAR CUANDO ESTE LISTO EL TRAILER <video id="landing-video" class="landing-video" autoplay muted loop playsinline poster="assets/images/trailer-poster.svg">
+
+    <main id="landing">
+      <!-- DESCOMENTAR CUANDO ESTÉ LISTO EL TRÁILER (siempre silenciado; la música va aparte)
+      <video id="landing-video" class="landing-video" autoplay muted loop playsinline poster="assets/images/trailer-poster.jpg">
         <source src="assets/video/trailer.mp4" type="video/mp4">
       </video>
-    -->
+      -->
       <div class="landing-overlay" aria-hidden="true"></div>
 
       <header class="landing-top">
-        <!--DESCOMENTAR PARA EL IDIOMA Y EL SONIDO <div class="lang-select" id="lang-select" aria-haspopup="true" aria-expanded="false">
-          <button id="lang-select-btn" class="lang-btn" aria-label="Seleccionar idioma" title="Idioma">ES</button>
-          <ul class="lang-menu" role="menu" aria-label="Seleccionar idioma">
-            <li role="menuitem" data-lang="es">Español</li>
-            <li role="menuitem" data-lang="en">English</li>
+        <div class="lang-select" id="lang-select">
+          <button class="lang-btn" aria-haspopup="true" aria-expanded="false" aria-controls="lang-menu" aria-label="Seleccionar idioma" data-i18n-aria-label="select_language">ES</button>
+          <ul class="lang-menu" id="lang-menu" role="menu">
+            <li role="menuitemradio" data-lang="es" lang="es">Español</li>
+            <li role="menuitemradio" data-lang="en" lang="en">English</li>
           </ul>
         </div>
-        <button id="landing-sound-toggle" class="sound-toggle" aria-pressed="false" aria-label="Activar sonido" title="Activar sonido">
-          <svg class="sound-on" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 9v6h4l5 4V5L9 9H5z" fill="currentColor"/><path d="M16.5 8.5a4.5 4.5 0 010 7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <svg class="sound-off" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 9v6h4l5 4V5L9 9H5z" fill="currentColor"/><path d="M18 6l-6 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>-->
+        <button id="music-toggle" class="sound-toggle" aria-pressed="false" aria-label="Activar música" title="Activar música">
+          <svg class="sound-on" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 9v6h4l5 4V5L9 9H5z" fill="currentColor"/><path d="M16.5 8.5a4.5 4.5 0 010 7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg class="sound-off" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 9v6h4l5 4V5L9 9H5z" fill="currentColor"/><path d="M18 6l-6 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </header>
 
       <div class="landing-content">
-        <img src="assets/images/logo.png" alt="GrowTale logo" class="landing-logo">
-        <h1 class="landing-tagline">Convierte hábitos saludables en progreso en un RPG de fantasía</h1>
+        <img src="assets/images/logo.webp" alt="GrowTale" class="landing-logo" width="200" height="123" fetchpriority="high">
+        <h1 class="landing-tagline" data-i18n="cover_tagline">Convierte hábitos saludables en progreso en un RPG de fantasía</h1>
         <div class="landing-cta">
           <a id="discover-btn" class="btn btn-primary" href="proyecto.html" data-i18n="discover">Descubre GrowTale</a>
         </div>
       </div>
     </main>
 
-    <script src="shader.js" defer></script>
-    <script src="app.js"></script>
-    <!-- Custom animated cursor (desktop only) -->
+    <audio id="theme-audio" preload="auto" hidden>
+      <source src="assets/audio/theme.m4a" type="audio/mp4">
+    </audio>
+
+    <!-- Cursor animado (solo escritorio) -->
     <div id="custom-cursor" aria-hidden="true">
       <div class="cursor-outer"></div>
       <div class="cursor-inner"></div>
     </div>
-    <script src="cursor.js" defer></script>
+
+    <script src="shader.js?v=20261104e" defer></script>
+    <script src="app.js?v=20261104e" defer></script>
+    <script src="cursor.js?v=20261104e" defer></script>
   </body>
 </html>
