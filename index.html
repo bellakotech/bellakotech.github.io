@@ -25,9 +25,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Intro animada solo en la primera visita de la sesión (y si no se pide reducir movimiento) -->
-    <script>try{if(!sessionStorage.getItem('growtale_intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('intro');sessionStorage.setItem('growtale_intro','1')}}catch(e){}</script>
-    <link rel="stylesheet" href="styles.css?v=20261104h">
+    <!-- Intro animada en la primera visita de la sesión; animación de regreso al volver del proyecto.
+         Se decide aquí, antes del primer pintado, y respeta "reducir movimiento". -->
+    <script>try{var d=document.documentElement,ss=sessionStorage,n=performance.getEntriesByType&&performance.getEntriesByType('navigation')[0];if(!matchMedia('(prefers-reduced-motion: reduce)').matches){if(ss.getItem('growtale_return')||(n&&n.type==='back_forward'&&ss.getItem('growtale_intro'))){d.classList.add('return')}else if(!ss.getItem('growtale_intro')){d.classList.add('intro')}}ss.removeItem('growtale_return');ss.setItem('growtale_intro','1')}catch(e){}</script>
+    <link rel="stylesheet" href="styles.css?v=20261104m">
     <link rel="prefetch" href="proyecto.html">
   </head>
   <body class="cover-page">
@@ -42,14 +43,14 @@
       <div class="landing-overlay" aria-hidden="true"></div>
 
       <header class="landing-top">
-        <div class="lang-toggle" id="lang-select" role="group" aria-label="Idioma" data-i18n-aria-label="select_language">
-          <button type="button" class="lang-opt" data-lang="es" lang="es" aria-pressed="true" title="Español">
-            <svg class="flag" viewBox="0 0 750 500" aria-hidden="true"><rect width="750" height="500" fill="#c60b1e"/><rect y="125" width="750" height="250" fill="#ffc400"/></svg>ESP
-          </button>
-          <button type="button" class="lang-opt" data-lang="en" lang="en" aria-pressed="false" title="English">
-            <svg class="flag" viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><clipPath id="flag-uk-clip"><path d="M30,15h30v15zv15h-30zh-30v-15zv-15h30z"/></clipPath><rect width="60" height="30" fill="#012169"/><path d="M0,0 60,30M60,0 0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 60,30M60,0 0,30" clip-path="url(#flag-uk-clip)" stroke="#c8102e" stroke-width="4"/><path d="M30,0v30M0,15h60" stroke="#fff" stroke-width="10"/><path d="M30,0v30M0,15h60" stroke="#c8102e" stroke-width="6"/></svg>ENG
-          </button>
-        </div>
+        <button type="button" class="lang-switch" id="lang-select" role="switch" aria-checked="false" aria-label="English" title="Español / English">
+          <span class="lang-switch-text lang-switch-es" lang="es" aria-hidden="true">ESP</span>
+          <span class="lang-switch-text lang-switch-en" lang="en" aria-hidden="true">ENG</span>
+          <span class="lang-switch-knob" aria-hidden="true">
+            <svg class="flag flag-es" viewBox="0 0 750 500" preserveAspectRatio="xMidYMid slice"><rect width="750" height="500" fill="#c60b1e"/><rect y="125" width="750" height="250" fill="#ffc400"/></svg>
+            <svg class="flag flag-en" viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice"><clipPath id="flag-uk-clip"><path d="M30,15h30v15zv15h-30zh-30v-15zv-15h30z"/></clipPath><rect width="60" height="30" fill="#012169"/><path d="M0,0 60,30M60,0 0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 60,30M60,0 0,30" clip-path="url(#flag-uk-clip)" stroke="#c8102e" stroke-width="4"/><path d="M30,0v30M0,15h60" stroke="#fff" stroke-width="10"/><path d="M30,0v30M0,15h60" stroke="#c8102e" stroke-width="6"/></svg>
+          </span>
+        </button>
         <button id="music-toggle" class="sound-toggle" aria-pressed="false" aria-label="Activar música" title="Activar música">
           <svg class="sound-on" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 9v6h4l5 4V5L9 9H5z" fill="currentColor"/><path d="M16.5 8.5a4.5 4.5 0 010 7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <svg class="sound-off" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 9v6h4l5 4V5L9 9H5z" fill="currentColor"/><path d="M18 6l-6 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -75,8 +76,8 @@
       <div class="cursor-inner"></div>
     </div>
 
-    <script src="shader.js?v=20261104h" defer></script>
-    <script src="app.js?v=20261104h" defer></script>
-    <script src="cursor.js?v=20261104h" defer></script>
+    <script src="shader.js?v=20261104m" defer></script>
+    <script src="app.js?v=20261104m" defer></script>
+    <script src="cursor.js?v=20261104m" defer></script>
   </body>
 </html>

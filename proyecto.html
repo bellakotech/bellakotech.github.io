@@ -27,7 +27,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Entrada suave al llegar desde el botón "Descubre GrowTale" de la portada -->
     <script>try{if(sessionStorage.getItem('growtale_enter')){document.documentElement.classList.add('arrive');sessionStorage.removeItem('growtale_enter')}}catch(e){}</script>
-    <link rel="stylesheet" href="styles.css?v=20261104h">
+    <link rel="stylesheet" href="styles.css?v=20261104m">
   </head>
   <body>
     <a class="skip-link" href="#main" data-i18n="skip_to_content">Saltar al contenido</a>
@@ -40,7 +40,7 @@
           </a>
         </div>
 
-        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menú" data-i18n-aria-label="open_menu">☰</button>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menú" data-i18n-aria-label="open_menu"><span class="nav-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span></button>
 
         <ul class="nav-links" id="nav-links">
           <li><a href="#problem" data-i18n="nav_impact">Impacto</a></li>
@@ -52,14 +52,14 @@
 
         <div class="nav-right">
           <a href="index.html" class="back-to-cover nav-back" data-i18n="back_to_cover">Volver a portada</a>
-          <div class="lang-toggle" id="lang-select" role="group" aria-label="Idioma" data-i18n-aria-label="select_language">
-            <button type="button" class="lang-opt" data-lang="es" lang="es" aria-pressed="true" title="Español">
-              <svg class="flag" viewBox="0 0 750 500" aria-hidden="true"><rect width="750" height="500" fill="#c60b1e"/><rect y="125" width="750" height="250" fill="#ffc400"/></svg>ESP
-            </button>
-            <button type="button" class="lang-opt" data-lang="en" lang="en" aria-pressed="false" title="English">
-              <svg class="flag" viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><clipPath id="flag-uk-clip"><path d="M30,15h30v15zv15h-30zh-30v-15zv-15h30z"/></clipPath><rect width="60" height="30" fill="#012169"/><path d="M0,0 60,30M60,0 0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 60,30M60,0 0,30" clip-path="url(#flag-uk-clip)" stroke="#c8102e" stroke-width="4"/><path d="M30,0v30M0,15h60" stroke="#fff" stroke-width="10"/><path d="M30,0v30M0,15h60" stroke="#c8102e" stroke-width="6"/></svg>ENG
-            </button>
-          </div>
+          <button type="button" class="lang-switch" id="lang-select" role="switch" aria-checked="false" aria-label="English" title="Español / English">
+            <span class="lang-switch-text lang-switch-es" lang="es" aria-hidden="true">ESP</span>
+            <span class="lang-switch-text lang-switch-en" lang="en" aria-hidden="true">ENG</span>
+            <span class="lang-switch-knob" aria-hidden="true">
+              <svg class="flag flag-es" viewBox="0 0 750 500" preserveAspectRatio="xMidYMid slice"><rect width="750" height="500" fill="#c60b1e"/><rect y="125" width="750" height="250" fill="#ffc400"/></svg>
+              <svg class="flag flag-en" viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice"><clipPath id="flag-uk-clip"><path d="M30,15h30v15zv15h-30zh-30v-15zv-15h30z"/></clipPath><rect width="60" height="30" fill="#012169"/><path d="M0,0 60,30M60,0 0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 60,30M60,0 0,30" clip-path="url(#flag-uk-clip)" stroke="#c8102e" stroke-width="4"/><path d="M30,0v30M0,15h60" stroke="#fff" stroke-width="10"/><path d="M30,0v30M0,15h60" stroke="#c8102e" stroke-width="6"/></svg>
+            </span>
+          </button>
           <button id="music-toggle" class="music-toggle" aria-pressed="false" aria-label="Activar música" title="Activar música">
             <svg class="icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M5 9v6h4l5 4V5L9 9H5z" fill="currentColor"/>
@@ -485,16 +485,7 @@
     </main>
 
     <footer class="site-footer">
-      <div class="footer-inner">
-        <nav class="footer-links" aria-label="Pie de página">
-          <a href="#how" data-i18n="footer_how">Cómo funciona</a>
-          <a href="#gallery" data-i18n="footer_gallery">Galería</a>
-          <a href="#map" data-i18n="footer_map">Mapa</a>
-          <a href="#challenges" data-i18n="footer_challenges">Retos</a>
-          <a href="#contact" data-i18n="footer_contact">Contacto</a>
-        </nav>
-        <div class="copyright">© GrowTale — growtale.app<br><span data-i18n="footer_credit">Diseñada por José Manuel Ruiz Sánchez</span></div>
-      </div>
+      <p class="footer-note">© 2026 GrowTale <span class="footer-sep" aria-hidden="true">·</span> <span data-i18n="footer_credit">Diseñada con la colaboración de José Manuel Ruiz</span></p>
     </footer>
 
     <!-- Pop-up de contacto -->
@@ -588,7 +579,7 @@
       <div class="cursor-inner"></div>
     </div>
 
-    <script src="app.js?v=20261104h" defer></script>
-    <script src="cursor.js?v=20261104h" defer></script>
+    <script src="app.js?v=20261104m" defer></script>
+    <script src="cursor.js?v=20261104m" defer></script>
   </body>
 </html>

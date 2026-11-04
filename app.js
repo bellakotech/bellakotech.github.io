@@ -207,12 +207,7 @@ const I18N_EN = {
   form_success_fallback: 'If it didn’t open, write to us at',
   form_success_close: 'Back to the site',
   // pie
-  footer_how: 'How it works',
-  footer_gallery: 'Gallery',
-  footer_map: 'Map',
-  footer_challenges: 'Challenges',
-  footer_contact: 'Contact',
-  footer_credit: 'Designed by José Manuel Ruiz Sánchez',
+  footer_credit: 'Designed in collaboration with José Manuel Ruiz',
   // lightbox
   lightbox_label: 'Enlarged image',
   lightbox_close: 'Close (Esc)',
@@ -280,8 +275,36 @@ function translatePage(lang){
   document.dispatchEvent(new CustomEvent('growtale:langchange'))
 }
 
+// Cambio de idioma animado: los textos visibles se desvanecen, cambian y vuelven a aparecer.
+// Se usa la Web Animations API para no pisar las animaciones CSS de entrada de la portada.
+let langSwitching = false
+async function switchLanguage(lang){
+  if(langSwitching) return
+  const visible = Array.from(document.querySelectorAll('[data-i18n]')).filter(el=>{
+    if(el.tagName === 'TITLE' || !el.animate) return false
+    const r = el.getBoundingClientRect()
+    return r.bottom > 0 && r.top < window.innerHeight && r.width > 0
+  })
+  if(prefersReducedMotion() || visible.length === 0){ translatePage(lang); return }
+
+  langSwitching = true
+  const out = { opacity: [1, 0], filter: ['blur(0px)', 'blur(6px)'], transform: ['translateY(0)', 'translateY(-4px)'] }
+  const back = { opacity: [0, 1], filter: ['blur(6px)', 'blur(0px)'], transform: ['translateY(4px)', 'translateY(0)'] }
+  // Límite de tiempo por si el navegador pausa las animaciones (pestaña en segundo plano)
+  const settle = (anims, ms)=> Promise.race([Promise.all(anims.map(a=> a.finished)), new Promise(r=> setTimeout(r, ms))])
+
+  const outs = visible.map(el=> el.animate(out, { duration: 180, easing: 'ease-in', fill: 'forwards' }))
+  await settle(outs, 260)
+  translatePage(lang)
+  const backs = visible.map((el, i)=>
+    el.animate(back, { duration: 320, delay: Math.min(i * 12, 160), easing: 'cubic-bezier(.2,.9,.2,1)', fill: 'backwards' }))
+  outs.forEach(a=> a.cancel()) // la entrada (fill: backwards) ya mantiene el texto oculto durante su retardo
+  await settle(backs, 600)
+  langSwitching = false
+}
+
 /* -----------------------------------------
-   Selector de idioma: interruptor ESP | ENG
+   Selector de idioma: interruptor deslizable ESP <-> ENG
    ----------------------------------------- */
 function initLanguage(){
   const toggle = document.getElementById('lang-select')
@@ -290,15 +313,15 @@ function initLanguage(){
   translatePage(saved)
   if(!toggle) return
 
-  const options = Array.from(toggle.querySelectorAll('[data-lang]'))
-  const sync = ()=> options.forEach(o=> o.setAttribute('aria-pressed', o.dataset.lang === currentLang() ? 'true' : 'false'))
-
-  options.forEach(opt=> opt.addEventListener('click', ()=>{
-    if(opt.dataset.lang === currentLang()) return
-    storage.set(LANG_KEY, opt.dataset.lang)
-    translatePage(opt.dataset.lang)
-    sync()
-  }))
+  const sync = ()=> toggle.setAttribute('aria-checked', currentLang() === 'en' ? 'true' : 'false')
+  toggle.addEventListener('click', ()=>{
+    if(langSwitching) return
+    const lang = currentLang() === 'en' ? 'es' : 'en'
+    storage.set(LANG_KEY, lang)
+    toggle.setAttribute('aria-checked', lang === 'en' ? 'true' : 'false') // el interruptor se mueve ya
+    switchLanguage(lang)
+  })
+  document.addEventListener('growtale:langchange', sync)
   sync()
 }
 
@@ -482,7 +505,8 @@ function initLightbox(){
     lightbox.classList.replace('lightbox-visible', 'lightbox-hidden')
     lightbox.setAttribute('aria-hidden', 'true')
     document.body.style.overflow = ''
-    lbImage.removeAttribute('src')
+    // la imagen se quita cuando termina el fundido de salida
+    setTimeout(()=>{ if(lightbox.classList.contains('lightbox-hidden')) lbImage.removeAttribute('src') }, 300)
     if(lastFocus) lastFocus.focus()
   }
 
@@ -521,14 +545,22 @@ function initContact(){
     dialog.showModal()
     form.querySelector('input').focus()
   }
+  // Cierre animado: la clase "closing" reproduce la salida y después se cierra de verdad
+  const close = ()=>{
+    if(!dialog.open || dialog.classList.contains('closing')) return
+    if(prefersReducedMotion()){ dialog.close(); return }
+    dialog.classList.add('closing')
+    const done = ()=>{ dialog.classList.remove('closing'); dialog.close() }
+    dialog.addEventListener('animationend', done, { once: true })
+    setTimeout(()=>{ if(dialog.classList.contains('closing')) done() }, 400) // por si no llega el evento
+  }
   document.querySelectorAll('[data-open-contact]').forEach(btn=>
     btn.addEventListener('click', e=>{ e.preventDefault(); open() })
   )
-  dialog.querySelectorAll('[data-close-contact]').forEach(btn=>
-    btn.addEventListener('click', ()=> dialog.close())
-  )
-  // cerrar al pulsar fuera del panel
-  dialog.addEventListener('click', e=>{ if(e.target === dialog) dialog.close() })
+  dialog.querySelectorAll('[data-close-contact]').forEach(btn=> btn.addEventListener('click', close))
+  // cerrar al pulsar fuera del panel o con Escape, también animado
+  dialog.addEventListener('click', e=>{ if(e.target === dialog) close() })
+  dialog.addEventListener('cancel', e=>{ e.preventDefault(); close() })
 
   const checkParticipation = ()=>{
     const ok = participation.some(o=> o.checked)
@@ -605,8 +637,35 @@ function initCoverTransition(){
     document.dispatchEvent(new CustomEvent('growtale:leave'))
     setTimeout(()=>{ window.location.href = btn.href }, LEAVE_MS)
   })
-  // Al volver con "atrás" el navegador puede restaurar la página tal cual: la reseteamos
-  window.addEventListener('pageshow', e=>{ if(e.persisted) root.classList.remove('leaving') })
+  // Al volver con "atrás" el navegador puede restaurar la página tal cual (bfcache):
+  // quitamos el estado de salida y reproducimos la animación de regreso
+  window.addEventListener('pageshow', e=>{
+    if(!e.persisted) return
+    root.classList.remove('leaving', 'return')
+    if(prefersReducedMotion()) return
+    void root.offsetWidth // reinicia las animaciones CSS
+    root.classList.add('return')
+    document.dispatchEvent(new CustomEvent('growtale:return'))
+  })
+}
+
+// Proyecto: los enlaces a la portada funden la página antes de navegar;
+// la portada reproduce entonces la animación de regreso (clase "return").
+function initBackToCover(){
+  if(document.getElementById('discover-btn')) return // estamos en la portada
+  const root = document.documentElement
+  const LEAVE_MS = 420
+  document.querySelectorAll('a[href="index.html"]').forEach(link=>{
+    link.addEventListener('click', e=>{
+      if(e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return
+      storage.set('growtale_return', '1', sessionStorage)
+      if(prefersReducedMotion()) return
+      e.preventDefault()
+      root.classList.add('leaving-project')
+      setTimeout(()=>{ window.location.href = link.href }, LEAVE_MS)
+    })
+  })
+  window.addEventListener('pageshow', e=>{ if(e.persisted) root.classList.remove('leaving-project') })
 }
 
 function initScreenTimeCounter(){
@@ -638,4 +697,5 @@ document.addEventListener('DOMContentLoaded', ()=>{
   initParallax()
   initScreenTimeCounter()
   initCoverTransition()
+  initBackToCover()
 })

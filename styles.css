@@ -191,12 +191,13 @@ h2:hover::after{width:180px}
 .challenge h4{margin:0 0 6px}
 
 /* Footer */
-.site-footer{padding:12px 0;margin-top:12px;background:transparent}
-.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.footer-links a{margin-right:12px;color:var(--text-muted);text-decoration:none}
+.site-footer{max-width:1100px;margin:48px auto 0;padding:22px 16px 34px;text-align:center;position:relative}
+/* línea fina que se desvanece hacia los lados */
+.site-footer::before{content:"";position:absolute;top:0;left:50%;width:min(420px,70%);height:1px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(141,240,216,.25),transparent)}
+.footer-note{margin:0;font-size:12px;letter-spacing:.06em;color:var(--text-muted);opacity:.55}
+.footer-sep{margin:0 6px;opacity:.6}
 
 /* Footer overall color */
-.site-footer, .site-footer a, .site-footer p, .site-footer div{color:var(--text-light)}
 
 /* Section icons and subtle hover effects */
 h2{
@@ -318,7 +319,6 @@ svg{transition:color 160ms ease,fill 160ms ease,transform 160ms ease}
 /* Responsive */
 @media (max-width:800px){
 	.steps{flex-direction:column}
-	.footer-inner{flex-direction:column;text-align:center}
 }
 
 /* Investor sections */
@@ -444,7 +444,7 @@ svg{transition:color 160ms ease,fill 160ms ease,transform 160ms ease}
 .sound-toggle.on .sound-off{display:none}
 
 .landing-content{position:relative;z-index:3;text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px;padding:24px}
-.landing-logo{width:200px;max-width:48vw;filter:drop-shadow(0 30px 80px rgba(2,6,23,0.8));transform-origin:center}
+.landing-logo{width:200px;max-width:48vw;height:auto;filter:drop-shadow(0 30px 80px rgba(2,6,23,0.8));transform-origin:center}
 .landing-tagline{font-family:'Cinzel', Georgia, serif;font-size:20px;max-width:780px;margin:0;color:var(--text-light);opacity:0.95;font-weight:500}
 .landing-cta .btn-primary{padding:14px 22px;font-size:18px}
 
@@ -490,9 +490,8 @@ svg{transition:color 160ms ease,fill 160ms ease,transform 160ms ease}
 
 /* Mobile behaviour */
 @media (max-width:900px){
-	.top-nav{height:48px}
-	.top-nav .nav-links{position:fixed;left:0;right:0;top:48px;background:linear-gradient(180deg, rgba(1,6,10,0.95), rgba(1,6,10,0.9));flex-direction:column;gap:0;display:none;padding:8px 12px;z-index:10011}
-	.top-nav .nav-links.open{display:flex}
+	.top-nav{height:52px}
+	.top-nav .nav-links{position:fixed;left:0;right:0;top:52px;background:linear-gradient(180deg, rgba(1,6,10,0.97), rgba(1,6,10,0.92));backdrop-filter:blur(8px);flex-direction:column;gap:0;display:flex;padding:8px 12px 12px;z-index:10011;box-shadow:0 18px 40px rgba(0,0,0,.45)}
 	.top-nav .nav-links li{width:100%}
 	.top-nav .nav-links a{display:block;padding:12px 10px;border-radius:8px}
 	.top-nav .nav-toggle{display:block}
@@ -773,7 +772,7 @@ justify-content:flex-start;
 }
 /* Shader canvas fixed to viewport so it always fills available space */
 html,body{height:auto;min-height:100%}
-#bg-canvas{position:fixed;left:0;top:0;right:0;bottom:0;width:100vw;height:100vh;z-index:-2;pointer-events:auto;display:block}
+#bg-canvas{position:fixed;left:0;top:0;right:0;bottom:0;width:100%;height:100%;z-index:-2;pointer-events:auto;display:block}
 
 /* Top bar: reserve space for language and volume controls */
 .landing-top{position:fixed;left:0;right:0;top:0;height:var(--nav-height);display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:8px 18px;z-index:60;pointer-events:auto;background:#042029 !important;border:0;border-top:0;border-bottom:0;box-shadow:none;backdrop-filter:none}
@@ -793,7 +792,7 @@ html,body{height:auto;min-height:100%}
 
 /* Ensure language and sound/music controls align and share sizing across pages */
 .sound-toggle, .music-toggle{display:inline-flex;align-items:center;justify-content:center;height:36px;padding:6px;border-radius:8px}
-.landing-top .lang-toggle, .landing-top .sound-toggle{margin-right:8px}
+.landing-top .lang-switch, .landing-top .sound-toggle{margin-right:8px}
 .top-nav .music-toggle{width:36px;height:36px;margin-left:6px}
 
 
@@ -824,8 +823,8 @@ body {
 #bg-canvas {
 	position: fixed;
 	inset: 0;
-	width: 100vw;
-	height: 100vh;
+	width: 100%;
+	height: 100%;
 	display: block;
 	margin: 0;
 	padding: 0;
@@ -1231,15 +1230,23 @@ textarea.form-control{min-height:140px;resize:vertical}
 .team-section .member-link{align-self:flex-start;color:#8df0d8;font-size:13px;font-weight:800;text-decoration:none;border-bottom:1px solid rgba(141,240,216,.35)}
 .team-section .member-link:hover, .team-section .member-link:focus-visible{color:var(--turquoise);border-color:var(--turquoise)}
 
-/* Selector de idioma: interruptor ESP | ENG con banderas */
-.lang-toggle{display:inline-flex;align-items:center;gap:2px;padding:3px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
-.lang-opt{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border:0;border-radius:999px;background:transparent;color:var(--text-muted);font:inherit;font-size:12px;font-weight:800;letter-spacing:.06em;cursor:pointer;opacity:.6;transition:background 160ms ease,color 160ms ease,opacity 160ms ease}
-.lang-opt .flag{width:20px;height:14px;border-radius:3px;flex:0 0 auto;box-shadow:0 0 0 1px rgba(255,255,255,.15)}
-.lang-opt:hover{opacity:1;color:var(--text-light)}
-.lang-opt[aria-pressed="true"]{opacity:1;color:var(--cta-contrast);background:var(--turquoise);cursor:default}
-.lang-opt:focus-visible{outline:2px solid var(--turquoise);outline-offset:2px}
-@media (max-width:480px){
-  .lang-opt{padding:5px 7px;gap:4px;font-size:11px}
+/* Selector de idioma: interruptor deslizable (ESP <-> ENG) */
+.lang-switch{position:relative;display:inline-flex;align-items:center;width:84px;height:34px;padding:0;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);cursor:pointer;font:inherit;flex:0 0 auto;transition:background 300ms ease,border-color 300ms ease}
+.lang-switch:hover{border-color:rgba(20,184,176,.5)}
+.lang-switch:focus-visible{outline:2px solid var(--turquoise);outline-offset:3px}
+.lang-switch-knob{position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.45),0 0 0 2px var(--turquoise);transition:transform 380ms cubic-bezier(.65,0,.35,1)}
+.lang-switch-knob .flag{position:absolute;inset:0;width:100%;height:100%;transition:opacity 260ms ease}
+.lang-switch-knob .flag-en{opacity:0}
+.lang-switch-text{position:absolute;top:50%;transform:translateY(-50%);font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--text-light);transition:opacity 260ms ease,transform 380ms cubic-bezier(.65,0,.35,1)}
+.lang-switch-es{right:12px}
+.lang-switch-en{left:12px;opacity:0;transform:translate(-8px,-50%)}
+.lang-switch[aria-checked="true"] .lang-switch-knob{transform:translateX(50px)}
+.lang-switch[aria-checked="true"] .flag-es{opacity:0}
+.lang-switch[aria-checked="true"] .flag-en{opacity:1}
+.lang-switch[aria-checked="true"] .lang-switch-es{opacity:0;transform:translate(8px,-50%)}
+.lang-switch[aria-checked="true"] .lang-switch-en{opacity:1;transform:translate(0,-50%)}
+@media (prefers-reduced-motion: reduce){
+  .lang-switch-knob, .lang-switch-text, .lang-switch-knob .flag{transition:none}
 }
 
 /* Equipo: el botón se oculta si la bio ya cabe entera */
@@ -1270,4 +1277,96 @@ textarea.form-control{min-height:140px;resize:vertical}
 
   /* Llegada a proyecto.html */
   html.arrive body{animation:fadeIn 700ms ease both}
+}
+
+/* =========================================
+   Vuelta del proyecto a la portada
+   ========================================= */
+@keyframes fadeOut{to{opacity:0}}
+@keyframes returnIn{from{opacity:0;transform:scale(1.08);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@media (prefers-reduced-motion: no-preference){
+  /* proyecto.html se funde con el fondo antes de navegar */
+  html.leaving-project body{animation:fadeOut 420ms ease forwards}
+  /* la portada recupera el foco mientras el vapor hace el zoom inverso (shader.js) */
+  html.return .landing-content{animation:returnIn 800ms cubic-bezier(.2,.9,.2,1) 250ms both}
+  html.return .landing-logo, html.return .landing-tagline, html.return .landing-cta{animation:none}
+  html.return .landing-top{animation:fadeIn 500ms ease 600ms both}
+  html.return .landing-overlay{animation:fadeIn 900ms ease both}
+}
+
+/* =========================================
+   Menú móvil: apertura animada e icono ☰ → ✕
+   ========================================= */
+.top-nav .nav-toggle{line-height:0}
+.nav-toggle-bars{position:relative;display:block;width:22px;height:16px}
+.nav-toggle-bars span{position:absolute;left:0;width:100%;height:2px;border-radius:2px;background:currentColor;transition:transform 320ms cubic-bezier(.65,0,.35,1),opacity 200ms ease,top 320ms cubic-bezier(.65,0,.35,1)}
+.nav-toggle-bars span:nth-child(1){top:0}
+.nav-toggle-bars span:nth-child(2){top:7px}
+.nav-toggle-bars span:nth-child(3){top:14px}
+.nav-toggle[aria-expanded="true"] .nav-toggle-bars span:nth-child(1){top:7px;transform:rotate(45deg)}
+.nav-toggle[aria-expanded="true"] .nav-toggle-bars span:nth-child(2){opacity:0;transform:scaleX(.2)}
+.nav-toggle[aria-expanded="true"] .nav-toggle-bars span:nth-child(3){top:7px;transform:rotate(-45deg)}
+
+@media (max-width:900px){
+  /* El panel baja y aparece; visibility evita que se pueda tabular cuando está cerrado */
+  .top-nav .nav-links{opacity:0;visibility:hidden;transform:translateY(-10px);clip-path:inset(0 0 100% 0);pointer-events:none;
+    transition:opacity 260ms ease,transform 360ms cubic-bezier(.2,.9,.2,1),clip-path 360ms cubic-bezier(.2,.9,.2,1),visibility 0s linear 360ms}
+  .top-nav .nav-links.open{opacity:1;visibility:visible;transform:none;clip-path:inset(0 0 0 0);pointer-events:auto;
+    transition:opacity 260ms ease,transform 360ms cubic-bezier(.2,.9,.2,1),clip-path 360ms cubic-bezier(.2,.9,.2,1),visibility 0s}
+  /* Enlaces escalonados */
+  .top-nav .nav-links li{opacity:0;transform:translateY(-6px);transition:opacity 220ms ease,transform 300ms cubic-bezier(.2,.9,.2,1)}
+  .top-nav .nav-links.open li{opacity:1;transform:none}
+  .top-nav .nav-links.open li:nth-child(1){transition-delay:60ms}
+  .top-nav .nav-links.open li:nth-child(2){transition-delay:100ms}
+  .top-nav .nav-links.open li:nth-child(3){transition-delay:140ms}
+  .top-nav .nav-links.open li:nth-child(4){transition-delay:180ms}
+  .top-nav .nav-links.open li:nth-child(5){transition-delay:220ms}
+}
+@media (max-width:900px) and (prefers-reduced-motion: reduce){
+  .top-nav .nav-links, .top-nav .nav-links.open, .top-nav .nav-links li, .nav-toggle-bars span{transition:none}
+}
+
+
+/* =========================================
+   Barra superior: negra translúcida y alineación común (portada y proyecto)
+   ========================================= */
+.landing-top, .top-nav{background:rgba(3,8,12,.42) !important;-webkit-backdrop-filter:blur(12px) saturate(1.2);backdrop-filter:blur(12px) saturate(1.2);border-bottom:1px solid rgba(255,255,255,.06) !important}
+.landing-top{padding:0 16px;gap:10px}
+.landing-top .lang-switch, .landing-top .sound-toggle{margin:0}
+.top-nav .nav-inner{padding:0 16px}
+.top-nav .nav-right{margin-left:auto;gap:10px}
+/* Botón de sonido: mismo tamaño y aspecto en las dos páginas, sin desplazarse al activarse */
+.landing-top .sound-toggle, .top-nav .music-toggle{width:36px;height:36px;padding:0;margin:0;border-radius:10px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--text-light);box-shadow:none;transform:none}
+.top-nav .music-toggle.on, .landing-top .sound-toggle.on{color:var(--turquoise);border-color:rgba(20,184,176,.45);background:rgba(20,184,176,.12);box-shadow:none;transform:none}
+.landing-top .sound-toggle:hover, .top-nav .music-toggle:hover{border-color:rgba(20,184,176,.5)}
+@media (max-width:900px){
+  .landing-top{height:52px}
+  /* ☰ al final, junto a idioma y sonido */
+  .top-nav .nav-right{order:2}
+  .top-nav .nav-toggle{order:3;margin-left:2px;padding:8px 4px}
+}
+
+/* =========================================
+   Portada: legibilidad del logo y la frase sobre el vapor (y la linterna)
+   ========================================= */
+.landing-content::before{content:"";position:absolute;inset:-8% -14%;z-index:-1;pointer-events:none;
+  background:radial-gradient(closest-side, rgba(2,8,12,.6), rgba(2,8,12,.32) 55%, transparent);filter:blur(12px)}
+.landing-logo{filter:drop-shadow(0 4px 16px rgba(0,0,0,.6)) drop-shadow(0 24px 60px rgba(2,6,23,.7))}
+.landing-tagline{text-shadow:0 2px 10px rgba(0,0,0,.8),0 0 2px rgba(0,0,0,.6)}
+
+/* =========================================
+   Pop-ups: entrada y salida animadas
+   ========================================= */
+@keyframes dialogOut{to{opacity:0;transform:translateY(10px) scale(.98)}}
+@keyframes backdropIn{from{opacity:0}}
+@keyframes backdropOut{to{opacity:0}}
+@media (prefers-reduced-motion: no-preference){
+  .contact-dialog[open]::backdrop{animation:backdropIn 260ms ease}
+  .contact-dialog.closing{animation:dialogOut 200ms ease-in forwards}
+  .contact-dialog.closing::backdrop{animation:backdropOut 200ms ease-in forwards}
+  .lightbox-visible{transition:opacity 260ms ease,visibility 0s}
+  .lightbox-hidden{transition:opacity 260ms ease,visibility 0s linear 260ms}
+  .lb-image, .lb-caption{transition:transform 260ms ease,opacity 260ms ease}
+  .lightbox-hidden .lb-image{transform:scale(.94);opacity:0}
 }
