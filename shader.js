@@ -1,4 +1,6 @@
-// Simple WebGL vapor shader with pointer and device motion interaction
+// Fondo WebGL de la portada: vapor turquesa que reacciona al ratón y al tacto como humo/agua.
+// - Al mover el puntero se deja una estela que arremolina el vapor (más intensa cuanto más rápido).
+// - Al hacer clic o tocar se generan ondas que se expanden como en el agua.
 (function(){
   const canvas = document.getElementById('bg-canvas')
   if(!canvas) return
@@ -6,12 +8,20 @@
   const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl')
   if(!gl){ document.body.style.background = 'linear-gradient(180deg,#042029,#072f2b)'; return }
 
+  const TRAIL = 16   // puntos de estela
+  const RIPPLES = 4  // ondas simultáneas
+
   const vert = `attribute vec2 a_pos; varying vec2 v_uv; void main(){ v_uv = a_pos * 0.5 + 0.5; gl_Position = vec4(a_pos,0.0,1.0); }`;
-  const frag = `precision highp float; varying vec2 v_uv; uniform vec2 u_resolution; uniform float u_time; uniform vec3 u_mouse; uniform vec3 u_click; // x,y in px, strength
-  // iq noise
+  const frag = `precision highp float;
+  varying vec2 v_uv;
+  uniform vec2 u_resolution;
+  uniform float u_time;
+  uniform vec4 u_trail[${TRAIL}];     // xy: posición (uv), z: intensidad, w: sentido del giro
+  uniform vec4 u_ripples[${RIPPLES}]; // xy: posición (uv), z: edad (s), w: intensidad
+
   vec3 mod289(vec3 x){return x - floor(x * (1.0/289.0)) * 289.0;}
   vec2 mod289(vec2 x){return x - floor(x * (1.0/289.0)) * 289.0;}
-  vec3 permute(vec3 x){return mod289(((x*34.0)+1.0)*x);} 
+  vec3 permute(vec3 x){return mod289(((x*34.0)+1.0)*x);}
   float noise(vec2 v){
     const vec4 C = vec4(0.211324865405187,0.366025403784439, -0.577350269189626, 0.024390243902439);
     vec2 i = floor(v + dot(v, C.yy));
@@ -38,137 +48,138 @@
   void main(){
     vec2 uv = v_uv;
     vec2 res = u_resolution.xy;
-    // normalized pixel-correct coords
-    vec2 p = (uv * res - 0.5*u_resolution.xy) / min(res.x,res.y);
+    float aspect = res.x / res.y;
+    vec2 p = (uv * res - 0.5*res) / min(res.x,res.y);
     float t = u_time;
 
-    // mouse in uv space [0,1]
-    vec2 mouseUV = clamp(u_mouse.xy / u_resolution.xy, 0.0, 1.0);
-    vec2 center = vec2(0.5,0.5);
+    vec2 disp = vec2(0.0);
+    float wake = 0.0;   // densidad de la estela: aclara el humo removido
+    float crest = 0.0;  // brillo en las crestas de las ondas
 
-    // click in uv space and local ripple/distortion
-    // use same coordinate origin as u_mouse (device pixels origin converted directly to uv)
-    vec2 clickUV = vec2(u_click.x / u_resolution.x, u_click.y / u_resolution.y);
-    float clickStrength = u_click.z;
-    float cd = length(uv - clickUV);
-    // compute a short-lived ripple that displaces sampling locally
-    vec2 clickDisp = vec2(0.0);
-    if(clickStrength > 0.001){
-      float freq = 60.0;
-      float speed = 6.0;
-      float amp = 0.06 * clickStrength;
-      float wave = sin(cd * freq - u_time * speed);
-      float env = exp(-cd * 12.0);
-      float ripple = wave * env * amp;
-      // push samples away/towards click center for a ripple/distortion
-      // guard against normalizing zero-length vector
-      clickDisp = (cd > 0.0001) ? normalize(uv - clickUV) * ripple : vec2(0.0);
+    // Estela de humo: cada punto crea un pequeño remolino que se desvanece
+    for(int i=0;i<${TRAIL};i++){
+      vec4 tr = u_trail[i];
+      if(tr.z < 0.002) continue;
+      vec2 d = (uv - tr.xy) * vec2(aspect, 1.0);
+      float s = tr.z * exp(-dot(d,d) * 90.0);
+      disp += vec2(-d.y, d.x) * s * 2.2 * tr.w + d * s * 0.5;
+      wake += s;
     }
 
-    // radial idle pulse from center (subtle)
-    float distC = length(uv - center);
-    float radial = 0.012 * sin(distC * 24.0 - t * 1.1) * exp(-distC * 3.6);
+    // Ondas de agua: anillos que crecen y se apagan
+    for(int i=0;i<${RIPPLES};i++){
+      vec4 rp = u_ripples[i];
+      if(rp.w < 0.002) continue;
+      vec2 d = (uv - rp.xy) * vec2(aspect, 1.0);
+      float dist = length(d) + 1e-5;
+      float band = dist - rp.z * 0.42;
+      float ring = exp(-band * band * 260.0);
+      float wave = sin(band * 70.0) * ring * rp.w * exp(-rp.z * 1.3);
+      disp += (d / dist) * wave * 0.035;
+      crest += max(wave, 0.0) * 0.9;
+    }
 
-    // local repulsion: compute vector from mouse to fragment
-    vec2 dir = uv - mouseUV;
-    float d = length(dir) + 1e-6;
-    float repelStr = exp(-d * 12.0) * (1.2 * u_mouse.z);
-    // shift sampling position away from the mouse (repel) - reduced intensity
-    vec2 repelOffset = normalize(dir) * repelStr * 0.45;
+    vec2 q0 = p + disp;
+    float q = fbm(q0 + vec2(0.0, t * 0.095));
+    float r = fbm(q0 * 1.8 - vec2(t * 0.15, -t * 0.04) + q * 0.9);
+    float f = fbm(q0 + r * 0.6 + t * 0.055);
 
-    // base layered fbm, with radial, click and local offsets
-    // incorporate clickDisp (scaled) into the sampling position to create local distortion
-    float q = fbm((p + repelOffset*1.0 + clickDisp * 8.0) * 1.0 + vec2(0.0, t * 0.095));
-    float r = fbm((p + repelOffset*0.8 + clickDisp * 6.0) * 1.8 - vec2(t * 0.15, -t * 0.04) + q * 0.9);
-    float f = fbm(p + r * 0.6 + repelOffset * 1.2 + clickDisp * 4.0 + (center - uv) * radial * 1.2 + t * 0.055);
-
-    // color ramp teal/green
     vec3 colA = vec3(0.02,0.18,0.14);
     vec3 colB = vec3(0.09,0.68,0.58);
     vec3 colC = vec3(0.46,0.86,0.76);
-    float glow = smoothstep(0.18, 0.78, f + 0.25 * r + radial * 0.6);
+    float glow = smoothstep(0.18, 0.78, f + 0.25 * r + wake * 0.35);
     vec3 color = mix(colA, colB, clamp(f * 1.05 + r * 0.45, 0.0, 1.0));
     color = mix(color, colC, pow(glow, 1.12));
 
-    // subtle vignette
-    float vign = 1.0 - smoothstep(0.6, 1.0, distC);
+    float vign = 1.0 - smoothstep(0.6, 1.0, length(uv - 0.5));
     color *= 0.62 + 0.6 * glow;
     color += 0.06 * vec3(0.9, 1.0, 0.95) * pow(glow, 2.0);
-
-    // bright localized bloom near pointer (repulsion spot)
-    color += 0.12 * exp(-d * d * 180.0) * (0.45 + 0.6 * u_mouse.z);
-
-    // localized click bloom (kept for visual feedback)
-    color += clickStrength * 0.35 * vec3(0.95,1.0,0.9) * exp(-cd * cd * 220.0);
-
-    // combine with radial idle subtle wash
-    color += 0.03 * vec3(0.9, 1.0, 0.95) * radial;
-
+    color += crest * vec3(0.45, 0.85, 0.78) * 0.35;
     color *= mix(0.94, 1.18, vign);
     gl_FragColor = vec4(color, 1.0);
   }`;
 
   function compile(src, type){ const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)){ console.error(gl.getShaderInfoLog(s)); } return s }
-  const vs = compile(vert, gl.VERTEX_SHADER), fs = compile(frag, gl.FRAGMENT_SHADER)
-  const prog = gl.createProgram(); gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog); if(!gl.getProgramParameter(prog, gl.LINK_STATUS)) console.error(gl.getProgramInfoLog(prog))
+  const prog = gl.createProgram()
+  gl.attachShader(prog, compile(vert, gl.VERTEX_SHADER)); gl.attachShader(prog, compile(frag, gl.FRAGMENT_SHADER))
+  gl.linkProgram(prog); if(!gl.getProgramParameter(prog, gl.LINK_STATUS)) console.error(gl.getProgramInfoLog(prog))
   gl.useProgram(prog)
 
   const pos = gl.getAttribLocation(prog,'a_pos')
-  const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW)
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW)
   gl.enableVertexAttribArray(pos); gl.vertexAttribPointer(pos,2,gl.FLOAT,false,0,0)
 
   const u_time = gl.getUniformLocation(prog,'u_time')
   const u_res = gl.getUniformLocation(prog,'u_resolution')
-  const u_mouse = gl.getUniformLocation(prog,'u_mouse')
-  const u_click = gl.getUniformLocation(prog,'u_click')
-
-  let start = performance.now()
-  let mouse = [window.innerWidth*0.5, window.innerHeight*0.5, 0.0]
-  let click = [0,0,0]
-  let motion = [0,0]
+  const u_trail = gl.getUniformLocation(prog,'u_trail')
+  const u_ripples = gl.getUniformLocation(prog,'u_ripples')
 
   const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
   // El vapor es difuso: renderizar a media resolución ahorra mucha GPU sin pérdida visible
-  function resize(){ const dpr = Math.min(2, Math.max(1, window.devicePixelRatio || 1)) * 0.5; const w = Math.max(1, window.innerWidth); const h = Math.max(1, window.innerHeight); canvas.width = Math.max(1, Math.floor(w * dpr)); canvas.height = Math.max(1, Math.floor(h * dpr)); canvas.style.width = w + 'px'; canvas.style.height = h + 'px'; gl.viewport(0,0,canvas.width,canvas.height) }
+  function resize(){
+    const dpr = Math.min(2, Math.max(1, window.devicePixelRatio || 1)) * 0.5
+    const w = Math.max(1, window.innerWidth), h = Math.max(1, window.innerHeight)
+    canvas.width = Math.max(1, Math.floor(w * dpr)); canvas.height = Math.max(1, Math.floor(h * dpr))
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px'
+    gl.viewport(0,0,canvas.width,canvas.height)
+  }
   window.addEventListener('resize', ()=>{ resize(); if(reducedMotion) requestAnimationFrame(frame) }); resize()
 
-  function updateMouse(e){ let x=0,y=0,z=0; const rect = canvas.getBoundingClientRect(); if(e.touches && e.touches[0]){ x=e.touches[0].clientX - rect.left; y=e.touches[0].clientY - rect.top; z=0.95 } else { x = (e.clientX || e.pageX) - rect.left; y = (e.clientY || e.pageY) - rect.top; z = 1.0 }
-    mouse[0] = x; mouse[1]= y; mouse[2] = z }
-  window.addEventListener('mousemove', updateMouse, {passive:true}); window.addEventListener('touchstart', updateMouse, {passive:true}); window.addEventListener('touchmove', updateMouse, {passive:true})
+  // Estado de la interacción (uv 0..1 con origen abajo-izquierda, como en el shader)
+  const trail = new Float32Array(TRAIL * 4)
+  const ripples = new Float32Array(RIPPLES * 4)
+  let trailHead = 0, rippleHead = 0
+  let last = null
 
-  // click / tap reaction: set a brief impulse recorded in device pixels
-  function clickHandle(e){ const rect = canvas.getBoundingClientRect(); let cx=0, cy=0; if(e.touches && e.touches[0]){ cx = e.touches[0].clientX - rect.left; cy = e.touches[0].clientY - rect.top } else { cx = (e.clientX || e.pageX) - rect.left; cy = (e.clientY || e.pageY) - rect.top }
-    const dpr = canvas.width / Math.max(1, canvas.clientWidth||1);
-    click[0] = Math.max(0, Math.min(canvas.width, cx * dpr));
-    click[1] = Math.max(0, Math.min(canvas.height, (canvas.clientHeight - cy) * dpr));
-    click[2] = 1.6; // strength
+  const toUV = (x, y) => [x / window.innerWidth, 1 - y / window.innerHeight]
+
+  function addTrail(x, y, speed){
+    const [u, v] = toUV(x, y)
+    const i = trailHead * 4
+    trail[i] = u; trail[i+1] = v
+    trail[i+2] = Math.min(0.9, 0.12 + speed * 0.012)
+    trail[i+3] = Math.random() < 0.5 ? 1 : -1
+    trailHead = (trailHead + 1) % TRAIL
   }
-  // Escuchamos en window porque otras capas del DOM quedan por encima del canvas
-  window.addEventListener('pointerdown', clickHandle, {passive:true});
+  function addRipple(x, y, strength){
+    const [u, v] = toUV(x, y)
+    const i = rippleHead * 4
+    ripples[i] = u; ripples[i+1] = v; ripples[i+2] = 0; ripples[i+3] = strength
+    rippleHead = (rippleHead + 1) % RIPPLES
+  }
 
-  window.addEventListener('deviceorientation', (ev)=>{
-    if(ev.gamma == null) return
-    motion[0] = ev.gamma/90; motion[1]= ev.beta/90
-    // subtly offset mouse based on tilt
-    mouse[0] = window.innerWidth*0.5 + motion[0]*window.innerWidth*0.15
-    mouse[1] = window.innerHeight*0.5 + motion[1]*window.innerHeight*0.12
-  }, {passive:true})
+  if(!reducedMotion){
+    window.addEventListener('pointermove', e=>{
+      const now = performance.now()
+      if(last){
+        const dist = Math.hypot(e.clientX - last.x, e.clientY - last.y)
+        if(dist < 6) return
+        const speed = dist / Math.max(8, now - last.t) * 16 // px por fotograma, aprox.
+        addTrail(e.clientX, e.clientY, speed)
+      }
+      last = { x: e.clientX, y: e.clientY, t: now }
+    }, {passive:true})
+    window.addEventListener('pointerdown', e=> addRipple(e.clientX, e.clientY, 1), {passive:true})
+    window.addEventListener('pointerup', e=>{ if(e.pointerType !== 'mouse') last = null }, {passive:true})
+  }
 
-  function frame(){ const t = (performance.now()-start)/1000; gl.uniform1f(u_time, t);
-    gl.uniform2f(u_res, canvas.width, canvas.height);
-    // convert mouse (css px) -> device px, invert Y to match shader uv origin
-    const dpr = canvas.width / Math.max(1, canvas.clientWidth || 1);
-    const mx = mouse[0] * dpr;
-    const my = (canvas.clientHeight - mouse[1]) * dpr;
-    gl.uniform3f(u_mouse, mx, my, mouse[2]);
-    // decay click strength over time
-    const dt = Math.max(0.0, 1/60);
-    if(click[2] > 0.0) click[2] = Math.max(0, click[2] - dt * 1.6);
-    gl.uniform3f(u_click, click[0], click[1], click[2]);
-    gl.drawArrays(gl.TRIANGLES, 0, 6);
+  const start = performance.now()
+  let prev = start
+  function frame(){
+    const now = performance.now()
+    const dt = Math.min(0.05, (now - prev) / 1000); prev = now
+
+    // La estela se disipa (~1 s) y las ondas envejecen
+    for(let i=0;i<TRAIL;i++) trail[i*4+2] *= Math.pow(0.12, dt)
+    for(let i=0;i<RIPPLES;i++){ ripples[i*4+2] += dt; if(ripples[i*4+2] > 3) ripples[i*4+3] = 0 }
+
+    gl.uniform1f(u_time, (now - start) / 1000)
+    gl.uniform2f(u_res, canvas.width, canvas.height)
+    gl.uniform4fv(u_trail, trail)
+    gl.uniform4fv(u_ripples, ripples)
+    gl.drawArrays(gl.TRIANGLES, 0, 6)
     if(!reducedMotion) requestAnimationFrame(frame)
   }
   requestAnimationFrame(frame)
-
 })();

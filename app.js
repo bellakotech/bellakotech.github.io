@@ -150,26 +150,20 @@ const I18N_EN = {
   view_profile: 'View full profile',
   role_daniel: 'CPO & Head of Product',
   bio_daniel: 'Technical Producer at Foundever and former Head of Product at BrytSpace. Engineer and manager combining his passion for technology and psychology to improve mental health through software.',
-  exp_daniel_1: 'Head of Product — BrytSpace',
-  exp_daniel_2: 'Technical Producer — Foundever',
   role_charlie: 'Creative Director',
   bio_charlie: 'Senior Game Designer at Gameloft Barcelona, lecturer at U-Tad and founder of Beast Arts. Gamification specialist with over seven years of experience.',
-  exp_charlie_2: 'Lecturer — U-Tad',
   role_raquel: 'Full-Stack Developer',
   bio_raquel: 'Former gameplay and systems developer at Péndulo Studios. Specialist in Unity, Unreal Engine and interfaces.',
   role_david: 'Full-Stack Developer & DevSecOps',
   bio_david: 'Rigging and IT programmer at Huhaa Studios. Industrial Engineering graduate and expert in systems and backend.',
   role_rober: 'Composer & Sound Designer',
   bio_rober: 'Video game music composer and author of “Crónicas de un Gamer: Guía Emocional de Videojuegos”.',
-  exp_rober_1: 'Composer — Freelance',
   role_ismael: 'Concept Artist',
   bio_ismael: 'Concept Artist and Graphic Designer at Infinite Thread Games. Specialised in digital illustration and concept art.',
   role_sergio: 'Business & Operations',
   bio_sergio: 'Life Cycle Support Engineer at Navantia. A University of Málaga graduate, he brings engineering method and vision to GrowTale’s development.',
-  exp_sergio_1: 'Life Cycle Support Engineer — Navantia',
   role_andrea: 'Concept Artist',
   bio_andrea: 'Concept artist and Marketing student. Combines illustration with the project’s communication.',
-  exp_andrea_1: 'Marketing student',
   // qué buscamos
   ask_title: 'What we are looking for',
   ask_subtitle: 'We are building GrowTale together with people and institutions who share our vision.',
@@ -287,55 +281,24 @@ function translatePage(lang){
 }
 
 /* -----------------------------------------
-   Selector de idioma
+   Selector de idioma: interruptor ESP | ENG
    ----------------------------------------- */
 function initLanguage(){
-  const sel = document.getElementById('lang-select')
+  const toggle = document.getElementById('lang-select')
   const saved = storage.get(LANG_KEY) ||
     ((navigator.language || '').toLowerCase().startsWith('es') ? 'es' : 'en')
   translatePage(saved)
-  if(!sel) return
+  if(!toggle) return
 
-  const btn = sel.querySelector('.lang-btn')
-  const options = Array.from(sel.querySelectorAll('[data-lang]'))
+  const options = Array.from(toggle.querySelectorAll('[data-lang]'))
+  const sync = ()=> options.forEach(o=> o.setAttribute('aria-pressed', o.dataset.lang === currentLang() ? 'true' : 'false'))
 
-  const sync = ()=>{
-    const lang = currentLang()
-    btn.textContent = lang.toUpperCase()
-    options.forEach(o=> o.setAttribute('aria-checked', o.dataset.lang === lang ? 'true' : 'false'))
-  }
-  const close = focusBtn=>{
-    sel.classList.remove('open')
-    btn.setAttribute('aria-expanded', 'false')
-    if(focusBtn) btn.focus()
-  }
-  const open = ()=>{
-    sel.classList.add('open')
-    btn.setAttribute('aria-expanded', 'true')
-    const checked = options.find(o=> o.getAttribute('aria-checked') === 'true') || options[0]
-    checked.focus()
-  }
-
-  btn.addEventListener('click', e=>{
-    e.stopPropagation()
-    sel.classList.contains('open') ? close() : open()
-  })
-  options.forEach((opt, i)=>{
-    opt.tabIndex = -1
-    opt.addEventListener('click', ()=>{
-      storage.set(LANG_KEY, opt.dataset.lang)
-      translatePage(opt.dataset.lang)
-      sync()
-      close(true)
-    })
-    opt.addEventListener('keydown', e=>{
-      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); opt.click() }
-      if(e.key === 'ArrowDown'){ e.preventDefault(); options[(i + 1) % options.length].focus() }
-      if(e.key === 'ArrowUp'){ e.preventDefault(); options[(i - 1 + options.length) % options.length].focus() }
-    })
-  })
-  document.addEventListener('click', e=>{ if(!sel.contains(e.target)) close() })
-  sel.addEventListener('keydown', e=>{ if(e.key === 'Escape' && sel.classList.contains('open')) close(true) })
+  options.forEach(opt=> opt.addEventListener('click', ()=>{
+    if(opt.dataset.lang === currentLang()) return
+    storage.set(LANG_KEY, opt.dataset.lang)
+    translatePage(opt.dataset.lang)
+    sync()
+  }))
   sync()
 }
 
@@ -464,6 +427,13 @@ function initTeam(){
     const expanded = btn.getAttribute('aria-expanded') === 'true'
     btn.textContent = expanded ? t('hide_profile') : t('view_profile')
   }
+  // El botón solo tiene sentido si la bio está recortada
+  const updateVisibility = ()=> buttons.forEach(btn=>{
+    const card = btn.closest('.member-card')
+    if(card.classList.contains('expanded')) return
+    const bio = card.querySelector('.bio-short')
+    btn.hidden = bio.scrollHeight <= bio.clientHeight + 1
+  })
   buttons.forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const expanded = btn.closest('.member-card').classList.toggle('expanded')
@@ -471,7 +441,9 @@ function initTeam(){
       sync(btn)
     })
   })
-  document.addEventListener('growtale:langchange', ()=> buttons.forEach(sync))
+  document.addEventListener('growtale:langchange', ()=>{ buttons.forEach(sync); updateVisibility() })
+  window.addEventListener('resize', updateVisibility)
+  updateVisibility()
 }
 
 /* -----------------------------------------

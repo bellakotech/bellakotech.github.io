@@ -25,7 +25,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=20261104e">
+    <link rel="stylesheet" href="styles.css?v=20261104f">
   </head>
   <body>
     <a class="skip-link" href="#main" data-i18n="skip_to_content">Saltar al contenido</a>
@@ -34,7 +34,7 @@
       <div class="nav-inner container-lg">
         <div class="nav-left">
           <a href="index.html" class="nav-logo" aria-label="Volver a la portada" data-i18n-aria-label="back_to_cover">
-            <img src="assets/images/logo.svg" alt="GrowTale" width="32" height="32">
+            <img src="assets/images/logo.svg" alt="GrowTale" width="76" height="44">
           </a>
         </div>
 
@@ -50,12 +50,13 @@
 
         <div class="nav-right">
           <a href="index.html" class="back-to-cover nav-back" data-i18n="back_to_cover">Volver a portada</a>
-          <div class="lang-select" id="lang-select">
-            <button class="lang-btn" aria-haspopup="true" aria-expanded="false" aria-controls="lang-menu" aria-label="Seleccionar idioma" data-i18n-aria-label="select_language">ES</button>
-            <ul class="lang-menu" id="lang-menu" role="menu">
-              <li role="menuitemradio" data-lang="es" lang="es">Español</li>
-              <li role="menuitemradio" data-lang="en" lang="en">English</li>
-            </ul>
+          <div class="lang-toggle" id="lang-select" role="group" aria-label="Idioma" data-i18n-aria-label="select_language">
+            <button type="button" class="lang-opt" data-lang="es" lang="es" aria-pressed="true" title="Español">
+              <svg class="flag" viewBox="0 0 750 500" aria-hidden="true"><rect width="750" height="500" fill="#c60b1e"/><rect y="125" width="750" height="250" fill="#ffc400"/></svg>ESP
+            </button>
+            <button type="button" class="lang-opt" data-lang="en" lang="en" aria-pressed="false" title="English">
+              <svg class="flag" viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><clipPath id="flag-uk-clip"><path d="M30,15h30v15zv15h-30zh-30v-15zv-15h30z"/></clipPath><rect width="60" height="30" fill="#012169"/><path d="M0,0 60,30M60,0 0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 60,30M60,0 0,30" clip-path="url(#flag-uk-clip)" stroke="#c8102e" stroke-width="4"/><path d="M30,0v30M0,15h60" stroke="#fff" stroke-width="10"/><path d="M30,0v30M0,15h60" stroke="#c8102e" stroke-width="6"/></svg>ENG
+            </button>
           </div>
           <button id="music-toggle" class="music-toggle" aria-pressed="false" aria-label="Activar música" title="Activar música">
             <svg class="icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -355,13 +356,9 @@
               <div class="member-meta">
                 <h3 class="member-name">Daniel Robledo</h3>
                 <div class="role" data-i18n="role_daniel">CPO y Director de Producto</div>
-                <p class="bio-short" data-i18n="bio_daniel">Technical Producer en Foundever y anterior Director de Producto en BrytSpace. Ingeniero y gestor que combina su pasión por la tecnología y la psicología para mejorar la salud mental mediante software.</p>
-                <ul class="bio-full exp-list" id="exp-daniel">
-                  <li data-i18n="exp_daniel_1">Director de Producto — BrytSpace</li>
-                  <li data-i18n="exp_daniel_2">Technical Producer — Foundever</li>
-                </ul>
+                <p class="bio-short" id="bio-daniel" data-i18n="bio_daniel">Technical Producer en Foundever y anterior Director de Producto en BrytSpace. Ingeniero y gestor que combina su pasión por la tecnología y la psicología para mejorar la salud mental mediante software.</p>
                 <a class="member-link" href="https://www.linkedin.com/in/danielcrobledo/" target="_blank" rel="noopener" aria-label="Daniel Robledo · LinkedIn">LinkedIn ↗</a>
-                <button class="btn view-profile" aria-expanded="false" aria-controls="exp-daniel">Ver perfil completo</button>
+                <button class="btn view-profile" aria-expanded="false" aria-controls="bio-daniel">Ver perfil completo</button>
               </div>
             </li>
 
@@ -370,13 +367,9 @@
               <div class="member-meta">
                 <h3 class="member-name">Charlie Sánchez</h3>
                 <div class="role" data-i18n="role_charlie">Director Creativo</div>
-                <p class="bio-short" data-i18n="bio_charlie">Senior Game Designer en Gameloft Barcelona, profesor en U-Tad y fundador de Beast Arts. Especialista en gamificación con más de siete años de experiencia.</p>
-                <ul class="bio-full exp-list" id="exp-charlie">
-                  <li>Senior Game Designer — Gameloft</li>
-                  <li data-i18n="exp_charlie_2">Profesor — U-Tad</li>
-                </ul>
+                <p class="bio-short" id="bio-charlie" data-i18n="bio_charlie">Senior Game Designer en Gameloft Barcelona, profesor en U-Tad y fundador de Beast Arts. Especialista en gamificación con más de siete años de experiencia.</p>
                 <a class="member-link" href="https://www.linkedin.com/in/charliesnchez/" target="_blank" rel="noopener" aria-label="Charlie Sánchez · LinkedIn">LinkedIn ↗</a>
-                <button class="btn view-profile" aria-expanded="false" aria-controls="exp-charlie">Ver perfil completo</button>
+                <button class="btn view-profile" aria-expanded="false" aria-controls="bio-charlie">Ver perfil completo</button>
               </div>
             </li>
 
@@ -385,12 +378,9 @@
               <div class="member-meta">
                 <h3 class="member-name">Sergio Ruiz</h3>
                 <div class="role" data-i18n="role_sergio">Business & Operaciones</div>
-                <p class="bio-short" data-i18n="bio_sergio">Ingeniero de Apoyo al Ciclo de Vida en Navantia. Formado en la Universidad de Málaga, aporta método y visión de ingeniería al desarrollo de GrowTale.</p>
-                <ul class="bio-full exp-list" id="exp-sergio">
-                  <li data-i18n="exp_sergio_1">Ingeniero de Apoyo al Ciclo de Vida — Navantia</li>
-                </ul>
+                <p class="bio-short" id="bio-sergio" data-i18n="bio_sergio">Ingeniero de Apoyo al Ciclo de Vida en Navantia. Formado en la Universidad de Málaga, aporta método y visión de ingeniería al desarrollo de GrowTale.</p>
                 <a class="member-link" href="https://www.linkedin.com/in/sergio-ruiz-p%C3%A9rez-536897249/" target="_blank" rel="noopener" aria-label="Sergio Ruiz · LinkedIn">LinkedIn ↗</a>
-                <button class="btn view-profile" aria-expanded="false" aria-controls="exp-sergio">Ver perfil completo</button>
+                <button class="btn view-profile" aria-expanded="false" aria-controls="bio-sergio">Ver perfil completo</button>
               </div>
             </li>
 
@@ -399,12 +389,9 @@
               <div class="member-meta">
                 <h3 class="member-name">Raquel Mas</h3>
                 <div class="role" data-i18n="role_raquel">Programadora Full-Stack</div>
-                <p class="bio-short" data-i18n="bio_raquel">Ex-desarrolladora de gameplay y sistemas en Péndulo Studios. Especialista en Unity, Unreal Engine e interfaces.</p>
-                <ul class="bio-full exp-list" id="exp-raquel">
-                  <li>Gameplay Developer — Péndulo Studios</li>
-                </ul>
+                <p class="bio-short" id="bio-raquel" data-i18n="bio_raquel">Ex-desarrolladora de gameplay y sistemas en Péndulo Studios. Especialista en Unity, Unreal Engine e interfaces.</p>
                 <a class="member-link" href="https://www.linkedin.com/in/raquel-mas-garc%C3%ADa/" target="_blank" rel="noopener" aria-label="Raquel Mas · LinkedIn">LinkedIn ↗</a>
-                <button class="btn view-profile" aria-expanded="false" aria-controls="exp-raquel">Ver perfil completo</button>
+                <button class="btn view-profile" aria-expanded="false" aria-controls="bio-raquel">Ver perfil completo</button>
               </div>
             </li>
 
@@ -413,12 +400,9 @@
               <div class="member-meta">
                 <h3 class="member-name">David Muñoz</h3>
                 <div class="role" data-i18n="role_david">Programador Full-Stack y DevSecOps</div>
-                <p class="bio-short" data-i18n="bio_david">Programador de rig e IT en Huhaa Studios. Graduado en Ingeniería Industrial y experto en sistemas y backend.</p>
-                <ul class="bio-full exp-list" id="exp-david">
-                  <li>DevOps — Huhaa Studios</li>
-                </ul>
+                <p class="bio-short" id="bio-david" data-i18n="bio_david">Programador de rig e IT en Huhaa Studios. Graduado en Ingeniería Industrial y experto en sistemas y backend.</p>
                 <a class="member-link" href="https://www.linkedin.com/in/david-mu%C3%B1oz-bernal/" target="_blank" rel="noopener" aria-label="David Muñoz · LinkedIn">LinkedIn ↗</a>
-                <button class="btn view-profile" aria-expanded="false" aria-controls="exp-david">Ver perfil completo</button>
+                <button class="btn view-profile" aria-expanded="false" aria-controls="bio-david">Ver perfil completo</button>
               </div>
             </li>
 
@@ -427,12 +411,9 @@
               <div class="member-meta">
                 <h3 class="member-name">Rober “Roboo” Díaz</h3>
                 <div class="role" data-i18n="role_rober">Compositor y Sound Designer</div>
-                <p class="bio-short" data-i18n="bio_rober">Compositor de música para videojuegos y autor de “Crónicas de un Gamer: Guía Emocional de Videojuegos”.</p>
-                <ul class="bio-full exp-list" id="exp-rober">
-                  <li data-i18n="exp_rober_1">Compositor — Freelance</li>
-                </ul>
+                <p class="bio-short" id="bio-rober" data-i18n="bio_rober">Compositor de música para videojuegos y autor de “Crónicas de un Gamer: Guía Emocional de Videojuegos”.</p>
                 <a class="member-link" href="https://roboomusic.bandcamp.com/music" target="_blank" rel="noopener" aria-label="Rober “Roboo” Díaz · Bandcamp">Bandcamp ↗</a>
-                <button class="btn view-profile" aria-expanded="false" aria-controls="exp-rober">Ver perfil completo</button>
+                <button class="btn view-profile" aria-expanded="false" aria-controls="bio-rober">Ver perfil completo</button>
               </div>
             </li>
 
@@ -441,12 +422,9 @@
               <div class="member-meta">
                 <h3 class="member-name">Ismael Ruiz</h3>
                 <div class="role" data-i18n="role_ismael">Concept Artist</div>
-                <p class="bio-short" data-i18n="bio_ismael">Concept Artist y Diseñador Gráfico en Infinite Thread Games. Especializado en ilustración digital y concept art.</p>
-                <ul class="bio-full exp-list" id="exp-ismael">
-                  <li>Concept Artist — Infinite Thread Games</li>
-                </ul>
+                <p class="bio-short" id="bio-ismael" data-i18n="bio_ismael">Concept Artist y Diseñador Gráfico en Infinite Thread Games. Especializado en ilustración digital y concept art.</p>
                 <a class="member-link" href="https://www.linkedin.com/in/ismael-r-artndesign/" target="_blank" rel="noopener" aria-label="Ismael Ruiz · LinkedIn">LinkedIn ↗</a>
-                <button class="btn view-profile" aria-expanded="false" aria-controls="exp-ismael">Ver perfil completo</button>
+                <button class="btn view-profile" aria-expanded="false" aria-controls="bio-ismael">Ver perfil completo</button>
               </div>
             </li>
 
@@ -455,12 +433,9 @@
               <div class="member-meta">
                 <h3 class="member-name">Andrea Calvar</h3>
                 <div class="role" data-i18n="role_andrea">Concept Artist</div>
-                <p class="bio-short" data-i18n="bio_andrea">Concept artist y estudiante de Marketing. Compagina la ilustración con la comunicación del proyecto.</p>
-                <ul class="bio-full exp-list" id="exp-andrea">
-                  <li data-i18n="exp_andrea_1">Estudiante de Marketing</li>
-                </ul>
+                <p class="bio-short" id="bio-andrea" data-i18n="bio_andrea">Concept artist y estudiante de Marketing. Compagina la ilustración con la comunicación del proyecto.</p>
                 <a class="member-link" href="https://www.linkedin.com/in/andrea-calvar-prieto-308182278/" target="_blank" rel="noopener" aria-label="Andrea Calvar · LinkedIn">LinkedIn ↗</a>
-                <button class="btn view-profile" aria-expanded="false" aria-controls="exp-andrea">Ver perfil completo</button>
+                <button class="btn view-profile" aria-expanded="false" aria-controls="bio-andrea">Ver perfil completo</button>
               </div>
             </li>
           </ul>
@@ -611,7 +586,7 @@
       <div class="cursor-inner"></div>
     </div>
 
-    <script src="app.js?v=20261104e" defer></script>
-    <script src="cursor.js?v=20261104e" defer></script>
+    <script src="app.js?v=20261104f" defer></script>
+    <script src="cursor.js?v=20261104f" defer></script>
   </body>
 </html>

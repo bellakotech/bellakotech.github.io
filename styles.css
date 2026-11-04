@@ -109,16 +109,6 @@ h2{font-size:calc(1rem * 1.18)}
 h2{position:relative;overflow:visible}
 h2::after{content:'';position:absolute;left:0;bottom:-6px;height:3px;width:0;background:linear-gradient(90deg,var(--turquoise),rgba(20,184,176,0.7));transition:width 260ms ease}
 h2:hover::after{width:180px}
-h2{
-  transform-origin:left center;
-  transition:
-    color .25s ease,
-    transform .25s ease;
-}
-
-h2:hover{
-  transform:scaleX(1.15);
-}
 /* Keep animations subtle and under 300ms */
 .block-sep .block-icon, h2::after{transition-duration:260ms}
 
@@ -419,11 +409,9 @@ svg{transition:color 160ms ease,fill 160ms ease,transform 160ms ease}
 .team-section .member-meta .member-name{margin:0;font-size:18px;font-weight:700}
 .team-section .member-meta .role{font-size:13px;color:var(--turquoise);font-weight:700}
 .team-section .member-meta .bio-short{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;margin:0}
-.team-section .member-meta .bio-full{display:none;color:var(--text-muted);font-size:14px;line-height:1.45;margin:0;padding-left:18px}
 .team-section .member-card .view-profile{margin-top:auto;align-self:stretch;text-align:center;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);color:var(--text-light);cursor:pointer;font:inherit;font-weight:700}
 .team-section .member-card:hover{transform:translateY(-6px);box-shadow:0 30px 80px rgba(2,6,23,0.6);border-color:rgba(20,184,176,0.08)}
-.team-section .member-card:hover .bio-short, .team-section .member-card.expanded .bio-short{display:block;-webkit-line-clamp:unset;line-clamp:unset}
-.team-section .member-card:hover .bio-full, .team-section .member-card.expanded .bio-full{display:block}
+.team-section .member-card.expanded .bio-short{display:block;-webkit-line-clamp:unset;line-clamp:unset}
 .team-section .member-card.expanded{box-shadow:0 36px 100px rgba(2,6,23,0.68);transform:translateY(-8px)}
 
 @media (max-width:1000px){
@@ -447,18 +435,10 @@ svg{transition:color 160ms ease,fill 160ms ease,transform 160ms ease}
 .landing-top{position:fixed;left:0;right:0;top:0;height:var(--nav-height);display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:8px 18px;z-index:60;pointer-events:auto;background:#042029;border:0;border-bottom:0;border-top:0;box-shadow:none;backdrop-filter:none}
 .sound-toggle{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);color:var(--text-light);padding:8px;border-radius:8px;cursor:pointer;backdrop-filter:blur(6px);display:inline-flex;align-items:center;justify-content:center}
 .sound-toggle svg{width:18px;height:18px}
-.lang-select{position:relative}
-.lang-btn{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);color:var(--text-light);padding:6px 8px;border-radius:8px;cursor:pointer;backdrop-filter:blur(6px);display:inline-flex;align-items:center;justify-content:center;min-width:44px}
-.lang-menu{position:absolute;right:0;margin:8px 0 0 0;padding:8px 6px;background:linear-gradient(180deg,rgba(2,6,10,0.9),rgba(2,6,10,0.8));border:1px solid rgba(255,255,255,0.04);border-radius:10px;list-style:none;box-shadow:0 12px 48px rgba(0,0,0,0.6);transform-origin:top right;transform:scale(0.96);opacity:0;visibility:hidden;transition:transform 200ms cubic-bezier(.2,.9,.2,1),opacity 180ms ease}
-.lang-menu li{padding:8px 12px;color:var(--text-light);cursor:pointer;border-radius:8px;white-space:nowrap}
-.lang-menu li:hover{background:rgba(255,255,255,0.03)}
-.lang-select.open .lang-menu{transform:scale(1);opacity:1;visibility:visible}
 
 /* Small arrow indicator on button */
-.lang-btn::after{content:"▾";margin-left:8px;font-size:11px;color:var(--text-muted)}
 
 /* Accessibility focus */
-.lang-btn:focus{outline:3px solid rgba(20,184,176,0.16);outline-offset:4px}
 .sound-toggle .sound-on{display:none}
 .sound-toggle.on .sound-on{display:block}
 .sound-toggle.on .sound-off{display:none}
@@ -494,7 +474,7 @@ svg{transition:color 160ms ease,fill 160ms ease,transform 160ms ease}
 .top-nav{position:sticky !important;top:0 !important;left:0 !important;right:0 !important;width:100% !important;margin:0 !important;height:var(--nav-height);display:flex;align-items:center;z-index:10010;background:#042029 !important;backdrop-filter:none;border-top:0;border-right:0;border-left:0;border-bottom:1px solid rgba(255,255,255,0.04);box-shadow:none;transform:none !important;will-change:auto}
 .top-nav .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:0 16px;width:100%}
 .top-nav .nav-left{display:flex;align-items:center;gap:12px}
-.top-nav .nav-logo img{width:32px;height:auto;display:block}
+.top-nav .nav-logo img{width:76px;height:auto;display:block}
 .top-nav .nav-links{display:flex;gap:18px;list-style:none;margin:0;padding:0;flex:1;justify-content:center}
 .top-nav .nav-links a{color:var(--text-light);text-decoration:none;padding:10px 6px;border-radius:6px;position:relative;transition:color 180ms ease}
 .top-nav .nav-links a::after{content:"";position:absolute;left:8px;right:8px;bottom:6px;height:2px;background:linear-gradient(90deg, transparent, transparent);transform:scaleX(0);transform-origin:left;transition:transform 220ms cubic-bezier(.2,.9,.2,1)}
@@ -692,7 +672,7 @@ justify-content:flex-start;
 @media (max-width:768px){
 
   .top-nav .nav-logo img{
-    width:24px;
+    width:60px;
   }
 
 }
@@ -769,9 +749,6 @@ justify-content:flex-start;
     line-clamp:unset;
   }
 
-  .team-section .member-meta .bio-full{
-    display:block;
-  }
 
   .team-section .view-profile{
     display:none;
@@ -813,12 +790,10 @@ html,body{height:auto;min-height:100%}
 .landing-cta .btn-primary:active{transform:translateY(-2px) scale(0.99);box-shadow:0 10px 36px rgba(20,184,176,0.18)}
 
 /* Make language button and sound toggle visually grouped */
-.lang-select{margin-left:8px}
 
 /* Ensure language and sound/music controls align and share sizing across pages */
-.lang-select, .sound-toggle, .music-toggle{display:inline-flex;align-items:center;justify-content:center;height:36px;padding:6px;border-radius:8px}
-.landing-top .lang-select, .landing-top .sound-toggle{margin-right:8px}
-.top-nav .nav-right .lang-select{margin-left:6px}
+.sound-toggle, .music-toggle{display:inline-flex;align-items:center;justify-content:center;height:36px;padding:6px;border-radius:8px}
+.landing-top .lang-toggle, .landing-top .sound-toggle{margin-right:8px}
 .top-nav .music-toggle{width:36px;height:36px;margin-left:6px}
 
 
@@ -1183,16 +1158,15 @@ main#landing {
    ========================================= */
 
 /* Portada sin scroll */
-body.cover-page{overflow:hidden;height:100vh;isolation:isolate}
+body.cover-page{overflow:hidden;height:100vh;isolation:isolate;touch-action:pinch-zoom}
 
 /* Enlace para saltar al contenido (visible solo con teclado) */
 .skip-link{position:absolute;left:12px;top:-60px;z-index:100001;padding:10px 14px;border-radius:8px;background:var(--turquoise);color:var(--cta-contrast);font-weight:800;text-decoration:none;transition:top 160ms ease}
 .skip-link:focus{top:12px}
 
 /* Foco visible para imágenes ampliables y opciones de idioma */
-.gallery-item img:focus-visible, .map-wrapper img:focus-visible, .lang-menu li:focus-visible, .view-profile:focus-visible{outline:3px solid var(--turquoise);outline-offset:3px}
+.gallery-item img:focus-visible, .map-wrapper img:focus-visible, .view-profile:focus-visible{outline:3px solid var(--turquoise);outline-offset:3px}
 .gallery-item img, .map-wrapper img{cursor:zoom-in}
-.lang-menu li[aria-checked="true"]{color:var(--turquoise);font-weight:700}
 
 /* Títulos de los pasos (antes eran h2) */
 .step-title{font-size:calc(1rem * 1.18);font-weight:900;margin:8px 0}
@@ -1221,7 +1195,6 @@ body.cover-page{overflow:hidden;height:100vh;isolation:isolate}
 .contact-dialog-header{text-align:center;margin:0 0 20px;padding:0 36px}
 .contact-dialog-header h2{margin:0 0 8px;font-size:clamp(1.5rem,4vw,2.2rem);line-height:1.1}
 .contact-dialog-header h2::after{display:none}
-.contact-dialog-header h2:hover{transform:none}
 .contact-kicker{display:inline-block;margin:0 0 12px;padding:7px 14px;color:#8df0d8;background:rgba(20,184,176,.15);border:1px solid rgba(20,184,176,.25);border-radius:999px;font-size:.82rem;font-weight:800;letter-spacing:.12em}
 
 .growtale-form{display:grid;gap:20px}
@@ -1257,3 +1230,18 @@ textarea.form-control{min-height:140px;resize:vertical}
 /* Equipo: enlace a LinkedIn / Bandcamp */
 .team-section .member-link{align-self:flex-start;color:#8df0d8;font-size:13px;font-weight:800;text-decoration:none;border-bottom:1px solid rgba(141,240,216,.35)}
 .team-section .member-link:hover, .team-section .member-link:focus-visible{color:var(--turquoise);border-color:var(--turquoise)}
+
+/* Selector de idioma: interruptor ESP | ENG con banderas */
+.lang-toggle{display:inline-flex;align-items:center;gap:2px;padding:3px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.lang-opt{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border:0;border-radius:999px;background:transparent;color:var(--text-muted);font:inherit;font-size:12px;font-weight:800;letter-spacing:.06em;cursor:pointer;opacity:.6;transition:background 160ms ease,color 160ms ease,opacity 160ms ease}
+.lang-opt .flag{width:20px;height:14px;border-radius:3px;flex:0 0 auto;box-shadow:0 0 0 1px rgba(255,255,255,.15)}
+.lang-opt:hover{opacity:1;color:var(--text-light)}
+.lang-opt[aria-pressed="true"]{opacity:1;color:var(--cta-contrast);background:var(--turquoise);cursor:default}
+.lang-opt:focus-visible{outline:2px solid var(--turquoise);outline-offset:2px}
+@media (max-width:480px){
+  .lang-opt{padding:5px 7px;gap:4px;font-size:11px}
+}
+
+/* Equipo: el botón se oculta si la bio ya cabe entera */
+.team-section .view-profile[hidden]{display:none}
+
