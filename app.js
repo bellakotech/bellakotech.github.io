@@ -1223,8 +1223,7 @@ function initTryIt(){
     }
     cur = i; playSfx('modal-open'); renderAll(); bump()
     modal.closest('.tryit-item').classList.add('touched')
-    if(window.matchMedia('(max-width: 900px)').matches) modal.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    else $('dc-close').focus({ preventScroll: true })
+    $('dc-close').focus({ preventScroll: true })
   }
   const close = msg =>{
     const was = cur
@@ -1248,6 +1247,8 @@ function initTryIt(){
   $('dc-apply').addEventListener('click', ()=>{ playSfx('success'); close(CH_TXT[currentLang()].applied) })
   $('dc-close').addEventListener('click', ()=>{ playSfx('modal-close'); close() })
   modal.addEventListener('keydown', e =>{ if(e.key === 'Escape'){ playSfx('modal-close'); close() } })
+  // la capa oscura sobre la lista: pulsarla avisa de que hay una ventana abierta
+  modalBox.addEventListener('click', e =>{ if(e.target === modalBox && isOpen()) open(cur) })
   let lastTick = 0
   $('dc-range').addEventListener('input', e =>{
     const c = list[cur], goal = goalOf(c), wasDone = c.done >= goal

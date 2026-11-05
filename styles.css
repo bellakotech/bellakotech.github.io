@@ -2555,3 +2555,37 @@ main{margin-bottom:0}
 @keyframes dcOpenSoft{from{opacity:0;transform:translate3d(18px,0,0)}to{opacity:1;transform:none}}
 @media (max-width:900px){ @keyframes dcOpenSoft{from{opacity:0;transform:translate3d(0,12px,0)}to{opacity:1;transform:none}} }
 @media (prefers-reduced-motion:reduce){ .challenge-demo-modal:not(.is-empty) .dc-modal,.challenge-demo-modal:not(.is-empty) .dc-apply{animation:none} }
+/* =========================================
+   Retos: la ventana aparece como una capa ENCIMA de la lista (que queda atenuada),
+   sin mover nada del diseño. Solo se animan opacidad y transform → fluido.
+   ========================================= */
+.challenge-demo-grid,.challenge-demo-grid.is-open{position:relative;display:flex !important;align-items:center;justify-content:center;
+  min-height:500px;grid-template-columns:none !important;gap:0 !important;transition:none !important}
+.challenge-demo-list,.challenge-demo-grid.is-open .challenge-demo-list{width:min(100%,560px);margin:0 auto !important;transition:none !important}
+.challenge-demo-modal,.challenge-demo-modal.is-empty{position:absolute !important;inset:-8px;z-index:5;display:flex !important;flex-direction:column;align-items:center;justify-content:center;
+  min-height:0;padding:30px 0 0;overflow:visible;border-radius:18px;visibility:visible;
+  background:radial-gradient(ellipse at center,rgba(2,12,16,.72) 0%,rgba(2,12,16,.45) 60%,rgba(2,12,16,0) 100%);
+  opacity:1;transition:opacity .28s ease}
+.challenge-demo-modal.is-empty{opacity:0;pointer-events:none}
+.challenge-demo-modal.is-empty .dc-modal,.challenge-demo-modal.is-empty .dc-apply,.challenge-demo-modal.is-empty .dc-toast{display:flex}
+.challenge-demo-modal.is-empty .dc-apply{display:inline-block}
+.challenge-demo-modal.is-empty .dc-empty,.dc-empty{display:none !important}
+.challenge-demo-modal .dc-modal{will-change:transform,opacity;transition:transform .34s cubic-bezier(.2,.8,.2,1),opacity .28s ease;transform:none;opacity:1;box-shadow:0 24px 60px rgba(0,0,0,.55)}
+.challenge-demo-modal.is-empty .dc-modal{transform:translate3d(0,14px,0) scale(.96);opacity:0}
+.challenge-demo-modal .dc-apply{transition:transform .34s cubic-bezier(.2,.8,.2,1) .04s,opacity .28s ease .04s}
+.challenge-demo-modal.is-empty .dc-apply{transform:translate3d(0,10px,0);opacity:0}
+.challenge-demo-modal:not(.is-empty) .dc-modal,.challenge-demo-modal:not(.is-empty) .dc-apply{animation:none}
+.challenge-demo-modal{cursor:not-allowed}
+.challenge-demo-modal .dc-modal,.challenge-demo-modal .dc-apply,.challenge-demo-modal .dc-toast{cursor:auto}
+.dc-modal{display:block}
+.challenge-demo-modal.is-empty .dc-modal{display:block}
+@media (max-width:900px){ .challenge-demo-grid,.challenge-demo-grid.is-open{min-height:540px} .challenge-demo-modal,.challenge-demo-modal.is-empty{inset:-4px} }
+@media (prefers-reduced-motion:reduce){ .challenge-demo-modal,.challenge-demo-modal .dc-modal,.challenge-demo-modal .dc-apply{transition:none} }
+
+/* Habilidades: el dorado solo para la recarga; "lista" en turquesa */
+.skill-card-steps{color:#8df0d8}
+.skill-card.is-cooldown .skill-card-steps{color:var(--btn-gold-pressed)}
+.skill-card:not(.is-cooldown) .skill-card-state{color:#8df0d8}
+.challenge-demo-modal.is-empty{visibility:hidden;transition:opacity .28s ease,visibility 0s linear .28s}
+.challenge-demo-modal:not(.is-empty){visibility:visible;transition:opacity .28s ease,visibility 0s}
+.challenge-demo-modal .dc-toast{display:block}
