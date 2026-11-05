@@ -27,7 +27,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Poppins:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <!-- Entrada suave al llegar desde el botón "Descubre GrowTale" de la portada -->
     <script>try{if(sessionStorage.getItem('growtale_enter')){document.documentElement.classList.add('arrive');sessionStorage.removeItem('growtale_enter')}}catch(e){}</script>
-    <link rel="stylesheet" href="styles.css?v=20261104t">
+    <link rel="stylesheet" href="styles.css?v=20261106y">
   </head>
   <body>
     <a class="skip-link" href="#main" data-i18n="skip_to_content">Saltar al contenido</a>
@@ -36,17 +36,17 @@
       <div class="nav-inner container-lg">
         <div class="nav-left">
           <a href="index.html" class="nav-logo" aria-label="Volver a la portada" data-i18n-aria-label="back_to_cover">
-            <img src="assets/images/logo.svg" alt="GrowTale" width="76" height="44">
+            <img src="assets/images/logo.webp" alt="GrowTale" width="76" height="47">
           </a>
         </div>
 
         <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menú" data-i18n-aria-label="open_menu"><span class="nav-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span></button>
 
         <ul class="nav-links" id="nav-links">
-          <li><a href="#problem" data-i18n="nav_impact">Impacto</a></li>
-          <li><a href="#how" data-i18n="nav_game">Videojuego</a></li>
-          <li><a href="#universe" data-i18n="nav_universe">Universo</a></li>
-          <li><a href="#team" data-i18n="nav_team">Equipo</a></li>
+          <li><a href="#objetivos" data-i18n="nav_impact">Objetivos</a></li>
+          <li><a href="#videojuego" data-i18n="nav_game">Videojuego</a></li>
+          <li><a href="#universo" data-i18n="nav_universe">Universo</a></li>
+          <li><a href="#proyecto" data-i18n="nav_project">Proyecto</a></li>
           <li><a href="#contact" data-i18n="nav_contact">Contacto</a></li>
         </ul>
 
@@ -74,30 +74,47 @@
       </div>
     </nav>
 
-    <!-- VISIÓN -->
-    <header id="vision" class="vision-section">
+    <!-- PORTADA DEL PROYECTO: pantalla completa con el valle de Mindveil y Liria -->
+    <header id="vision" class="vision-section hero-full">
+      <div class="hero-motes" aria-hidden="true"><span style="--x:43%;--y:54%;--s:6px;--d:11.6s;--delay:-0.9s"></span><span style="--x:70%;--y:47%;--s:5px;--d:11.1s;--delay:-10.9s"></span><span style="--x:29%;--y:39%;--s:3px;--d:10.0s;--delay:-0.8s"></span><span style="--x:13%;--y:89%;--s:3px;--d:12.8s;--delay:-1.5s"></span><span style="--x:30%;--y:42%;--s:6px;--d:7.3s;--delay:-2.7s"></span><span style="--x:73%;--y:52%;--s:5px;--d:9.9s;--delay:-6.5s"></span><span style="--x:75%;--y:74%;--s:4px;--d:7.7s;--delay:-6.9s"></span><span style="--x:26%;--y:82%;--s:3px;--d:10.8s;--delay:-0.8s"></span><span style="--x:9%;--y:61%;--s:6px;--d:11.8s;--delay:-5.1s"></span><span style="--x:42%;--y:94%;--s:6px;--d:9.5s;--delay:-3.0s"></span><span style="--x:25%;--y:66%;--s:3px;--d:11.0s;--delay:-6.3s"></span><span style="--x:45%;--y:92%;--s:5px;--d:11.3s;--delay:-0.9s"></span><span style="--x:67%;--y:88%;--s:4px;--d:12.3s;--delay:-1.8s"></span><span style="--x:64%;--y:88%;--s:3px;--d:13.7s;--delay:-0.9s"></span><span style="--x:73%;--y:75%;--s:5px;--d:11.9s;--delay:-7.1s"></span><span style="--x:76%;--y:93%;--s:3px;--d:12.9s;--delay:-11.3s"></span><span style="--x:62%;--y:43%;--s:3px;--d:12.1s;--delay:-3.7s"></span><span style="--x:75%;--y:92%;--s:5px;--d:12.0s;--delay:-10.6s"></span></div>
       <div class="container vision-grid">
-        <div class="vision-image">
-          <img src="assets/images/icono_vision.webp" alt="" width="220" height="220" fetchpriority="high">
-        </div>
         <div class="vision-copy">
+          <p class="hero-eyebrow"><span class="hero-eyebrow-dot" aria-hidden="true"></span><span data-i18n="hero_eyebrow">RPG de bienestar digital</span></p>
           <h1 data-i18n="vision_title">Una aventura que crece cuando el jugador desconecta</h1>
           <p class="lead" data-i18n="vision_lead">GrowTale convierte hábitos saludables, como desconectar del móvil, en progreso dentro de un universo RPG.</p>
           <div class="hero-ctas">
-            <a class="btn btn-primary" href="#product" data-i18n="view_product">Ver producto</a>
-            <a class="btn btn-secondary" href="#contact" data-i18n="contact">Contacto</a>
-            <a class="btn btn-secondary" href="docs/GrowTale_PitchDeck.pdf" target="_blank" rel="noopener">📄 Pitch Deck</a>
+            <a class="btn btn-primary" href="#how" data-i18n="hero_discover">Descubre el juego</a>
+            <a class="btn btn-secondary" href="docs/GrowTale_PitchDeck.pdf" target="_blank" rel="noopener" data-doc-viewer data-doc-title="pitch_doc_title">Pitch Deck</a>
           </div>
+          <p class="hero-contact"><span data-i18n="hero_contact_q">¿Eres inversor o centro educativo?</span> <a href="mailto:bellakotech@gmail.com" data-open-contact data-i18n="hero_contact_cta">Hablemos</a></p>
+          <ul class="hero-facts">
+            <li><strong data-i18n="hero_fact1_value">Prototipo</strong><span data-i18n="hero_fact1_label">jugable</span></li>
+            <li><strong data-i18n="hero_fact2_value">Validado</strong><span data-i18n="hero_fact2_label">por profesionales</span></li>
+            <li><strong>8</strong><span data-i18n="hero_fact3_label">personas en el equipo</span></li>
+          </ul>
+        </div>
+        <div class="vision-image">
+          <span class="hero-halo" aria-hidden="true"></span>
+          <div class="hero-speech" id="hero-speech" role="button" tabindex="0" aria-label="Siguiente mensaje de Liria" data-i18n-aria-label="hero_speech_next">
+            <span class="hero-speech-name">Liria</span>
+            <p class="hero-speech-text" aria-live="polite"><span id="hero-speech-text">¡Hola! Soy Liria, tu guía en Mindveil.</span><span class="hero-speech-caret" aria-hidden="true"></span></p>
+            <span class="hero-speech-next" aria-hidden="true"></span>
+          </div>
+          <button type="button" class="hero-liria-stage" id="hero-liria-stage" aria-label="Hablar con Liria" data-i18n-aria-label="hero_liria_talk">
+            <img id="hero-liria" src="assets/images/hero/liria-happy2.webp" alt="Liria, la guía de GrowTale" data-i18n-alt="hero_liria_alt" width="420" height="513" fetchpriority="high">
+          </button>
         </div>
       </div>
+      <a class="hero-scroll" href="#main" aria-label="Seguir bajando" data-i18n-aria-label="hero_scroll"><span aria-hidden="true"></span></a>
     </header>
 
     <main id="main">
 
+      <div class="zone zone-impact" id="objetivos">
       <!-- BLOQUE: OBJETIVOS Y CRECIMIENTO -->
       <div class="block-sep" data-block="impacto">
         <div class="block-inner container">
-          <div class="block-icon" aria-hidden="true">⚖️</div>
+          <div class="block-icon" aria-hidden="true"><span class="gt-icon" style="--icon:url(assets/icons/objectives.svg)" aria-hidden="true"></span></div>
           <div class="block-text">
             <h2 class="block-title" data-i18n="block_impact_title">OBJETIVOS Y CRECIMIENTO</h2>
             <p class="block-sub" data-i18n="block_impact_sub">Estamos construyendo una nueva forma de mejorar nuestra relación con la tecnología a través del videojuego</p>
@@ -106,39 +123,78 @@
         </div>
       </div>
 
-      <div class="impact-grid">
-        <!-- El problema -->
-        <section id="problem" class="investor-section">
-          <div class="container">
-            <h2 data-i18n="problem_title">El problema</h2>
-            <p class="problem-subtitle" data-i18n="problem_subtitle">Recuperar la atención se ha vuelto un reto diario.</p>
-            <p data-i18n="problem_p1">El móvil forma parte de nuestro día a día, pero las interrupciones constantes hacen que sea más difícil estudiar, concentrarse, descansar y dedicar tiempo a otras actividades.</p>
-            <p data-i18n="problem_p2">Muchas herramientas nos muestran cuánto utilizamos el teléfono. Sin embargo, conocer el problema no siempre es suficiente para cambiar nuestros hábitos.</p>
-            <div class="screen-time-demo">
-              <div class="screen-time-label" data-i18n="screen_time_label">Tiempo de pantalla hoy</div>
-              <div class="screen-time-counter" id="screen-time-counter">7h 42m</div>
+      <!-- Hilo del bloque: problema → solución → por qué tiene sentido -->
+      <ol class="story-steps">
+        <li><a href="#problem"><span class="story-num">01</span><span data-i18n="problem_title">El problema</span></a></li>
+        <li><a href="#solution"><span class="story-num">02</span><span data-i18n="solution_title">Nuestra solución</span></a></li>
+        <li><a href="#validation"><span class="story-num">03</span><span data-i18n="why_title">Por qué tiene sentido</span></a></li>
+      </ol>
+
+        <!-- 01 · El problema -->
+        <section id="problem" class="investor-section story-section">
+          <div class="container story-grid">
+            <div class="story-copy">
+              <p class="story-eyebrow"><span class="story-num">01</span><span data-i18n="problem_title">El problema</span></p>
+              <h2 class="story-statement" data-i18n="problem_subtitle">Recuperar la atención se ha vuelto un reto diario.</h2>
+              <p data-i18n="problem_p1">El móvil forma parte de nuestro día a día, pero las interrupciones constantes hacen que sea más difícil estudiar, concentrarse, descansar y dedicar tiempo a otras actividades.</p>
+              <p data-i18n="problem_p2">Muchas herramientas nos muestran cuánto utilizamos el teléfono. Sin embargo, conocer el problema no siempre es suficiente para cambiar nuestros hábitos.</p>
             </div>
-            <p class="problem-highlight" data-i18n="problem_highlight">GrowTale transforma ese reto en una aventura</p>
+            <div class="story-aside">
+              <div class="screen-time-demo">
+                <div class="screen-time-label" data-i18n="screen_time_label">Tiempo de pantalla hoy</div>
+                <div class="screen-time-counter" id="screen-time-counter">7h 42m</div>
+              </div>
+              <div class="liria-tip">
+                <img class="liria-tip-img" src="assets/images/liria/liria-worried.webp" alt="" width="240" height="294" loading="lazy" decoding="async">
+                <p class="liria-bubble"><span class="liria-name">Liria</span><span data-i18n="liria_problem">¿Cuántas veces has desbloqueado el móvil hoy sin darte cuenta?</span></p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 02 · Nuestra solución -->
+        <section id="solution" class="investor-section story-section">
+          <div class="container">
+            <p class="story-eyebrow"><span class="story-num">02</span><span data-i18n="solution_title">Nuestra solución</span></p>
+            <h2 class="story-statement" data-i18n="problem_highlight">GrowTale transforma ese reto en una aventura</h2>
+            <ol class="solution-steps">
+              <li class="solution-card">
+                <span class="gt-tile" style="--icon:url(assets/icons/device-mobile-slash.svg)" aria-hidden="true"></span>
+                <h3 data-i18n="solution1_title">Lo que haces fuera de la pantalla cuenta</h3>
+                <p data-i18n="solution1_text">Retos reales como caminar, leer o desconectar de las apps que tú elijas.</p>
+              </li>
+              <li class="solution-card">
+                <span class="gt-tile" style="--icon:url(assets/icons/sword.svg)" aria-hidden="true"></span>
+                <h3 data-i18n="solution2_title">Se convierte en progreso en un RPG</h3>
+                <p data-i18n="solution2_text">Cada reto cumplido desbloquea habilidades, zonas del mapa y combates contra tus distracciones.</p>
+              </li>
+              <li class="solution-card">
+                <span class="gt-tile" style="--icon:url(assets/icons/trophy.svg)" aria-hidden="true"></span>
+                <h3 data-i18n="solution3_title">Refuerzo positivo, sin castigos</h3>
+                <p data-i18n="solution3_text">No bloquea ni culpabiliza: premia cada avance para que el nuevo hábito se mantenga.</p>
+              </li>
+            </ol>
           </div>
         </section>
 
         <!-- Validación profesional -->
-        <section id="validation" class="investor-section">
+        <section id="validation" class="investor-section story-section">
           <div class="container">
-            <h2 data-i18n="validation_title">Validación profesional</h2>
-            <div class="validation-seal" data-i18n="validation_seal">✅ Evaluación profesional independiente</div>
+            <p class="story-eyebrow"><span class="story-num">03</span><span data-i18n="why_title">Por qué tiene sentido</span></p>
+            <h2 class="story-statement" data-i18n="validation_title">Validación profesional</h2>
+            <div class="validation-seal"><span class="gt-icon" style="--icon:url(assets/icons/check.svg)" aria-hidden="true"></span><span data-i18n="validation_seal">Evaluación profesional independiente</span></div>
 
             <div class="validators">
               <div class="validation-card">
-                <h3 data-i18n="validation_wellbeing_title">🧘 Bienestar digital</h3>
+                <h3 class="has-tile"><span class="gt-tile" style="--icon:url(assets/icons/mind.svg)" aria-hidden="true"></span><span data-i18n="validation_wellbeing_title">Bienestar digital</span></h3>
                 <p data-i18n="validation_wellbeing_text">Reduce el uso pasivo del móvil mediante mecánicas de refuerzo positivo</p>
               </div>
               <div class="validation-card">
-                <h3 data-i18n="validation_ethics_title">🌱 Diseño ético</h3>
+                <h3 class="has-tile"><span class="gt-tile" style="--icon:url(assets/icons/shield-check.svg)" aria-hidden="true"></span><span data-i18n="validation_ethics_title">Diseño ético</span></h3>
                 <p data-i18n="validation_ethics_text">Sin adicción artificial ni sistemas diseñados para generar dependencia</p>
               </div>
               <div class="validation-card">
-                <h3 data-i18n="validation_potential_title">🚀 Potencial de aplicación</h3>
+                <h3 class="has-tile"><span class="gt-tile" style="--icon:url(assets/icons/comet.svg)" aria-hidden="true"></span><span data-i18n="validation_potential_title">Potencial de aplicación</span></h3>
                 <ul>
                   <li data-i18n="validation_potential_education">Educación</li>
                   <li data-i18n="validation_potential_prevention">Prevención psicosocial</li>
@@ -149,19 +205,20 @@
             <blockquote class="validation-quote" data-i18n="validation_quote">“GrowTale presenta una propuesta innovadora y socialmente pertinente dentro del bienestar digital y la prevención psicosocial.”</blockquote>
             <div class="validator-author">
               <p data-i18n="validation_author">Valoración profesional independiente del ámbito del Trabajo Social.</p>
-              <a href="docs/AnalisisMdm.pdf" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="validation_download">📄 Descargar informe completo</a>
+              <a href="docs/AnalisisMdm.pdf" target="_blank" rel="noopener" class="btn btn-primary" data-doc-viewer data-doc-title="validation_doc_title" data-i18n="validation_download">Consulta informe completo</a>
             </div>
           </div>
         </section>
       </div>
 
+      <div class="zone zone-game" id="videojuego">
       <!-- BLOQUE: EL VIDEOJUEGO -->
       <div class="block-sep block-sep-immersive" data-block="videojuego">
         <div class="block-inner container">
-          <div class="block-icon" aria-hidden="true">🜚</div>
+          <div class="block-icon" aria-hidden="true"><span class="gt-icon" style="--icon:url(assets/icons/flame.svg)" aria-hidden="true"></span></div>
           <div class="block-text">
             <h2 class="block-title" data-i18n="block_game_title">EL VIDEOJUEGO</h2>
-            <p class="block-sub" data-i18n="block_game_sub">Descubre las mecánicas, los retos y el universo que convierten la desconexión en progreso.</p>
+            <p class="block-sub" data-i18n="block_game_sub">Descubre cómo funciona, pruébalo y mira cómo la desconexión se convierte en progreso.</p>
           </div>
           <div class="block-deco" aria-hidden="true"></div>
         </div>
@@ -171,19 +228,23 @@
       <section id="how" class="how">
         <h2 data-i18n="how_title">Cómo funciona</h2>
         <p data-i18n="how_lead">Convierte menos tiempo frente a aplicaciones distractoras en progreso dentro de GrowTale.</p>
+        <div class="liria-tip">
+          <img class="liria-tip-img" src="assets/images/liria/liria-explicative.webp" alt="" width="240" height="294" loading="lazy" decoding="async">
+          <p class="liria-bubble"><span class="liria-name">Liria</span><span data-i18n="liria_how">Cada reto que cumples lejos de la pantalla se convierte en progreso en Mindveil.</span></p>
+        </div>
         <div class="steps">
           <div class="step">
-            <h3 class="step-title" data-i18n="how_step1_title">🎲 Elige tu reto</h3>
+            <h3 class="step-title has-tile"><span class="gt-tile" style="--icon:url(assets/icons/settings.svg)" aria-hidden="true"></span><span data-i18n="how_step1_title">Elige tu reto</span></h3>
             <p data-i18n="how_step1_text">Clasifica las aplicaciones que quieres evitar y define tus objetivos.</p>
             <figure class="gallery-item"><img src="assets/images/comofunciona1.webp" alt="Pantalla de GrowTale para elegir retos" data-i18n-alt="how_step1_alt" width="468" height="768" loading="lazy"></figure>
           </div>
           <div class="step">
-            <h3 class="step-title" data-i18n="how_step2_title">🎯 Dedica tiempo a lo que importa</h3>
+            <h3 class="step-title has-tile"><span class="gt-tile" style="--icon:url(assets/icons/hourglass.svg)" aria-hidden="true"></span><span data-i18n="how_step2_title">Dedica tiempo a lo que importa</span></h3>
             <p data-i18n="how_step2_text">Cumple retos reales y recibe recursos para avanzar.</p>
             <figure class="gallery-item"><img src="assets/images/comofunciona2.webp" alt="Pantalla de GrowTale con un reto en curso" data-i18n-alt="how_step2_alt" width="424" height="708" loading="lazy"></figure>
           </div>
           <div class="step">
-            <h3 class="step-title" data-i18n="how_step3_title">🌱 Haz crecer tu mundo</h3>
+            <h3 class="step-title has-tile"><span class="gt-tile" style="--icon:url(assets/icons/map.svg)" aria-hidden="true"></span><span data-i18n="how_step3_title">Haz crecer tu mundo</span></h3>
             <p data-i18n="how_step3_text">Desbloquea nuevas zonas y haz crecer tu aventura.</p>
             <figure class="gallery-item"><img src="assets/images/comofunciona3.webp" alt="Pantalla de GrowTale con el mundo creciendo" data-i18n-alt="how_step3_alt" width="367" height="615" loading="lazy"></figure>
           </div>
@@ -197,61 +258,182 @@
 
           <section id="gallery" class="gallery">
             <h3 class="section-subtitle" data-i18n="gallery_title">Galería</h3>
-            <div class="gallery-grid">
-              <figure class="gallery-item">
-                <img src="assets/images/captura1.webp" alt="Pantalla de habilidades de GrowTale" data-i18n-alt="gallery_skills_alt" width="319" height="679" loading="lazy">
-                <figcaption data-i18n="gallery_skills">Habilidades</figcaption>
-              </figure>
-              <figure class="gallery-item">
-                <img src="assets/images/captura2.webp" alt="Pantalla de combate de GrowTale" data-i18n-alt="gallery_combat_alt" width="487" height="757" loading="lazy">
-                <figcaption data-i18n="gallery_combat">Combate</figcaption>
-              </figure>
-              <figure class="gallery-item">
-                <img src="assets/images/captura3.webp" alt="Pantalla de personaje de GrowTale" data-i18n-alt="gallery_character_alt" width="900" height="1078" loading="lazy">
-                <figcaption data-i18n="gallery_character">Personaje</figcaption>
-              </figure>
-            </div>
-          </section>
-
-          <section id="challenges" class="challenges">
-            <h3 class="section-subtitle" data-i18n="challenges_title">Retos diarios</h3>
-            <div class="challenge-list compact">
-              <article class="challenge card">
-                <h4 data-i18n="challenge1_title">Concentración de 30 min</h4>
-                <p data-i18n="challenge1_text">Evita apps distractoras durante 30 minutos y gana semillas.</p>
-                <div class="challenge-meta">
-                  <span class="badge" data-i18n="challenge1_badge">Reto diario</span>
-                  <span class="reward" data-i18n="challenge1_reward">Recompensa: Semillas</span>
-                </div>
-              </article>
-              <article class="challenge card">
-                <h4 data-i18n="challenge2_title">Paseo al aire libre</h4>
-                <p data-i18n="challenge2_text">Pasa 20 minutos fuera del móvil y desbloquea una zona en el mapa.</p>
-                <div class="challenge-meta">
-                  <span class="badge" data-i18n="challenge2_badge">Reto de bienestar</span>
-                  <span class="reward" data-i18n="challenge2_reward">Recompensa: Desbloqueo de región</span>
-                </div>
-              </article>
-              <article class="challenge card">
-                <h4 data-i18n="challenge3_title">Aprendizaje</h4>
-                <p data-i18n="challenge3_text">Completa un objetivo de estudio o lectura.</p>
-                <div class="challenge-meta">
-                  <span class="badge" data-i18n="challenge3_badge">Reto de aprendizaje</span>
-                  <span class="reward" data-i18n="challenge3_reward">Recompensa: Libro de poder</span>
-                </div>
-              </article>
+            <div class="carousel" data-carousel aria-roledescription="carrusel" aria-label="Capturas del juego" data-i18n-aria-label="gallery_label">
+              <button type="button" class="carousel-btn carousel-prev" aria-label="Anterior" data-i18n-aria-label="carousel_prev"></button>
+              <ul class="carousel-track" tabindex="0">
+                <li class="carousel-slide">
+                  <figure class="gallery-item">
+                    <img src="assets/images/screens/map.webp" alt="Pantalla del mapa del mundo de GrowTale con el recorrido y el progreso diario" data-i18n-alt="gallery_map_alt" width="430" height="932" loading="lazy" decoding="async">
+                    <figcaption data-i18n="gallery_map">Mapa del mundo</figcaption>
+                  </figure>
+                </li>
+                <li class="carousel-slide">
+                  <figure class="gallery-item">
+                    <img src="assets/images/screens/progress.webp" alt="Pantalla de progreso diario con pasos, tiempo de pantalla y retos" data-i18n-alt="gallery_progress_alt" width="430" height="932" loading="lazy" decoding="async">
+                    <figcaption data-i18n="gallery_progress">Progreso diario</figcaption>
+                  </figure>
+                </li>
+                <li class="carousel-slide">
+                  <figure class="gallery-item">
+                    <img src="assets/images/screens/objectives.webp" alt="Pantalla de objetivos con retos diarios y misiones principales" data-i18n-alt="gallery_objectives_alt" width="430" height="932" loading="lazy" decoding="async">
+                    <figcaption data-i18n="gallery_objectives">Objetivos y misiones</figcaption>
+                  </figure>
+                </li>
+                <li class="carousel-slide">
+                  <figure class="gallery-item">
+                    <img src="assets/images/screens/skills.webp" alt="Pantalla del mazo de habilidades de GrowTale" data-i18n-alt="gallery_skills_alt" width="430" height="932" loading="lazy" decoding="async">
+                    <figcaption data-i18n="gallery_skills">Habilidades</figcaption>
+                  </figure>
+                </li>
+                <li class="carousel-slide">
+                  <figure class="gallery-item">
+                    <img src="assets/images/screens/combat.webp" alt="Pantalla de combate en curso con las habilidades del jugador" data-i18n-alt="gallery_combat_alt" width="430" height="932" loading="lazy" decoding="async">
+                    <figcaption data-i18n="gallery_combat">Combate</figcaption>
+                  </figure>
+                </li>
+                <li class="carousel-slide">
+                  <figure class="gallery-item">
+                    <img src="assets/images/screens/dialogue.webp" alt="Pantalla de evento con un diálogo de Liria" data-i18n-alt="gallery_dialogue_alt" width="430" height="932" loading="lazy" decoding="async">
+                    <figcaption data-i18n="gallery_dialogue">Diálogo con Liria</figcaption>
+                  </figure>
+                </li>
+              </ul>
+              <button type="button" class="carousel-btn carousel-next" aria-label="Siguiente" data-i18n-aria-label="carousel_next"></button>
+              <div class="carousel-dots" role="tablist"></div>
             </div>
           </section>
         </div>
       </section>
 
+      <!-- Pruébalo: componentes del juego recreados en HTML (reto del día, habilidades y retos diarios) -->
+      <section id="demo" class="demo-section">
+        <div class="container">
+          <div class="tryit">
+            <h2 data-i18n="tryit_title">Pruébalo tú mismo</h2>
+            <p class="muted" data-i18n="tryit_lead">Pulsa los botones y prueba algunas piezas clave del juego.</p>
+            <div class="tryit-grid">
+              <div class="tryit-item">
+                <span class="tryit-badge"><span class="tryit-badge-dot" aria-hidden="true"></span><span data-i18n="tryit_badge">Demo interactiva</span></span>
+                <h4 data-i18n="tryit_challenge_title">Configura tu reto del día</h4>
+                <p class="tryit-hint" data-i18n="tryit_challenge_hint">Ajusta la dificultad, cambia el reto o descártalo si no te encaja.</p>
+                <div class="dc-modal" id="dc-modal">
+                  <span class="dc-badge" aria-hidden="true"><span class="gt-icon" id="dc-icon" style="--icon:url(assets/icons/footprints.svg)"></span></span>
+                  <p class="dc-title" id="dc-title" aria-live="polite">Camina 9000 pasos</p>
+                  <div class="dc-progress"><span class="dc-progress-fill" id="dc-fill" aria-hidden="true"></span><input class="dc-range" id="dc-range" type="range" min="0" max="9000" step="100" value="2500" aria-label="Progreso del reto" data-i18n-aria-label="dc_range"></div>
+                  <p class="dc-count" id="dc-count">2500 / 9000</p>
+                  <p class="dc-drag-hint" data-i18n="dc_drag">Arrastra la barra para avanzar</p>
+                  <hr class="dc-sep">
+                  <p class="dc-label" data-i18n="dc_difficulty">Dificultad</p>
+                  <div class="dc-difficulty">
+                    <button type="button" class="dc-step" id="dc-minus" aria-label="Bajar dificultad" data-i18n-aria-label="dc_less">&minus;</button>
+                    <span id="dc-level" aria-live="polite">Normal</span>
+                    <button type="button" class="dc-step" id="dc-plus" aria-label="Subir dificultad" data-i18n-aria-label="dc_more">+</button>
+                  </div>
+                  <div class="dc-actions">
+                    <button type="button" class="dc-btn dc-ban" id="dc-ban"><span class="gt-icon" style="--icon:url(assets/icons/prohibit.svg)" aria-hidden="true"></span><span data-i18n="dc_ban">Descartar</span></button>
+                    <button type="button" class="dc-btn dc-swap tap-hint" id="dc-swap"><span class="gt-icon" style="--icon:url(assets/icons/shuffle.svg)" aria-hidden="true"></span><span data-i18n="dc_swap">Cambiar</span></button>
+                  </div>
+                </div>
+                <button type="button" class="dc-apply" id="dc-apply" data-i18n="dc_apply">Aplicar</button>
+                <p class="dc-toast" id="dc-toast" role="status"></p>
+              </div>
+
+              <div class="tryit-item">
+                <span class="tryit-badge"><span class="tryit-badge-dot" aria-hidden="true"></span><span data-i18n="tryit_badge">Demo interactiva</span></span>
+                <h4 data-i18n="tryit_skills_title">Habilidades que se recargan con tus objetivos</h4>
+                <p class="tryit-hint" data-i18n="tryit_skills_hint">Elige una habilidad para ver qué hace y cuándo está lista.</p>
+                <div class="skill-card" id="skill-card" aria-live="polite">
+                  <div class="skill-card-head">
+                    <span class="skill-glyph" id="skill-card-icon" aria-hidden="true"></span>
+                    <div>
+                      <p class="skill-card-name" id="skill-card-name"></p>
+                      <p class="skill-card-state" id="skill-card-state"></p>
+                    </div>
+                  </div>
+                  <p class="skill-card-quote" id="skill-card-quote"></p>
+                  <p class="skill-card-effect" id="skill-card-effect"></p>
+                  <p class="skill-card-steps" id="skill-card-steps"></p>
+                </div>
+                <div class="skill-buttons tap-hint" role="group" aria-label="Habilidades" data-i18n-aria-label="skills_group">
+                  <button type="button" class="skill-btn" data-skill="smite" aria-pressed="false"><span class="skill-glyph" aria-hidden="true"></span><span class="skill-btn-text"><span class="skill-btn-name"></span><span class="skill-btn-state"></span></span></button>
+                  <button type="button" class="skill-btn" data-skill="gust" aria-pressed="false"><span class="skill-glyph" aria-hidden="true"></span><span class="skill-btn-text"><span class="skill-btn-name"></span><span class="skill-btn-state"></span></span></button>
+                  <button type="button" class="skill-btn" data-skill="frost" aria-pressed="true"><span class="skill-glyph" aria-hidden="true"></span><span class="skill-btn-text"><span class="skill-btn-name"></span><span class="skill-btn-state"></span></span></button>
+                  <button type="button" class="skill-btn" data-skill="heal" aria-pressed="false"><span class="skill-glyph" aria-hidden="true"></span><span class="skill-btn-text"><span class="skill-btn-name"></span><span class="skill-btn-state"></span></span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <section id="challenges" class="challenges">
+            <h3 class="section-subtitle" data-i18n="challenges_title">Retos diarios</h3>
+            <div class="liria-tip">
+              <img class="liria-tip-img" src="assets/images/liria/liria-happy2.webp" alt="" width="240" height="294" loading="lazy" decoding="async">
+              <p class="liria-bubble"><span class="liria-name">Liria</span><span data-i18n="liria_challenges">¡Pulsa el + para avanzar y completar tus retos!</span></p>
+            </div>
+            <!-- Retos con el formato del juego: rombo con icono + barra de progreso; dorada si está completado -->
+            <ul class="daily-list">
+              <li class="daily" data-state="progress" style="--progress:60%">
+                <span class="daily-icon" aria-hidden="true"><span class="gt-icon" style="--icon:url(assets/icons/eye.svg)"></span></span>
+                <div class="daily-bar">
+                  <div class="daily-text">
+                    <span class="daily-type" data-i18n="challenge1_badge">Reto diario</span>
+                    <h4 data-i18n="challenge1_title">Concentración de 30 min</h4>
+                    <p data-i18n="challenge1_text">Evita las apps distractoras durante 30 minutos.</p>
+                  </div>
+                  <button type="button" class="daily-end" aria-label="Avanzar reto" data-i18n-aria-label="daily_advance"></button>
+                </div>
+              </li>
+              <li class="daily" data-state="progress" style="--progress:20%">
+                <span class="daily-icon" aria-hidden="true"><span class="gt-icon" style="--icon:url(assets/icons/runner.svg)"></span></span>
+                <div class="daily-bar">
+                  <div class="daily-text">
+                    <span class="daily-type" data-i18n="challenge2_badge">Reto de bienestar</span>
+                    <h4 data-i18n="challenge2_title">Paseo al aire libre</h4>
+                    <p data-i18n="challenge2_text">Pasa 20 minutos fuera del móvil.</p>
+                  </div>
+                  <button type="button" class="daily-end" aria-label="Avanzar reto" data-i18n-aria-label="daily_advance"></button>
+                </div>
+              </li>
+              <li class="daily" data-state="done" style="--progress:100%">
+                <span class="daily-icon" aria-hidden="true"><span class="gt-icon" style="--icon:url(assets/icons/book-open.svg)"></span></span>
+                <div class="daily-bar">
+                  <div class="daily-text">
+                    <span class="daily-type" data-i18n="challenge3_badge">Reto de aprendizaje</span>
+                    <h4 data-i18n="challenge3_title">Aprendizaje</h4>
+                    <p data-i18n="challenge3_text">Completa un objetivo de estudio o lectura.</p>
+                  </div>
+                  <button type="button" class="daily-end" aria-label="Avanzar reto" data-i18n-aria-label="daily_advance"></button>
+                </div>
+              </li>
+            </ul>
+          </section>
+        </div>
+      </section>
+      </div>
+
+      <div class="zone zone-universe" id="universo">
+      <!-- BLOQUE: EL UNIVERSO -->
+      <div class="block-sep block-sep-immersive" data-block="universo">
+        <div class="block-inner container">
+          <div class="block-icon" aria-hidden="true"><span class="gt-icon" style="--icon:url(assets/icons/planet.svg)" aria-hidden="true"></span></div>
+          <div class="block-text">
+            <h2 class="block-title" data-i18n="block_universe_title">EL UNIVERSO DE GROWTALE</h2>
+            <p class="block-sub" data-i18n="block_universe_sub">Recorre Mindveil, conoce a sus enemigos y descubre cómo creamos su arte.</p>
+          </div>
+          <div class="block-deco" aria-hidden="true"></div>
+        </div>
+      </div>
+
       <!-- Universo GrowTale -->
       <section id="universe" class="universe-section">
         <div class="container">
-          <h2 data-i18n="universe_title">Universo GrowTale</h2>
+          <h2 data-i18n="universe_title">El mapa de Mindveil</h2>
           <section id="map" class="map">
             <h3 class="section-subtitle" data-i18n="map_title">Mindveil, el Reino de la Compulsión</h3>
             <p class="muted" data-i18n="map_text">Una isla con forma de cerebro. Toca cada lugar para descubrir qué te espera.</p>
+            <div class="liria-tip">
+              <img class="liria-tip-img" src="assets/images/liria/liria-surprised.webp" alt="" width="240" height="294" loading="lazy" decoding="async">
+              <p class="liria-bubble"><span class="liria-name">Liria</span><span data-i18n="liria_map">Mindveil es enorme… y cada lugar esconde un hábito por mejorar.</span></p>
+            </div>
 
             <!-- Mapa interactivo: el mar animado va por CSS; los puntos usan % sobre la imagen -->
             <div class="world-map">
@@ -332,21 +514,215 @@
                 </article>
               </div>
             </div>
+
+            <!-- Tipos de nodo del mapa del juego (iconografía del Figma) -->
+            <div class="node-types">
+              <h4 class="node-types-title" data-i18n="nodes_title">Tipos de nodo</h4>
+              <ul class="node-type-list">
+              <li class="node-type">
+                <span class="map-node" data-type="main-quest" aria-hidden="true"></span>
+                <div>
+                  <h4 data-i18n="node_main">Misión principal</h4>
+                  <p data-i18n="node_main_text">Hacen avanzar la historia de cada acto y abren el camino a nuevas zonas del mapa.</p>
+                </div>
+              </li>
+              <li class="node-type">
+                <span class="map-node" data-type="side-quest" aria-hidden="true"></span>
+                <div>
+                  <h4 data-i18n="node_side">Misión secundaria</h4>
+                  <p data-i18n="node_side_text">Encargos opcionales de los habitantes de Mindveil que dan recompensas extra.</p>
+                </div>
+              </li>
+              <li class="node-type">
+                <span class="map-node" data-type="combat" aria-hidden="true"></span>
+                <div>
+                  <h4 data-i18n="node_combat">Combate</h4>
+                  <p data-i18n="node_combat_text">Enfrentamientos por turnos contra las distracciones convertidas en enemigos.</p>
+                </div>
+              </li>
+              <li class="node-type">
+                <span class="map-node" data-type="tip" aria-hidden="true"></span>
+                <div>
+                  <h4 data-i18n="node_tip">Consejo</h4>
+                  <p data-i18n="node_tip_text">Pequeñas paradas con ideas prácticas sobre bienestar digital y hábitos saludables.</p>
+                </div>
+              </li>
+              </ul>
+            </div>
           </section>
         </div>
       </section>
 
+      <!-- Bestiario: cada distracción es un enemigo del juego -->
+      <section id="bestiary" class="bestiary">
+        <div class="container">
+          <h2 data-i18n="bestiary_title">Algunos enemigos de Mindveil</h2>
+          <p class="problem-subtitle" data-i18n="bestiary_subtitle">Cada distracción del día a día toma forma de criatura en el juego.</p>
+          <ul class="enemy-grid">
+              <li class="enemy-card">
+                <div class="enemy-art">
+                  <img src="assets/images/enemies/doomscrollers-sketch.webp" alt="Scroll Serpent" width="520" height="520" loading="lazy" decoding="async">
+                </div>
+                <div class="enemy-body">
+                  <span class="enemy-dist" data-i18n="enemy1_dist">El scroll infinito</span>
+                  <h3>Scroll Serpent</h3>
+                  <p data-i18n="enemy1_text">Se enrosca sin fin y te atrapa en un bucle de contenido.</p>
+                  <button type="button" class="enemy-toggle" aria-expanded="false" aria-controls="enemy-more-1"><span class="enemy-toggle-text">Ver ataques y estrategia</span><span class="enemy-toggle-icon" aria-hidden="true"></span></button>
+                  <div class="enemy-more" id="enemy-more-1" hidden>
+                    <p class="enemy-trait"><strong data-i18n="enemy1_traitname">Feed infinito</strong>: <span data-i18n="enemy1_trait">gana daño acumulado en cada turno.</span></p>
+                    <p class="enemy-beat"><span class="enemy-beat-label" data-i18n="bestiary_beat">Cómo vencerlo</span> <span data-i18n="enemy1_beat">Cuanto más dura el combate, más fuerte se vuelve. Rompe su rutina pronto y acaba con él de un golpe concentrado, igual que cortar el scroll a tiempo.</span></p>
+                    <p class="enemy-attacks-label" data-i18n="bestiary_attacks">Ataques</p>
+                      <ul class="enemy-skills"><li data-i18n="enemy1_skill1">Feed sin fin</li><li data-i18n="enemy1_skill2">Robo de tiempo</li><li data-i18n="enemy1_skill3">Mordisco de scroll</li></ul>
+                  </div>
+                </div>
+              </li>
+              <li class="enemy-card">
+                <div class="enemy-art enemy-art-final">
+                  <img src="assets/images/enemies/flicker-final.webp" alt="Flicker" width="560" height="588" loading="lazy" decoding="async">
+                </div>
+                <div class="enemy-body">
+                  <span class="enemy-dist" data-i18n="enemy3_dist">Saltar de app en app</span>
+                  <h3>Flicker</h3>
+                  <p data-i18n="enemy3_text">Un hada veloz que divide tu atención y te arrastra de una tarea a otra.</p>
+                  <button type="button" class="enemy-toggle" aria-expanded="false" aria-controls="enemy-more-3"><span class="enemy-toggle-text">Ver ataques y estrategia</span><span class="enemy-toggle-icon" aria-hidden="true"></span></button>
+                  <div class="enemy-more" id="enemy-more-3" hidden>
+                    <p class="enemy-trait"><strong data-i18n="enemy3_traitname">Presencia fragmentada</strong>: <span data-i18n="enemy3_trait">el primer golpe de cada turno tiene un 30% de probabilidad de fallar.</span></p>
+                    <p class="enemy-beat"><span class="enemy-beat-label" data-i18n="bestiary_beat">Cómo vencerlo</span> <span data-i18n="enemy3_beat">Es escurridizo y a veces esquiva tus golpes. No te disperses: céntrate en un solo objetivo y actúa con decisión.</span></p>
+                    <p class="enemy-attacks-label" data-i18n="bestiary_attacks">Ataques</p>
+                      <ul class="enemy-skills"><li data-i18n="enemy3_skill1">Pulso de fallo</li><li data-i18n="enemy3_skill2">Atención dividida</li><li data-i18n="enemy3_skill3">Microinterrupción</li></ul>
+                  </div>
+                </div>
+              </li>
+              <li class="enemy-card">
+                <div class="enemy-art">
+                  <img src="assets/images/enemies/shapeshifters-sketch.webp" alt="Shapeshifter" width="520" height="520" loading="lazy" decoding="async">
+                </div>
+                <div class="enemy-body">
+                  <span class="enemy-dist" data-i18n="enemy4_dist">Los pensamientos en bucle</span>
+                  <h3>Shapeshifter</h3>
+                  <p data-i18n="enemy4_text">Cambia de forma sin parar y distorsiona lo que ves y lo que piensas.</p>
+                  <button type="button" class="enemy-toggle" aria-expanded="false" aria-controls="enemy-more-4"><span class="enemy-toggle-text">Ver ataques y estrategia</span><span class="enemy-toggle-icon" aria-hidden="true"></span></button>
+                  <div class="enemy-more" id="enemy-more-4" hidden>
+                    <p class="enemy-trait"><strong data-i18n="enemy4_traitname">Forma inestable</strong>: <span data-i18n="enemy4_trait">cada turno potencia un atributo al azar (+30%).</span></p>
+                    <p class="enemy-beat"><span class="enemy-beat-label" data-i18n="bestiary_beat">Cómo vencerlo</span> <span data-i18n="enemy4_beat">Es impredecible porque cambia en cada turno. Sigue tu plan en lugar de reaccionar a cada cambio.</span></p>
+                    <p class="enemy-attacks-label" data-i18n="bestiary_attacks">Ataques</p>
+                      <ul class="enemy-skills"><li data-i18n="enemy4_skill1">Cambio de forma</li><li data-i18n="enemy4_skill2">Distorsión cognitiva</li><li data-i18n="enemy4_skill3">Pensamiento en bucle</li></ul>
+                  </div>
+                </div>
+              </li>
+              <li class="enemy-card">
+                <div class="enemy-art">
+                  <img src="assets/images/enemies/slugs-sketch.webp" alt="Slug" width="520" height="520" loading="lazy" decoding="async">
+                </div>
+                <div class="enemy-body">
+                  <span class="enemy-dist" data-i18n="enemy5_dist">La procrastinación</span>
+                  <h3>Slug</h3>
+                  <p data-i18n="enemy5_text">Te envuelve en su calma pegajosa y te convence de dejarlo para mañana.</p>
+                  <button type="button" class="enemy-toggle" aria-expanded="false" aria-controls="enemy-more-5"><span class="enemy-toggle-text">Ver ataques y estrategia</span><span class="enemy-toggle-icon" aria-hidden="true"></span></button>
+                  <div class="enemy-more" id="enemy-more-5" hidden>
+                    <p class="enemy-trait"><strong data-i18n="enemy5_traitname">Crecimiento pasivo</strong>: <span data-i18n="enemy5_trait">recupera un 3% de su vida en cada turno.</span></p>
+                    <p class="enemy-beat"><span class="enemy-beat-label" data-i18n="bestiary_beat">Cómo vencerlo</span> <span data-i18n="enemy5_beat">Se cura poco a poco si le das tiempo. No repitas siempre lo mismo: cambia de táctica para no quedarte atascado.</span></p>
+                    <p class="enemy-attacks-label" data-i18n="bestiary_attacks">Ataques</p>
+                      <ul class="enemy-skills"><li data-i18n="enemy5_skill1">Deriva cálida</li><li data-i18n="enemy5_skill2">Cuerpo pegajoso</li><li data-i18n="enemy5_skill3">Campo de sueño</li></ul>
+                  </div>
+                </div>
+              </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Cómo se hace: comparadores boceto → final y proceso de la ciudad de Vigilaris -->
+      <section id="making" class="making">
+        <div class="container">
+          <h2 data-i18n="making_title">Cómo creamos el arte del juego</h2>
+          <p class="problem-subtitle" data-i18n="making_subtitle">Del boceto al arte final: así trabaja el equipo. Arrastra para comparar.</p>
+          <div class="ba-grid">
+            <figure class="ba-item">
+              <div class="ba" style="--pos:50%;aspect-ratio:1000/770">
+                <img class="ba-after" src="assets/images/making/scene-final.webp" alt="" width="1000" height="770" loading="lazy" decoding="async">
+                <img class="ba-before" src="assets/images/making/scene-sketch.webp" alt="" width="1000" height="770" loading="lazy" decoding="async">
+                <span class="ba-tag ba-tag-before" data-i18n="making_before">Boceto</span>
+                <span class="ba-tag ba-tag-after" data-i18n="making_after">Final</span>
+                <span class="ba-handle" aria-hidden="true"></span>
+                <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Comparar boceto y versión final" data-i18n-aria-label="making_compare">
+              </div>
+              <figcaption><strong data-i18n="making_scene_title">Escenario</strong> <span data-i18n="making_scene_text">Del boceto en grises al fondo final que verás en el juego.</span></figcaption>
+            </figure>
+            <figure class="ba-item">
+              <div class="ba" style="--pos:50%;aspect-ratio:1000/950">
+                <img class="ba-after" src="assets/images/making/castle-final.webp" alt="" width="1000" height="950" loading="lazy" decoding="async">
+                <img class="ba-before" src="assets/images/making/castle-plan.webp" alt="" width="1000" height="950" loading="lazy" decoding="async">
+                <span class="ba-tag ba-tag-before" data-i18n="making_before">Boceto</span>
+                <span class="ba-tag ba-tag-after" data-i18n="making_after">Final</span>
+                <span class="ba-handle" aria-hidden="true"></span>
+                <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Comparar boceto y versión final" data-i18n-aria-label="making_compare">
+              </div>
+              <figcaption><strong data-i18n="making_castle_title">Castillo de Vigilaris</strong> <span data-i18n="making_castle_text">Primero se planifica cada estancia; después se ilustra el castillo completo.</span></figcaption>
+            </figure>
+            <figure class="ba-item">
+              <div class="ba" style="--pos:50%;aspect-ratio:800/800">
+                <img class="ba-after" src="assets/images/making/flicker-final.webp" alt="" width="800" height="800" loading="lazy" decoding="async">
+                <img class="ba-before" src="assets/images/making/flicker-sketch.webp" alt="" width="800" height="800" loading="lazy" decoding="async">
+                <span class="ba-tag ba-tag-before" data-i18n="making_before">Boceto</span>
+                <span class="ba-tag ba-tag-after" data-i18n="making_after">Final</span>
+                <span class="ba-handle" aria-hidden="true"></span>
+                <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Comparar boceto y versión final" data-i18n-aria-label="making_compare">
+              </div>
+              <figcaption><strong data-i18n="making_flicker_title">Flicker</strong> <span data-i18n="making_flicker_text">De los primeros trazos al enemigo terminado.</span></figcaption>
+            </figure>
+          </div>
+          <h3 class="section-subtitle making-process-title" data-i18n="making_city_title">La ciudad de Vigilaris, paso a paso</h3>
+          <ol class="process">
+              <li class="process-step">
+                <img src="assets/images/making/city-1-layout.webp" alt="" width="900" height="506" loading="lazy" decoding="async">
+                <p><strong data-i18n="making_city1_title">Planificación</strong> <span data-i18n="making_city1_text">Se estudia cómo se reparte la ciudad.</span></p>
+              </li>
+              <li class="process-step">
+                <img src="assets/images/making/city-2-blender.webp" alt="" width="900" height="500" loading="lazy" decoding="async">
+                <p><strong data-i18n="making_city2_title">Maqueta 3D</strong> <span data-i18n="making_city2_text">Volúmenes en Blender para fijar la perspectiva.</span></p>
+              </li>
+              <li class="process-step">
+                <img src="assets/images/making/city-3-lineart.webp" alt="" width="900" height="854" loading="lazy" decoding="async">
+                <p><strong data-i18n="making_city3_title">Línea final</strong> <span data-i18n="making_city3_text">El dibujo definitivo, listo para el color.</span></p>
+              </li>
+          </ol>
+        </div>
+      </section>
+      </div>
+
+      <div class="zone zone-project" id="proyecto">
       <!-- BLOQUE: PROYECTO E INVERSIÓN -->
       <div class="block-sep" data-block="proyecto">
         <div class="block-inner container">
-          <div class="block-icon" aria-hidden="true">🏗️</div>
+          <div class="block-icon" aria-hidden="true"><span class="gt-icon" style="--icon:url(assets/icons/troops.svg)" aria-hidden="true"></span></div>
           <div class="block-text">
             <h2 class="block-title" data-i18n="block_project_title">PROYECTO E INVERSIÓN</h2>
-            <p class="block-sub" data-i18n="block_project_sub">Conoce el estado de desarrollo, la oportunidad y el equipo responsable de GrowTale.</p>
+            <p class="block-sub" data-i18n="block_project_sub">Conoce la oportunidad, nuestra ventaja, el estado de desarrollo y el equipo detrás de GrowTale.</p>
           </div>
           <div class="block-deco" aria-hidden="true"></div>
         </div>
       </div>
+
+      <!-- Mercado -->
+      <section id="market" class="investor-section">
+        <div class="container">
+          <h2 data-i18n="market_title">Mercado</h2>
+          <div class="validators">
+            <div class="validation-card">
+              <h3 class="has-tile"><span class="gt-tile" style="--icon:url(assets/icons/graduation-cap.svg)" aria-hidden="true"></span><span data-i18n="market_schools_title">Centros y AMPAs</span></h3>
+              <p data-i18n="market_schools_text">Programas para trabajar concentración, bienestar digital y hábitos saludables.</p>
+            </div>
+            <div class="validation-card">
+              <h3 class="has-tile"><span class="gt-tile" style="--icon:url(assets/icons/house.svg)" aria-hidden="true"></span><span data-i18n="market_families_title">Familias</span></h3>
+              <p data-i18n="market_families_text">Herramientas positivas para acompañar el uso de la tecnología.</p>
+            </div>
+            <div class="validation-card">
+              <h3 class="has-tile"><span class="gt-tile" style="--icon:url(assets/icons/user.svg)" aria-hidden="true"></span><span data-i18n="market_users_title">Usuarios individuales</span></h3>
+              <p data-i18n="market_users_text">Personas que quieren reducir distracciones mediante una experiencia atractiva.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <!-- Nuestra ventaja -->
       <section id="differentiation" class="investor-section">
@@ -354,12 +730,12 @@
           <h2 data-i18n="advantage_title">Nuestra ventaja</h2>
           <p class="problem-subtitle" data-i18n="advantage_subtitle">Creatividad, tecnología y educación en una misma experiencia.</p>
           <div class="advantage-grid">
-            <div class="advantage-mini"><span aria-hidden="true">🎨</span><p data-i18n="advantage_universe">Universo propio</p></div>
-            <div class="advantage-mini"><span aria-hidden="true">🎵</span><p data-i18n="advantage_music">Música original</p></div>
-            <div class="advantage-mini"><span aria-hidden="true">🎮</span><p data-i18n="advantage_design">Diseño responsable</p></div>
-            <div class="advantage-mini"><span aria-hidden="true">🧘</span><p data-i18n="advantage_wellbeing">Bienestar digital</p></div>
-            <div class="advantage-mini"><span aria-hidden="true">👥</span><p data-i18n="advantage_team">Equipo experto</p></div>
-            <div class="advantage-mini"><span aria-hidden="true">⚙️</span><p data-i18n="advantage_systems">Sistemas principales implementados</p></div>
+            <div class="advantage-mini"><span class="gt-tile" style="--icon:url(assets/icons/feather.svg)" aria-hidden="true"></span><p data-i18n="advantage_universe">Universo propio</p></div>
+            <div class="advantage-mini"><span class="gt-tile" style="--icon:url(assets/icons/music.svg)" aria-hidden="true"></span><p data-i18n="advantage_music">Música original</p></div>
+            <div class="advantage-mini"><span class="gt-tile" style="--icon:url(assets/icons/hand-heart.svg)" aria-hidden="true"></span><p data-i18n="advantage_design">Diseño responsable</p></div>
+            <div class="advantage-mini"><span class="gt-tile" style="--icon:url(assets/icons/plant.svg)" aria-hidden="true"></span><p data-i18n="advantage_wellbeing">Bienestar digital</p></div>
+            <div class="advantage-mini"><span class="gt-tile" style="--icon:url(assets/icons/users-three.svg)" aria-hidden="true"></span><p data-i18n="advantage_team">Equipo experto</p></div>
+            <div class="advantage-mini"><span class="gt-tile" style="--icon:url(assets/icons/code.svg)" aria-hidden="true"></span><p data-i18n="advantage_systems">Sistemas principales implementados</p></div>
           </div>
           <p class="problem-highlight" data-i18n="advantage_highlight">La tecnología puede imitarse. La experiencia y la comunidad son mucho más difíciles de replicar.</p>
         </div>
@@ -370,56 +746,39 @@
         <div class="container">
           <h2 data-i18n="status_title">Estado del proyecto</h2>
           <p class="problem-subtitle" data-i18n="status_subtitle">De la idea a una experiencia real.</p>
+          <div class="liria-tip">
+            <img class="liria-tip-img" src="assets/images/liria/liria-thinking.webp" alt="" width="240" height="294" loading="lazy" decoding="async">
+            <p class="liria-bubble"><span class="liria-name">Liria</span><span data-i18n="liria_status">El prototipo ya funciona. Ahora toca llevarlo a centros y familias.</span></p>
+          </div>
           <ol class="roadmap">
             <li class="roadmap-step completed">
-              <div class="roadmap-icon" aria-hidden="true">✅</div>
+              <div class="roadmap-icon" aria-hidden="true"><span class="gt-tile" style="--icon:url(assets/icons/lightbulb.svg)" aria-hidden="true"></span></div>
               <h3 data-i18n="status_idea">Idea</h3>
               <p data-i18n="status_idea_text">Concepto, propósito y universo</p>
               <span class="roadmap-status" data-i18n="status_done">Completado</span>
             </li>
-            <li class="roadmap-arrow" aria-hidden="true">➜</li>
+            <li class="roadmap-arrow" aria-hidden="true"></li>
             <li class="roadmap-step completed">
-              <div class="roadmap-icon" aria-hidden="true">✅</div>
+              <div class="roadmap-icon" aria-hidden="true"><span class="gt-tile" style="--icon:url(assets/icons/game-controller.svg)" aria-hidden="true"></span></div>
               <h3 data-i18n="status_prototype">Prototipo</h3>
               <p data-i18n="status_prototype_text">Primera versión funcional para jugar</p>
               <span class="roadmap-status" data-i18n="status_done">Completado</span>
             </li>
-            <li class="roadmap-arrow" aria-hidden="true">➜</li>
+            <li class="roadmap-arrow" aria-hidden="true"></li>
             <li class="roadmap-step progress">
-              <div class="roadmap-icon" aria-hidden="true">🔃</div>
+              <div class="roadmap-icon" aria-hidden="true"><span class="gt-tile" style="--icon:url(assets/icons/flask.svg)" aria-hidden="true"></span></div>
               <h3 data-i18n="status_pilots">Pilotos</h3>
               <p data-i18n="status_pilots_text">Validación con centros y AMPAs</p>
               <span class="roadmap-status" data-i18n="status_in_progress">En preparación</span>
             </li>
-            <li class="roadmap-arrow" aria-hidden="true">➜</li>
+            <li class="roadmap-arrow" aria-hidden="true"></li>
             <li class="roadmap-step next">
-              <div class="roadmap-icon" aria-hidden="true">🚀</div>
+              <div class="roadmap-icon" aria-hidden="true"><span class="gt-tile" style="--icon:url(assets/icons/star.svg)" aria-hidden="true"></span></div>
               <h3 data-i18n="status_market">Mercado</h3>
               <p data-i18n="status_market_text">Primera versión comercial completa</p>
               <span class="roadmap-status" data-i18n="status_next">Siguiente hito</span>
             </li>
           </ol>
-        </div>
-      </section>
-
-      <!-- Mercado -->
-      <section id="market" class="investor-section">
-        <div class="container">
-          <h2 data-i18n="market_title">Mercado</h2>
-          <div class="validators">
-            <div class="validation-card">
-              <h3 data-i18n="market_schools_title">🏫 Centros y AMPAs</h3>
-              <p data-i18n="market_schools_text">Programas para trabajar concentración, bienestar digital y hábitos saludables.</p>
-            </div>
-            <div class="validation-card">
-              <h3 data-i18n="market_families_title">👨‍👩‍👧 Familias</h3>
-              <p data-i18n="market_families_text">Herramientas positivas para acompañar el uso de la tecnología.</p>
-            </div>
-            <div class="validation-card">
-              <h3 data-i18n="market_users_title">👩 Usuarios individuales</h3>
-              <p data-i18n="market_users_text">Personas que quieren reducir distracciones mediante una experiencia atractiva.</p>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -453,7 +812,7 @@
             </li>
 
             <li class="member-card">
-              <div class="avatar-wrap"><img class="avatar" src="assets/images/team/sergio.webp" alt="" width="88" height="88" loading="lazy"></div>
+              <div class="avatar-wrap"><img class="avatar avatar-zoom" src="assets/images/team/sergio.webp" alt="" width="88" height="88" loading="lazy"></div>
               <div class="member-meta">
                 <h3 class="member-name">Sergio Ruiz</h3>
                 <div class="role" data-i18n="role_sergio">Business & Operaciones</div>
@@ -528,17 +887,17 @@
           <p class="problem-subtitle" data-i18n="ask_subtitle">Construimos GrowTale junto a personas e instituciones que compartan nuestra visión.</p>
           <div class="ask-grid">
             <div class="ask-card">
-              <div class="ask-icon" aria-hidden="true">💸</div>
+              <div class="ask-icon" aria-hidden="true"><span class="gt-tile" style="--icon:url(assets/icons/coins.svg)" aria-hidden="true"></span></div>
               <h3 data-i18n="ask_investment_title">Inversión</h3>
               <p data-i18n="ask_investment_text">Capital para acelerar el desarrollo, validar mercado y preparar el lanzamiento.</p>
             </div>
             <div class="ask-card">
-              <div class="ask-icon" aria-hidden="true">🏫</div>
+              <div class="ask-icon" aria-hidden="true"><span class="gt-tile" style="--icon:url(assets/icons/chalkboard-teacher.svg)" aria-hidden="true"></span></div>
               <h3 data-i18n="ask_schools_title">Centros educativos</h3>
               <p data-i18n="ask_schools_text">Institutos, AMPAs y entidades interesadas en participar en los primeros pilotos.</p>
             </div>
             <div class="ask-card">
-              <div class="ask-icon" aria-hidden="true">🤝</div>
+              <div class="ask-icon" aria-hidden="true"><span class="gt-tile" style="--icon:url(assets/icons/handshake.svg)" aria-hidden="true"></span></div>
               <h3 data-i18n="ask_partners_title">Colaboraciones</h3>
               <p data-i18n="ask_partners_text">Partners estratégicos, instituciones, empresas y profesionales.</p>
             </div>
@@ -552,13 +911,19 @@
         <div class="container">
           <h2 data-i18n="contact_title">Contacto</h2>
           <p class="problem-subtitle" data-i18n="contact_subtitle">¿Centro educativo, AMPA, inversor o colaborador? Cuéntanos cómo podríamos colaborar.</p>
+          <div class="liria-tip">
+            <img class="liria-tip-img" src="assets/images/liria/liria-happy1.webp" alt="" width="240" height="294" loading="lazy" decoding="async">
+            <p class="liria-bubble"><span class="liria-name">Liria</span><span data-i18n="liria_contact">¡Me encantará saber de ti!</span></p>
+          </div>
           <div class="contact-actions">
-            <a class="btn btn-primary" href="mailto:bellakotech@gmail.com" data-open-contact data-i18n="contact_write">✉️ Escríbenos</a>
-            <a class="btn btn-secondary" href="docs/GrowTale_PitchDeck.pdf" target="_blank" rel="noopener">📄 Pitch Deck</a>
+            <a class="btn btn-primary" href="mailto:bellakotech@gmail.com" data-open-contact data-i18n="contact_write">Escríbenos</a>
+            <a class="btn btn-secondary" href="docs/GrowTale_PitchDeck.pdf" target="_blank" rel="noopener" data-doc-viewer data-doc-title="pitch_doc_title">Pitch Deck</a>
           </div>
           <p class="contact-alt"><span data-i18n="contact_alt">O directamente a</span> <a href="mailto:bellakotech@gmail.com">bellakotech@gmail.com</a></p>
         </div>
       </section>
+      </div>
+
     </main>
 
     <footer class="site-footer">
@@ -566,6 +931,27 @@
     </footer>
 
     <!-- Pop-up de contacto -->
+    <!-- Visor de documentos (informe y Pitch Deck) -->
+    <dialog id="doc-viewer" class="contact-dialog doc-viewer" aria-labelledby="doc-viewer-title">
+      <div class="doc-viewer-panel">
+        <header class="doc-viewer-bar">
+          <h2 id="doc-viewer-title" class="doc-viewer-title"></h2>
+          <div class="doc-viewer-actions">
+            <a class="doc-viewer-link" id="doc-viewer-open" href="#" target="_blank" rel="noopener" data-i18n="doc_open">Abrir en otra pestaña</a>
+            <a class="doc-viewer-link" id="doc-viewer-download" href="#" download data-i18n="doc_download">Descargar</a>
+            <button class="contact-dialog-close doc-viewer-close" type="button" aria-label="Cerrar" data-i18n-aria-label="form_close" data-close-doc>✕</button>
+          </div>
+        </header>
+        <div class="doc-viewer-body">
+          <iframe id="doc-viewer-frame" title="Documento" data-i18n-title="doc_frame" loading="lazy"></iframe>
+          <div class="doc-viewer-fallback" id="doc-viewer-fallback" hidden>
+            <p data-i18n="doc_fallback">Tu navegador no puede mostrar el PDF aquí.</p>
+            <a class="btn btn-primary" id="doc-viewer-fallback-link" href="#" target="_blank" rel="noopener" data-i18n="doc_open_pdf">Abrir el PDF</a>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
     <dialog id="contact-dialog" class="contact-dialog" aria-labelledby="contact-dialog-title">
       <div class="contact-dialog-panel">
         <button class="contact-dialog-close" type="button" aria-label="Cerrar" data-i18n-aria-label="form_close" data-close-contact>✕</button>
@@ -656,7 +1042,7 @@
       <div class="cursor-inner"></div>
     </div>
 
-    <script src="app.js?v=20261104t" defer></script>
-    <script src="cursor.js?v=20261104t" defer></script>
+    <script src="app.js?v=20261106y" defer></script>
+    <script src="cursor.js?v=20261106y" defer></script>
   </body>
 </html>

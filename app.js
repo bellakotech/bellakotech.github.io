@@ -36,8 +36,8 @@ const I18N_EN = {
   main_nav: 'Main',
   skip_to_content: 'Skip to content',
   // nav
-  nav_impact: 'Impact',
-  nav_game: 'Game',
+  nav_impact: 'Goals',
+  nav_game: 'Video game',
   nav_universe: 'Universe',
   nav_team: 'Team',
   nav_contact: 'Contact',
@@ -50,9 +50,9 @@ const I18N_EN = {
   block_impact_title: 'GOALS & GROWTH',
   block_impact_sub: 'We are building a new way to improve our relationship with technology through video games',
   block_game_title: 'THE VIDEO GAME',
-  block_game_sub: 'Discover the mechanics, challenges and universe that turn disconnection into progress.',
+  block_game_sub: 'See how it works, try it out and watch disconnection turn into progress.',
   block_project_title: 'PROJECT & INVESTMENT',
-  block_project_sub: 'Learn about the development status, the opportunity and the team behind GrowTale.',
+  block_project_sub: 'Learn about the opportunity, our advantage, the development status and the team behind GrowTale.',
   // problema
   problem_title: 'The problem',
   problem_subtitle: 'Getting our attention back has become a daily challenge.',
@@ -60,55 +60,180 @@ const I18N_EN = {
   problem_p2: 'Many tools show us how much we use our phone. However, knowing the problem is not always enough to change our habits.',
   screen_time_label: 'Screen time today',
   problem_highlight: 'GrowTale turns that challenge into an adventure',
+  bestiary_title: 'Some of the enemies of Mindveil',
+  bestiary_subtitle: 'Every everyday distraction takes the shape of a creature in the game.',
+  bestiary_beat: 'How to beat it',
+  enemy1_dist: 'Endless scrolling',
+  enemy1_text: 'It coils endlessly and traps you in a loop of content.',
+  enemy1_trait: 'gains stacking damage every turn.',
+  enemy1_beat: 'The longer the fight lasts, the stronger it gets. Break its routine early and finish it with one focused blow, just like stopping the scroll in time.',
+  enemy1_traitname: 'Infinite Feed',
+  enemy1_skill1: 'Endless Feed',
+  enemy1_skill2: 'Time Drain',
+  enemy1_skill3: 'Scroll Bite',
+  enemy3_dist: 'App hopping',
+  enemy3_text: 'A swift fairy that splits your attention and drags you from one task to the next.',
+  enemy3_trait: 'the first hit each turn has a 30% chance to miss.',
+  enemy3_beat: 'It is slippery and sometimes dodges your hits. Don\'t scatter: focus on a single goal and act decisively.',
+  enemy3_traitname: 'Fragmented Presence',
+  enemy3_skill1: 'Glitch Pulse',
+  enemy3_skill2: 'Attention Split',
+  enemy3_skill3: 'Micro-Interrupt',
+  enemy4_dist: 'Looping thoughts',
+  enemy4_text: 'It keeps changing shape and distorts what you see and what you think.',
+  enemy4_trait: 'a random stat is boosted each turn (+30%).',
+  enemy4_beat: 'It is unpredictable because it changes every turn. Stick to your plan instead of reacting to every change.',
+  enemy4_traitname: 'Unstable Form',
+  enemy4_skill1: 'Form Shift',
+  enemy4_skill2: 'Cognitive Distortion',
+  enemy4_skill3: 'Loop Thought',
+  enemy5_dist: 'Procrastination',
+  enemy5_text: 'It wraps you in its sticky calm and convinces you to leave it for tomorrow.',
+  enemy5_trait: 'heals 3% of its max HP each turn.',
+  enemy5_beat: 'It slowly heals if you give it time. Don\'t keep repeating the same thing: switch tactics so you don\'t get stuck.',
+  enemy5_traitname: 'Passive Growth',
+  enemy5_skill1: 'Warm Drift',
+  enemy5_skill2: 'Sticky Body',
+  enemy5_skill3: 'Sleep Field',
   // validación
   validation_title: 'Professional validation',
-  validation_seal: '✅ Independent professional assessment',
-  validation_wellbeing_title: '🧘 Digital wellbeing',
+  validation_seal: 'Independent professional assessment',
+  validation_wellbeing_title: 'Digital wellbeing',
   validation_wellbeing_text: 'Reduces passive phone use through positive reinforcement mechanics',
-  validation_ethics_title: '🌱 Ethical design',
+  validation_ethics_title: 'Ethical design',
   validation_ethics_text: 'No artificial addiction or systems designed to create dependency',
-  validation_potential_title: '🚀 Application potential',
+  validation_potential_title: 'Application potential',
   validation_potential_education: 'Education',
   validation_potential_prevention: 'Psychosocial prevention',
   validation_quote: '“GrowTale presents an innovative and socially relevant proposal within digital wellbeing and psychosocial prevention.”',
   validation_author: 'Independent professional assessment from the field of Social Work.',
-  validation_download: '📄 Download full report',
+  validation_download: 'View full report',
+  validation_doc_title: 'Independent professional assessment',
+  pitch_doc_title: 'GrowTale Pitch Deck',
+  doc_open: 'Open in a new tab',
+  doc_download: 'Download',
+  doc_frame: 'Document',
+  doc_fallback: 'Your browser cannot show the PDF here.',
+  doc_open_pdf: 'Open the PDF',
   // cómo funciona
   how_title: 'How it works',
   how_lead: 'Turn less time on distracting apps into progress in GrowTale.',
-  how_step1_title: '🎲 Choose your challenge',
+  how_step1_title: 'Choose your challenge',
   how_step1_text: 'Pick the apps you want to avoid and set your goals.',
   how_step1_alt: 'GrowTale screen for choosing challenges',
-  how_step2_title: '🎯 Spend time on what matters',
+  how_step2_title: 'Spend time on what matters',
   how_step2_text: 'Complete real challenges and earn resources to move forward.',
   how_step2_alt: 'GrowTale screen showing an active challenge',
-  how_step3_title: '🌱 Grow your world',
+  how_step3_title: 'Grow your world',
   how_step3_text: 'Unlock new areas and grow your adventure.',
   how_step3_alt: 'GrowTale screen showing the world growing',
   // producto
   product_title: 'Product',
   gallery_title: 'Gallery',
-  gallery_skills: 'Skills',
-  gallery_skills_alt: 'GrowTale skills screen',
-  gallery_combat: 'Combat',
-  gallery_combat_alt: 'GrowTale combat screen',
-  gallery_character: 'Character',
-  gallery_character_alt: 'GrowTale character screen',
   challenges_title: 'Daily challenges',
   challenge1_title: '30-minute focus',
-  challenge1_text: 'Avoid distracting apps for 30 minutes and earn seeds.',
+  challenge1_text: 'Avoid distracting apps for 30 minutes.',
   challenge1_badge: 'Daily challenge',
-  challenge1_reward: 'Reward: Seeds',
+  daily_advance: 'Advance challenge',
+  daily_restart: 'Restart challenge',
   challenge2_title: 'Outdoor walk',
-  challenge2_text: 'Spend 20 minutes away from your phone and unlock a map area.',
+  challenge2_text: 'Spend 20 minutes away from your phone.',
   challenge2_badge: 'Wellbeing challenge',
-  challenge2_reward: 'Reward: Region unlock',
   challenge3_title: 'Learning',
   challenge3_text: 'Complete a study or reading goal.',
   challenge3_badge: 'Learning challenge',
-  challenge3_reward: 'Reward: Book of power',
   // universo
-  universe_title: 'The GrowTale universe',
+  universe_title: 'The map of Mindveil',
+  nodes_title: 'Node types',
+  node_main: 'Main quest',
+  node_main_text: 'They move each act\'s story forward and open the way to new areas of the map.',
+  node_side: 'Side quest',
+  node_side_text: 'Optional tasks from the people of Mindveil that give extra rewards.',
+  node_combat: 'Combat',
+  node_combat_text: 'Turn-based fights against distractions turned into enemies.',
+  node_tip: 'Tip',
+  node_tip_text: 'Short stops with practical ideas about digital wellbeing and healthy habits.',
+  liria_problem: 'How many times have you unlocked your phone today without noticing?',
+  liria_how: 'Every challenge you complete away from the screen becomes progress in Mindveil.',
+  liria_challenges: 'Tap the + to move forward and complete your challenges!',
+  liria_map: 'Mindveil is huge… and every place hides a habit to improve.',
+  liria_status: 'The prototype already works. Now it is time to take it to schools and families.',
+  liria_contact: 'I\'d love to hear from you!',
+  tryit_title: 'Try it yourself',
+  tryit_lead: 'Press the buttons and try out some key pieces of the game.',
+  tryit_challenge_title: 'Set up today\'s challenge',
+  tryit_challenge_hint: 'Adjust the difficulty, swap the challenge or ban it if it doesn\'t suit you.',
+  dc_difficulty: 'Difficulty',
+  dc_less: 'Lower difficulty',
+  dc_more: 'Raise difficulty',
+  dc_ban: 'Ban',
+  dc_swap: 'Swap',
+  dc_apply: 'Apply',
+  tryit_skills_title: 'Skills that recharge with your goals',
+  tryit_skills_hint: 'Pick a skill to see what it does and when it is ready.',
+  skills_group: 'Skills',
+  making_title: 'How we create the game art',
+  making_subtitle: 'From sketch to final art: this is how the team works. Drag to compare.',
+  making_before: 'Sketch',
+  making_after: 'Final',
+  making_compare: 'Compare sketch and final version',
+  making_city_title: 'The city of Vigilaris, step by step',
+  making_scene_title: 'Scenery',
+  making_scene_text: 'From the greyscale sketch to the final background you will see in the game.',
+  making_castle_title: 'Vigilaris Castle',
+  making_castle_text: 'First every room is planned; then the whole castle is illustrated.',
+  making_flicker_title: 'Flicker',
+  making_flicker_text: 'From the first strokes to the finished enemy.',
+  making_city1_title: 'Planning',
+  making_city1_text: 'How the city is laid out is studied.',
+  making_city2_title: '3D blockout',
+  making_city2_text: 'Volumes in Blender to lock the perspective.',
+  making_city3_title: 'Final line art',
+  making_city3_text: 'The definitive drawing, ready for colour.',
+  nav_project: 'Project',
+  gallery_label: 'Game screenshots',
+  carousel_prev: 'Previous',
+  carousel_next: 'Next',
+  gallery_map: 'World map',
+  gallery_map_alt: 'GrowTale world map screen with the route and daily progress',
+  gallery_progress: 'Daily progress',
+  gallery_progress_alt: 'Daily progress screen with steps, screen time and challenges',
+  gallery_objectives: 'Goals and missions',
+  gallery_objectives_alt: 'Goals screen with daily challenges and main missions',
+  gallery_skills: 'Skills',
+  gallery_skills_alt: 'GrowTale skill deck screen',
+  gallery_combat: 'Combat',
+  gallery_combat_alt: 'Ongoing combat screen with the player skills',
+  gallery_dialogue: 'Talking with Liria',
+  gallery_dialogue_alt: 'Event screen with a dialogue from Liria',
+  hero_eyebrow: 'Digital wellbeing RPG',
+  hero_fact1_value: 'Playable',
+  hero_fact1_label: 'prototype',
+  hero_fact2_value: 'Validated',
+  hero_fact2_label: 'by professionals',
+  hero_fact3_label: 'people on the team',
+  hero_liria_alt: 'Liria, the GrowTale guide',
+  hero_scroll: 'Scroll down',
+  tryit_badge: 'Interactive demo',
+  tryit_tap: 'Try it',
+  hero_speech_next: 'Next message from Liria',
+  dc_range: 'Challenge progress',
+  dc_drag: 'Drag the bar to make progress',
+  bestiary_attacks: 'Attacks',
+  hero_liria_talk: 'Talk to Liria',
+  hero_discover: 'Discover the game',
+  hero_contact_q: 'Are you an investor or a school?',
+  hero_contact_cta: "Let's talk",
+  why_title: "Why it makes sense",
+  solution_title: "Our solution",
+  solution1_title: "What you do off screen counts",
+  solution1_text: "Real challenges like walking, reading or switching off the apps you choose.",
+  solution2_title: "It becomes progress in an RPG",
+  solution2_text: "Every challenge you complete unlocks skills, map areas and fights against your distractions.",
+  solution3_title: "Positive reinforcement, no punishment",
+  solution3_text: "It does not block or blame: it rewards every step so the new habit sticks.",
+  block_universe_title: 'THE GROWTALE UNIVERSE',
+  block_universe_sub: 'Travel through Mindveil, meet its enemies and discover how we create its art.',
   map_title: 'Mindveil, the Realm of Compulsion',
   map_text: 'A brain-shaped island. Tap each place to discover what awaits you.',
   map_alt: 'Map of Mindveil: a brain-shaped island',
@@ -171,11 +296,11 @@ const I18N_EN = {
   status_next: 'Next milestone',
   // mercado
   market_title: 'Market',
-  market_schools_title: '🏫 Schools and parent associations',
+  market_schools_title: 'Schools and parent associations',
   market_schools_text: 'Programmes to work on focus, digital wellbeing and healthy habits.',
-  market_families_title: '👨‍👩‍👧 Families',
+  market_families_title: 'Families',
   market_families_text: 'Positive tools to support healthy technology use.',
-  market_users_title: '👩 Individual users',
+  market_users_title: 'Individual users',
   market_users_text: 'People who want to reduce distractions through an engaging experience.',
   // equipo
   team_title: 'Team',
@@ -210,7 +335,7 @@ const I18N_EN = {
   // contacto
   contact_title: 'Contact',
   contact_subtitle: 'School, parent association, investor or partner? Tell us how we could work together.',
-  contact_write: '✉️ Write to us',
+  contact_write: 'Write to us',
   contact_alt: 'Or email us directly at',
   // formulario
   form_kicker: 'LET’S TALK',
@@ -254,6 +379,10 @@ const STRINGS = {
     music_on: 'Silenciar',
     music_off: 'Activar sonido',
     view_profile: 'Ver perfil completo',
+    enemy_more: 'Ver ataques y estrategia',
+    enemy_less: 'Ocultar detalles',
+    validation_doc_title: 'Evaluación profesional independiente',
+    pitch_doc_title: 'Pitch Deck de GrowTale',
     hide_profile: 'Ocultar perfil',
     participation_required: 'Selecciona al menos una forma de participación.',
     mail_subject: 'Contacto GrowTale',
@@ -268,6 +397,10 @@ const STRINGS = {
     music_on: 'Mute',
     music_off: 'Turn sound on',
     view_profile: 'View full profile',
+    enemy_more: 'See attacks and strategy',
+    enemy_less: 'Hide details',
+    validation_doc_title: 'Independent professional assessment',
+    pitch_doc_title: 'GrowTale Pitch Deck',
     hide_profile: 'Hide profile',
     participation_required: 'Please choose at least one way to get involved.',
     mail_subject: 'GrowTale contact',
@@ -350,7 +483,7 @@ function initSfx(){
     if(!el) return
     if(el.id === 'discover-btn') return playSfx('nav-transition')
     if(el.matches('a[href="index.html"]')) return playSfx('nav-transition-2')
-    if(el.matches('#music-toggle, [data-open-contact], [data-close-contact], .lb-close, [type="submit"]')) return
+    if(el.matches('.hero-liria-stage, .enemy-toggle, [data-doc-viewer], [data-close-doc], .carousel-btn, .carousel-dot, .daily-end, .dc-modal button, .dc-apply, .skill-btn, #music-toggle, [data-open-contact], [data-close-contact], .lb-close, [type="submit"]')) return
     if(el.matches('.lang-switch, .nav-toggle')) return playSfx('tap2')
     if(el.matches('.nav-links a, .member-link, .lb-prev, .lb-next, .contact-alt a, .map-spot')) return playSfx('tap')
     playSfx('button')
@@ -536,18 +669,21 @@ function initNav(){
   links.forEach(a=> a.addEventListener('click', ()=> setOpen(false)))
 
   const sections = links.map(a=> document.querySelector(a.getAttribute('href'))).filter(Boolean)
-  const obs = new IntersectionObserver(entries=>{
-    entries.forEach(en=>{
-      if(!en.isIntersecting) return
-      links.forEach(l=>{
-        const active = l.getAttribute('href') === '#' + en.target.id
-        l.classList.toggle('active', active)
-        if(active) l.setAttribute('aria-current', 'true')
-        else l.removeAttribute('aria-current')
-      })
+  let navRaf = 0
+  const updateActive = ()=>{
+    navRaf = 0
+    const line = window.innerHeight * 0.45
+    let current = null
+    sections.forEach(s =>{ if(s.getBoundingClientRect().top <= line) current = s })
+    links.forEach(l =>{
+      const active = !!current && l.getAttribute('href') === '#' + current.id
+      l.classList.toggle('active', active)
+      if(active) l.setAttribute('aria-current', 'true')
+      else l.removeAttribute('aria-current')
     })
-  }, { rootMargin: '-40% 0px -55% 0px' })
-  sections.forEach(s=> obs.observe(s))
+  }
+  window.addEventListener('scroll', ()=>{ if(!navRaf) navRaf = requestAnimationFrame(updateActive) }, { passive: true })
+  updateActive()
 }
 
 /* -----------------------------------------
@@ -568,9 +704,17 @@ function initTeam(){
   })
   buttons.forEach(btn=>{
     btn.addEventListener('click', ()=>{
-      const expanded = btn.closest('.member-card').classList.toggle('expanded')
-      btn.setAttribute('aria-expanded', expanded ? 'true' : 'false')
+      const card = btn.closest('.member-card')
+      const bio = card.querySelector('.bio-short')
+      const opening = !card.classList.contains('expanded')
+      // El cambio de tamaño es instantáneo (animar la altura recalcula toda la rejilla del equipo en cada
+      // fotograma y daba tirones); el texto aparece con un fundido que solo usa opacidad y transform.
+      card.classList.toggle('expanded', opening)
+      btn.setAttribute('aria-expanded', opening ? 'true' : 'false')
       sync(btn)
+      if(window.matchMedia('(prefers-reduced-motion: reduce)').matches || !bio.animate) return
+      bio.animate([{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'none' }],
+        { duration: 260, easing: 'cubic-bezier(.2,.8,.2,1)' })
     })
   })
   document.addEventListener('growtale:langchange', ()=>{ buttons.forEach(sync); updateVisibility() })
@@ -716,7 +860,8 @@ function initContact(){
    ----------------------------------------- */
 function initParallax(){
   const el = document.getElementById('vision')
-  if(!el || prefersReducedMotion()) return
+  // la portada a pantalla completa ya tiene su propio movimiento: sin parallax por scroll
+  if(!el || prefersReducedMotion() || el.classList.contains('hero-full')) return
   const maxShift = 88
   let ticking = false
 
@@ -817,17 +962,459 @@ if(!location.hash && 'scrollRestoration' in history){
   window.scrollTo(0, 0)
 }
 
+/* -----------------------------------------
+   Retos diarios: el "+" avanza el progreso hasta completarlo (barra dorada y ✓).
+   Pulsar el ✓ de un reto completado lo reinicia.
+   ----------------------------------------- */
+function initDailyChallenges(){
+  const STEP = 20
+  const ES = { daily_advance: 'Avanzar reto', daily_restart: 'Reiniciar reto' }
+  document.querySelectorAll('.daily').forEach(item=>{
+    const btn = item.querySelector('.daily-end')
+    if(!btn) return
+    let value = parseFloat(item.style.getPropertyValue('--progress')) || 0
+    // La barra se llena primero; al terminar la animación pasa a "completado" (dorada y ✓)
+    const FILL_MS = 480
+    let timer = null
+    const render = (done = value >= 100) =>{
+      item.style.setProperty('--progress', value + '%')
+      item.dataset.state = done ? 'done' : 'progress'
+      const key = done ? 'daily_restart' : 'daily_advance'
+      btn.setAttribute('data-i18n-aria-label', key)
+      btn.setAttribute('data-i18n-es-aria-label', ES[key])
+      btn.setAttribute('aria-label', currentLang() === 'en' ? I18N_EN[key] : ES[key])
+    }
+    btn.addEventListener('click', ()=>{
+      if(timer) return
+      if(value >= 100){ value = 0; playSfx('toggle-off'); render(); return }
+      value = Math.min(100, value + STEP)
+      playSfx('tap')
+      if(value < 100){ render(); return }
+      render(false)
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      timer = setTimeout(()=>{
+        timer = null
+        render(true)
+        playSfx('success')
+        item.classList.remove('just-done'); void item.offsetWidth; item.classList.add('just-done')
+      }, reduce ? 0 : FILL_MS)
+    })
+    render()
+  })
+}
+
+/* -----------------------------------------
+   "Pruébalo": modal de reto diario y habilidades, recreados del juego.
+   Los textos dinámicos se generan aquí en los dos idiomas.
+   ----------------------------------------- */
+const TRYIT = {
+  es: {
+    levels: ['Fácil', 'Normal', 'Difícil'],
+    challenges: {
+      walk: g => `Camina ${g.toLocaleString('es-ES')} pasos`,
+      read: g => `Lee ${g} páginas`
+    },
+    banned: 'Reto descartado: hoy no volverá a aparecer.',
+    lastOne: 'No puedes descartar tu último reto.',
+    applied: '¡Reto aplicado! Ya cuenta para tu progreso.',
+    completed: '¡Reto completado! Has ganado recompensas para tu aventura.',
+    ready: 'Lista',
+    cooldown: 'En recarga',
+    steps: n => `Se recarga al completar tu próximo objetivo (faltan ${n.toLocaleString('es-ES')} pasos)`,
+    readyLine: 'Lista para usar en el próximo combate',
+    skills: {
+      smite: ['Golpe Poderoso', 'Motivación', '“La acción es la clave fundamental.” — Pablo Picasso', 'Inflige 40 puntos de daño.'],
+      gust: ['Estado de Flujo', 'Foco', '“El tiempo desaparece en el flujo.” — Mihaly Csikszentmihalyi', 'Alarga 2 turnos la duración de todas tus mejoras activas.'],
+      frost: ['Determinación Firme', 'Resiliencia', '“Las raíces profundas no las alcanza la escarcha.” — J. R. R. Tolkien', 'Cada efecto negativo que recibes aumenta tu defensa física de forma acumulativa.'],
+      heal: ['Toque Sanador', 'Empatía', '“Donde hay amor, hay vida.” — Mahatma Gandhi', 'Recupera al instante un 20 % de tu vitalidad total.']
+    }
+  },
+  en: {
+    levels: ['Easy', 'Normal', 'Hard'],
+    challenges: {
+      walk: g => `Walk ${g.toLocaleString('en-GB')} steps`,
+      read: g => `Read ${g} pages`
+    },
+    banned: "Challenge banned: it won't come back today.",
+    lastOne: "You can't ban your last challenge.",
+    applied: 'Challenge applied! It now counts towards your progress.',
+    completed: 'Challenge complete! You earned rewards for your adventure.',
+    ready: 'Ready',
+    cooldown: 'Cooldown',
+    steps: n => `Recharges when you complete your next goal (${n.toLocaleString('en-GB')} steps to go)`,
+    readyLine: 'Ready to use in the next fight',
+    skills: {
+      smite: ['Power Strike', 'Motivation', '“Action is the foundational key.” — Pablo Picasso', 'Deals 40 damage points.'],
+      gust: ['Flow State', 'Focus', '“Time disappears in flow.” — Mihaly Csikszentmihalyi', 'Extends the duration of all your active buffs by 2 turns.'],
+      frost: ['Sturdy Resolve', 'Resilience', '“Deep roots are not reached by frost.” — J. R. R. Tolkien', 'Every debuff you receive stacks a physical defence boost.'],
+      heal: ['Healing Touch', 'Empathy', '“Where there is love, there is life.” — Mahatma Gandhi', 'Instantly restores 20% of your total vitality.']
+    }
+  }
+}
+
+function initTryIt(){
+  const modal = document.getElementById('dc-modal')
+  if(!modal) return
+  document.querySelectorAll('.tryit-item').forEach(item => item.addEventListener('click', e =>{
+    if(e.target.closest('button')) item.classList.add('touched')
+  }))
+  const L = () => TRYIT[currentLang()]
+  const $ = id => document.getElementById(id)
+
+  // Reto diario
+  const CH = [
+    { id: 'walk', icon: 'footprints', goals: [6000, 9000, 12000], done: 2500 },
+    { id: 'read', icon: 'book-bookmark', goals: [10, 20, 40], done: 6 }
+  ]
+  let pool = CH.slice(), cur = 0, level = 1, toastTimer = null
+  const toast = msg =>{
+    const el = $('dc-toast'); el.textContent = msg; el.classList.add('show')
+    clearTimeout(toastTimer); toastTimer = setTimeout(()=> el.classList.remove('show'), 2600)
+  }
+  const renderDc = () =>{
+    const c = pool[cur], goal = c.goals[level]
+    $('dc-icon').style.setProperty('--icon', `url(assets/icons/${c.icon}.svg)`)
+    $('dc-title').textContent = L().challenges[c.id](goal)
+    const range = $('dc-range')
+    range.max = goal; range.step = Math.max(1, Math.round(goal / 90)); range.value = Math.min(c.done, goal)
+    $('dc-fill').style.width = Math.min(100, c.done / goal * 100) + '%'
+    modal.classList.toggle('done', c.done >= goal)
+    const fmt = n => n.toLocaleString(currentLang() === 'en' ? 'en-GB' : 'es-ES')
+    $('dc-count').textContent = `${fmt(c.done)} / ${fmt(goal)}`
+    $('dc-level').textContent = L().levels[level]
+    $('dc-minus').disabled = level === 0
+    $('dc-plus').disabled = level === 2
+    $('dc-ban').disabled = pool.length < 2
+  }
+  const bump = () =>{ modal.classList.remove('bump'); void modal.offsetWidth; modal.classList.add('bump') }
+  $('dc-minus').addEventListener('click', ()=>{ if(level > 0){ level--; playSfx('toggle-off'); renderDc() } })
+  $('dc-plus').addEventListener('click', ()=>{ if(level < 2){ level++; playSfx('toggle-on'); renderDc() } })
+  $('dc-swap').addEventListener('click', ()=>{ cur = (cur + 1) % pool.length; playSfx('tap'); bump(); renderDc() })
+  $('dc-ban').addEventListener('click', ()=>{
+    if(pool.length < 2){ playSfx('error'); return toast(L().lastOne) }
+    pool.splice(cur, 1); cur = cur % pool.length
+    playSfx('error'); bump(); renderDc(); toast(L().banned)
+  })
+  $('dc-apply').addEventListener('click', ()=>{ playSfx('success'); toast(L().applied) })
+  let lastTick = 0
+  $('dc-range').addEventListener('input', e =>{
+    const c = pool[cur], goal = c.goals[level], wasDone = c.done >= goal
+    c.done = Math.min(goal, Number(e.target.value))
+    if(c.done >= goal - Number(e.target.step) / 2) c.done = goal
+    renderDc()
+    if(c.done >= goal && !wasDone){ playSfx('success'); bump(); toast(L().completed) }
+    else if(performance.now() - lastTick > 90){ lastTick = performance.now(); playSfx('hover') }
+    modal.closest('.tryit-item').classList.add('touched')
+  })
+
+  // Habilidades
+  const SK = { smite: 0, gust: 2386, frost: 0, heal: 1150 } // pasos que faltan para recargar
+  let selected = 'frost'
+  const glyph = (el, id) =>{ el.style.setProperty('--icon', `url(assets/icons/skills/${id}.svg)`); el.dataset.skill = id }
+  const renderSkills = () =>{
+    const l = L()
+    document.querySelectorAll('.skill-btn').forEach(b =>{
+      const id = b.dataset.skill
+      glyph(b.querySelector('.skill-glyph'), id)
+      b.querySelector('.skill-btn-name').textContent = l.skills[id][0]
+      b.querySelector('.skill-btn-state').textContent = SK[id] ? l.cooldown : l.ready
+      b.classList.toggle('cooldown', !!SK[id])
+      b.setAttribute('aria-pressed', id === selected ? 'true' : 'false')
+    })
+    const [name, power, quote, effect] = l.skills[selected]
+    glyph($('skill-card-icon'), selected)
+    $('skill-card-name').textContent = name
+    $('skill-card-state').textContent = power + ' · ' + (SK[selected] ? l.cooldown : l.ready)
+    $('skill-card').classList.toggle('is-cooldown', !!SK[selected])
+    $('skill-card-quote').textContent = quote
+    $('skill-card-effect').textContent = effect
+    $('skill-card-steps').textContent = SK[selected] ? l.steps(SK[selected]) : l.readyLine
+    $('skill-card').dataset.skill = selected
+  }
+  document.querySelectorAll('.skill-btn').forEach(b => b.addEventListener('click', ()=>{
+    selected = b.dataset.skill; playSfx('tap'); renderSkills()
+    const card = $('skill-card'); card.classList.remove('bump'); void card.offsetWidth; card.classList.add('bump')
+  }))
+
+  renderDc(); renderSkills()
+  document.addEventListener('growtale:langchange', ()=>{ renderDc(); renderSkills() })
+}
+
+/* Comparadores boceto → final: el range (accesible con teclado) mueve la cortinilla */
+function initBeforeAfter(){
+  document.querySelectorAll('.ba').forEach(ba =>{
+    const range = ba.querySelector('.ba-range')
+    if(!range) return
+    const set = () => ba.style.setProperty('--pos', range.value + '%')
+    range.addEventListener('input', set)
+    set()
+  })
+}
+
+/* Galería en carrusel: botones, puntos, teclado y diapositiva activa según el scroll */
+function initCarousel(){
+  document.querySelectorAll('[data-carousel]').forEach(root =>{
+    const track = root.querySelector('.carousel-track')
+    const slides = Array.from(track.children)
+    const prev = root.querySelector('.carousel-prev'), next = root.querySelector('.carousel-next')
+    const dotsBox = root.querySelector('.carousel-dots')
+    const dotLabel = i => `${currentLang() === 'en' ? 'Go to image' : 'Ir a la imagen'} ${i + 1}`
+    let active = 0
+    const go = i =>{
+      i = Math.max(0, Math.min(slides.length - 1, i))
+      const s = slides[i]
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      track.scrollTo({ left: s.offsetLeft - (track.clientWidth - s.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' })
+    }
+    const dots = slides.map((_, i)=>{
+      const d = document.createElement('button')
+      d.type = 'button'; d.className = 'carousel-dot'; d.setAttribute('role', 'tab')
+      d.setAttribute('aria-label', dotLabel(i))
+      d.addEventListener('click', ()=>{ playSfx('tap'); go(i) })
+      dotsBox.appendChild(d)
+      return d
+    })
+    const update = ()=>{
+      const mid = track.scrollLeft + track.clientWidth / 2
+      let best = 0, bestDist = Infinity
+      slides.forEach((s, i)=>{
+        const d = Math.abs(s.offsetLeft + s.offsetWidth / 2 - mid)
+        if(d < bestDist){ bestDist = d; best = i }
+      })
+      active = best
+      slides.forEach((s, i)=> s.classList.toggle('is-active', i === active))
+      dots.forEach((d, i)=> d.setAttribute('aria-selected', i === active ? 'true' : 'false'))
+      prev.disabled = active === 0
+      next.disabled = active === slides.length - 1
+    }
+    prev.addEventListener('click', ()=>{ playSfx('tap'); go(active - 1) })
+    next.addEventListener('click', ()=>{ playSfx('tap'); go(active + 1) })
+    track.addEventListener('keydown', e =>{
+      if(e.key === 'ArrowRight'){ e.preventDefault(); go(active + 1) }
+      if(e.key === 'ArrowLeft'){ e.preventDefault(); go(active - 1) }
+    })
+    let raf = 0
+    track.addEventListener('scroll', ()=>{ cancelAnimationFrame(raf); raf = requestAnimationFrame(update) }, { passive: true })
+    window.addEventListener('resize', update)
+    // las imágenes cargan de forma diferida: recalcular cuando llegan
+    track.querySelectorAll('img').forEach(img => img.addEventListener('load', update))
+    document.addEventListener('growtale:langchange', ()=> dots.forEach((d, i)=> d.setAttribute('aria-label', dotLabel(i))))
+    update()
+  })
+}
+
+/* -----------------------------------------
+   Visor de documentos: el informe y el Pitch Deck se abren en un pop-up.
+   Si el navegador no muestra PDF incrustados (muchos móviles), ofrece abrirlo aparte.
+   ----------------------------------------- */
+function initDocViewer(){
+  const dialog = document.getElementById('doc-viewer')
+  if(!dialog || typeof dialog.showModal !== 'function') return
+  const frame = document.getElementById('doc-viewer-frame')
+  const title = document.getElementById('doc-viewer-title')
+  const openLink = document.getElementById('doc-viewer-open')
+  const download = document.getElementById('doc-viewer-download')
+  const fallback = document.getElementById('doc-viewer-fallback')
+  const fallbackLink = document.getElementById('doc-viewer-fallback-link')
+  const canEmbed = navigator.pdfViewerEnabled !== false && !/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+  let lastFocus = null
+
+  const open = link =>{
+    const url = link.getAttribute('href')
+    lastFocus = link
+    title.textContent = t(link.dataset.docTitle) || link.textContent.trim()
+    openLink.href = download.href = fallbackLink.href = url
+    fallback.hidden = canEmbed
+    frame.hidden = !canEmbed
+    if(canEmbed) frame.src = url + '#view=FitH'
+    dialog.showModal()
+    playSfx('modal-open')
+  }
+  const close = ()=>{
+    if(!dialog.open || dialog.classList.contains('closing')) return
+    playSfx('modal-close')
+    dialog.classList.add('closing')
+    const done = ()=>{
+      dialog.classList.remove('closing')
+      dialog.close()
+      frame.removeAttribute('src')
+      if(lastFocus) lastFocus.focus()
+    }
+    dialog.addEventListener('animationend', done, { once: true })
+    setTimeout(()=>{ if(dialog.classList.contains('closing')) done() }, 400)
+  }
+
+  document.querySelectorAll('[data-doc-viewer]').forEach(link => link.addEventListener('click', e =>{
+    if(e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return // abrir en pestaña nueva a propósito
+    e.preventDefault()
+    open(link)
+  }))
+  dialog.querySelector('[data-close-doc]').addEventListener('click', close)
+  dialog.addEventListener('cancel', e =>{ e.preventDefault(); close() })
+  dialog.addEventListener('click', e =>{ if(e.target === dialog) close() })
+  document.addEventListener('growtale:langchange', ()=>{
+    if(dialog.open && lastFocus) title.textContent = t(lastFocus.dataset.docTitle) || title.textContent
+  })
+}
+
+/* -----------------------------------------
+   Liria habla en la portada: diálogo con efecto de máquina de escribir
+   y una expresión distinta para cada frase. Pulsar el bocadillo avanza.
+   ----------------------------------------- */
+const LIRIA_LINES = {
+  es: [
+    ['happy2', '¡Hola! Soy Liria, tu guía en Mindveil.'],
+    ['happy1', 'Bienvenido a GrowTale: aquí cada hábito saludable te hace más fuerte.'],
+    ['explicative', 'Cuando dejas el móvil y cumples tus retos, tu aventura avanza.'],
+    ['surprised', '¡Y hay todo un mundo por descubrir, lleno de distracciones con forma de monstruo!'],
+    ['thinking', '¿Te lo enseño? Baja conmigo y descubre cómo lo hacemos.']
+  ],
+  en: [
+    ['happy2', "Hi! I'm Liria, your guide in Mindveil."],
+    ['happy1', 'Welcome to GrowTale: here every healthy habit makes you stronger.'],
+    ['explicative', 'When you put your phone down and complete your challenges, your adventure moves forward.'],
+    ['surprised', "And there's a whole world to discover, full of distractions shaped like monsters!"],
+    ['thinking', 'Shall I show you? Scroll down with me and see how we do it.']
+  ]
+}
+
+function initHeroVisibility(){
+  const hero = document.getElementById('vision')
+  if(!hero || !('IntersectionObserver' in window)) return
+  new IntersectionObserver(entries =>{
+    entries.forEach(e => hero.classList.toggle('is-offscreen', !e.isIntersecting))
+  }).observe(hero)
+}
+
+function initLiriaSpeech(){
+  const bubble = document.getElementById('hero-speech')
+  const textEl = document.getElementById('hero-speech-text')
+  const img = document.getElementById('hero-liria')
+  if(!bubble || !textEl || !img) return
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  // precargar las expresiones para que el cambio sea instantáneo
+  new Set(LIRIA_LINES.es.map(l => l[0])).forEach(e =>{ const i = new Image(); i.src = `assets/images/hero/liria-${e}.webp` })
+
+  let index = 0, typing = null, autoNext = null, full = ''
+  const lines = () => LIRIA_LINES[currentLang()]
+  // Cambio de expresión sin doble imagen: Liria se encoge y atenúa un instante,
+  // se cambia la expresión en el punto más bajo y vuelve a su tamaño (como un parpadeo)
+  let swapToken = 0
+  const setExpression = expr =>{
+    const src = `assets/images/hero/liria-${expr}.webp`
+    if(img.getAttribute('src') === src) return
+    if(reduce || !img.animate){ img.setAttribute('src', src); return }
+    const token = ++swapToken
+    const loader = new Image()
+    loader.src = src
+    const ready = loader.decode ? loader.decode().catch(()=>{}) : Promise.resolve()
+    const out = img.animate([{ opacity: 1, transform: 'scale(1)' }, { opacity: .15, transform: 'scale(.94)' }],
+      { duration: 160, easing: 'ease-in', fill: 'forwards' })
+    Promise.all([ready, out.finished.catch(()=>{})]).then(()=>{
+      if(token !== swapToken) return
+      img.setAttribute('src', src)
+      const back = ()=>{
+        out.cancel()
+        img.animate([{ opacity: .15, transform: 'scale(.94)' }, { opacity: 1, transform: 'scale(1.02)', offset: .7 }, { opacity: 1, transform: 'scale(1)' }],
+          { duration: 300, easing: 'cubic-bezier(.2,.8,.2,1)' })
+      }
+      if(img.decode) img.decode().then(back, back); else back()
+    })
+  }
+  const finish = ()=>{
+    clearInterval(typing); typing = null
+    textEl.textContent = full
+    bubble.classList.remove('is-typing')
+    bubble.classList.toggle('is-last', index === lines().length - 1)
+    clearTimeout(autoNext)
+    if(index < lines().length - 1) autoNext = setTimeout(next, 4200)
+  }
+  const show = i =>{
+    index = i
+    const [expr, text] = lines()[index]
+    full = text
+    setExpression(expr)
+    clearInterval(typing); clearTimeout(autoNext)
+    if(reduce){ finish(); return }
+    let n = 0
+    textEl.textContent = ''
+    bubble.classList.add('is-typing')
+    typing = setInterval(()=>{
+      n += 1
+      textEl.textContent = full.slice(0, n)
+      if(n >= full.length) finish()
+    }, 28)
+  }
+  const next = ()=>{
+    if(typing){ finish(); return }
+    show((index + 1) % lines().length)
+  }
+  bubble.addEventListener('click', ()=>{ playSfx('tap2'); next() })
+  const stage = document.getElementById('hero-liria-stage')
+  if(stage) stage.addEventListener('click', ()=>{ playSfx('tap2'); next() })
+  bubble.addEventListener('keydown', e =>{ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); next() } })
+  document.addEventListener('growtale:langchange', ()=> show(index))
+  // empieza cuando Liria está a la vista (en móvil queda debajo del texto de presentación)
+  const start = ()=> setTimeout(()=> show(0), reduce ? 0 : 500)
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver(entries =>{
+      if(entries.some(e => e.isIntersecting)){ io.disconnect(); start() }
+    }, { threshold: 0.6 })
+    io.observe(bubble)
+  }else start()
+}
+
+/* Enemigos: tarjetas desplegables con ataques y estrategia */
+function initEnemyCards(){
+  const toggles = Array.from(document.querySelectorAll('.enemy-toggle'))
+  const label = btn => btn.querySelector('.enemy-toggle-text').textContent = t(btn.getAttribute('aria-expanded') === 'true' ? 'enemy_less' : 'enemy_more')
+  toggles.forEach(btn =>{
+    const panel = document.getElementById(btn.getAttribute('aria-controls'))
+    btn.addEventListener('click', ()=>{
+      const opening = btn.getAttribute('aria-expanded') !== 'true'
+      btn.setAttribute('aria-expanded', opening ? 'true' : 'false')
+      btn.closest('.enemy-card').classList.toggle('is-open', opening)
+      label(btn)
+      playSfx(opening ? 'modal-open' : 'modal-close')
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      if(reduce || !panel.animate){ panel.hidden = !opening; return }
+      if(opening){
+        panel.hidden = false
+        const h = panel.scrollHeight
+        panel.animate([{ height: '0px', opacity: 0 }, { height: h + 'px', opacity: 1 }], { duration: 320, easing: 'cubic-bezier(.2,.8,.2,1)' })
+      }else{
+        const h = panel.scrollHeight
+        const anim = panel.animate([{ height: h + 'px', opacity: 1 }, { height: '0px', opacity: 0 }], { duration: 260, easing: 'ease-in' })
+        let done = false
+        const end = ()=>{ if(done) return; done = true; if(btn.getAttribute('aria-expanded') !== 'true') panel.hidden = true }
+        anim.onfinish = end
+        setTimeout(end, 320)
+      }
+    })
+  })
+  document.addEventListener('growtale:langchange', ()=> toggles.forEach(label))
+  toggles.forEach(label)
+}
+
 document.addEventListener('DOMContentLoaded', ()=>{
   initSfx()
   initLanguage()
   initMusic()
   initNav()
   initTeam()
+  initEnemyCards()
+  initCarousel()
+  initLiriaSpeech()
+  initHeroVisibility()
+  initDocViewer()
   initLightbox()
   initContact()
   initParallax()
   initScreenTimeCounter()
   initCoverTransition()
   initWorldMap()
+  initDailyChallenges()
+  initTryIt()
+  initBeforeAfter()
   initBackToCover()
 })

@@ -44,3 +44,7 @@ python -m http.server 8000
 ```
 
 y abrir http://localhost:8000
+
+## Iconos
+
+Los iconos están en `assets/icons/` y se pintan con máscaras CSS (`.gt-icon` y `.gt-tile` en `styles.css`). Parte son del propio juego; el resto vienen de [Phosphor Icons](https://phosphoricons.com) (estilo *fill*, licencia MIT). Cada icono se usa una sola vez en la web.
