@@ -27,7 +27,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Poppins:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <!-- Entrada suave al llegar desde el botón "Descubre GrowTale" de la portada -->
     <script>try{if(sessionStorage.getItem('growtale_enter')){document.documentElement.classList.add('arrive');sessionStorage.removeItem('growtale_enter')}}catch(e){}</script>
-    <link rel="stylesheet" href="styles.css?v=20261106y">
+    <link rel="stylesheet" href="styles.css?v=20261107o">
   </head>
   <body>
     <a class="skip-link" href="#main" data-i18n="skip_to_content">Saltar al contenido</a>
@@ -182,7 +182,6 @@
           <div class="container">
             <p class="story-eyebrow"><span class="story-num">03</span><span data-i18n="why_title">Por qué tiene sentido</span></p>
             <h2 class="story-statement" data-i18n="validation_title">Validación profesional</h2>
-            <div class="validation-seal"><span class="gt-icon" style="--icon:url(assets/icons/check.svg)" aria-hidden="true"></span><span data-i18n="validation_seal">Evaluación profesional independiente</span></div>
 
             <div class="validators">
               <div class="validation-card">
@@ -202,6 +201,7 @@
               </div>
             </div>
 
+            <div class="validation-seal"><span class="gt-icon" style="--icon:url(assets/icons/check.svg)" aria-hidden="true"></span><span data-i18n="validation_seal">Evaluación profesional independiente</span></div>
             <blockquote class="validation-quote" data-i18n="validation_quote">“GrowTale presenta una propuesta innovadora y socialmente pertinente dentro del bienestar digital y la prevención psicosocial.”</blockquote>
             <div class="validator-author">
               <p data-i18n="validation_author">Valoración profesional independiente del ámbito del Trabajo Social.</p>
@@ -224,99 +224,83 @@
         </div>
       </div>
 
-      <!-- Cómo funciona -->
+      <!-- Cómo funciona: el flujo del juego, paso a paso, en un carrusel -->
       <section id="how" class="how">
         <h2 data-i18n="how_title">Cómo funciona</h2>
-        <p data-i18n="how_lead">Convierte menos tiempo frente a aplicaciones distractoras en progreso dentro de GrowTale.</p>
+        <p data-i18n="how_lead">Del reto real al progreso en el juego, paso a paso.</p>
         <div class="liria-tip">
           <img class="liria-tip-img" src="assets/images/liria/liria-explicative.webp" alt="" width="240" height="294" loading="lazy" decoding="async">
           <p class="liria-bubble"><span class="liria-name">Liria</span><span data-i18n="liria_how">Cada reto que cumples lejos de la pantalla se convierte en progreso en Mindveil.</span></p>
         </div>
-        <div class="steps">
-          <div class="step">
-            <h3 class="step-title has-tile"><span class="gt-tile" style="--icon:url(assets/icons/settings.svg)" aria-hidden="true"></span><span data-i18n="how_step1_title">Elige tu reto</span></h3>
-            <p data-i18n="how_step1_text">Clasifica las aplicaciones que quieres evitar y define tus objetivos.</p>
-            <figure class="gallery-item"><img src="assets/images/comofunciona1.webp" alt="Pantalla de GrowTale para elegir retos" data-i18n-alt="how_step1_alt" width="468" height="768" loading="lazy"></figure>
-          </div>
-          <div class="step">
-            <h3 class="step-title has-tile"><span class="gt-tile" style="--icon:url(assets/icons/hourglass.svg)" aria-hidden="true"></span><span data-i18n="how_step2_title">Dedica tiempo a lo que importa</span></h3>
-            <p data-i18n="how_step2_text">Cumple retos reales y recibe recursos para avanzar.</p>
-            <figure class="gallery-item"><img src="assets/images/comofunciona2.webp" alt="Pantalla de GrowTale con un reto en curso" data-i18n-alt="how_step2_alt" width="424" height="708" loading="lazy"></figure>
-          </div>
-          <div class="step">
-            <h3 class="step-title has-tile"><span class="gt-tile" style="--icon:url(assets/icons/map.svg)" aria-hidden="true"></span><span data-i18n="how_step3_title">Haz crecer tu mundo</span></h3>
-            <p data-i18n="how_step3_text">Desbloquea nuevas zonas y haz crecer tu aventura.</p>
-            <figure class="gallery-item"><img src="assets/images/comofunciona3.webp" alt="Pantalla de GrowTale con el mundo creciendo" data-i18n-alt="how_step3_alt" width="367" height="615" loading="lazy"></figure>
-          </div>
+        <div class="carousel flow-carousel" data-carousel aria-roledescription="carrusel" aria-label="Cómo funciona GrowTale, paso a paso" data-i18n-aria-label="flow_label">
+          <button type="button" class="carousel-btn carousel-prev" aria-label="Anterior" data-i18n-aria-label="carousel_prev"></button>
+          <ul class="carousel-track" tabindex="0">
+              <li class="carousel-slide">
+                <figure class="gallery-item flow-slide">
+                  <img src="assets/images/screens/objectives.webp" alt="Pantalla de objetivos con retos diarios y misiones" data-i18n-alt="flow1_alt" width="430" height="932" loading="lazy" decoding="async">
+                  <figcaption><span class="flow-step">1</span><strong data-i18n="flow1_title">Elige tus retos</strong><span class="flow-text" data-i18n="flow1_text">Cada día recibes retos reales: caminar, concentrarte, desconectar de las apps que tú elijas.</span></figcaption>
+                </figure>
+              </li>
+              <li class="carousel-slide">
+                <figure class="gallery-item flow-slide">
+                  <img src="assets/images/screens/progress.webp" alt="Pantalla de progreso diario con pasos y tiempo de pantalla" data-i18n-alt="flow2_alt" width="430" height="932" loading="lazy" decoding="async">
+                  <figcaption><span class="flow-step">2</span><strong data-i18n="flow2_title">Desconecta y cúmplelos</strong><span class="flow-text" data-i18n="flow2_text">La app mide tus pasos y tu tiempo de pantalla mientras avanzas en los retos del día.</span></figcaption>
+                </figure>
+              </li>
+              <li class="carousel-slide">
+                <figure class="gallery-item flow-slide">
+                  <img src="assets/images/screens/map.webp" alt="Pantalla del mapa del mundo de Mindveil" data-i18n-alt="flow3_alt" width="430" height="932" loading="lazy" decoding="async">
+                  <figcaption><span class="flow-step">3</span><strong data-i18n="flow3_title">Avanza por Mindveil</strong><span class="flow-text" data-i18n="flow3_text">Cada reto cumplido te hace avanzar por el mapa y desbloquea nuevas zonas y eventos.</span></figcaption>
+                </figure>
+              </li>
+              <li class="carousel-slide">
+                <figure class="gallery-item flow-slide">
+                  <img src="assets/images/screens/skills.webp" alt="Pantalla del mazo de habilidades" data-i18n-alt="flow4_alt" width="430" height="932" loading="lazy" decoding="async">
+                  <figcaption><span class="flow-step">4</span><strong data-i18n="flow4_title">Prepara tus habilidades</strong><span class="flow-text" data-i18n="flow4_text">Elige tu mazo de habilidades: se recargan cuando cumples tus objetivos.</span></figcaption>
+                </figure>
+              </li>
+              <li class="carousel-slide">
+                <figure class="gallery-item flow-slide">
+                  <img src="assets/images/screens/combat.webp" alt="Pantalla de combate contra una distracción" data-i18n-alt="flow5_alt" width="430" height="932" loading="lazy" decoding="async">
+                  <figcaption><span class="flow-step">5</span><strong data-i18n="flow5_title">Vence a tus distracciones</strong><span class="flow-text" data-i18n="flow5_text">Combates por turnos contra enemigos que representan las distracciones del día a día.</span></figcaption>
+                </figure>
+              </li>
+              <li class="carousel-slide">
+                <figure class="gallery-item flow-slide">
+                  <img src="assets/images/screens/dialogue.webp" alt="Pantalla de evento con un diálogo de Liria" data-i18n-alt="flow6_alt" width="430" height="932" loading="lazy" decoding="async">
+                  <figcaption><span class="flow-step">6</span><strong data-i18n="flow6_title">Descubre la historia</strong><span class="flow-text" data-i18n="flow6_text">Liria y otros personajes te guían por una historia sobre tu relación con la tecnología.</span></figcaption>
+                </figure>
+              </li>
+          </ul>
+          <button type="button" class="carousel-btn carousel-next" aria-label="Siguiente" data-i18n-aria-label="carousel_next"></button>
+          <div class="carousel-dots" role="tablist"></div>
         </div>
       </section>
 
-      <!-- Producto -->
-      <section id="product" class="product-section">
-        <div class="container">
-          <h2 data-i18n="product_title">Producto</h2>
-
-          <section id="gallery" class="gallery">
-            <h3 class="section-subtitle" data-i18n="gallery_title">Galería</h3>
-            <div class="carousel" data-carousel aria-roledescription="carrusel" aria-label="Capturas del juego" data-i18n-aria-label="gallery_label">
-              <button type="button" class="carousel-btn carousel-prev" aria-label="Anterior" data-i18n-aria-label="carousel_prev"></button>
-              <ul class="carousel-track" tabindex="0">
-                <li class="carousel-slide">
-                  <figure class="gallery-item">
-                    <img src="assets/images/screens/map.webp" alt="Pantalla del mapa del mundo de GrowTale con el recorrido y el progreso diario" data-i18n-alt="gallery_map_alt" width="430" height="932" loading="lazy" decoding="async">
-                    <figcaption data-i18n="gallery_map">Mapa del mundo</figcaption>
-                  </figure>
-                </li>
-                <li class="carousel-slide">
-                  <figure class="gallery-item">
-                    <img src="assets/images/screens/progress.webp" alt="Pantalla de progreso diario con pasos, tiempo de pantalla y retos" data-i18n-alt="gallery_progress_alt" width="430" height="932" loading="lazy" decoding="async">
-                    <figcaption data-i18n="gallery_progress">Progreso diario</figcaption>
-                  </figure>
-                </li>
-                <li class="carousel-slide">
-                  <figure class="gallery-item">
-                    <img src="assets/images/screens/objectives.webp" alt="Pantalla de objetivos con retos diarios y misiones principales" data-i18n-alt="gallery_objectives_alt" width="430" height="932" loading="lazy" decoding="async">
-                    <figcaption data-i18n="gallery_objectives">Objetivos y misiones</figcaption>
-                  </figure>
-                </li>
-                <li class="carousel-slide">
-                  <figure class="gallery-item">
-                    <img src="assets/images/screens/skills.webp" alt="Pantalla del mazo de habilidades de GrowTale" data-i18n-alt="gallery_skills_alt" width="430" height="932" loading="lazy" decoding="async">
-                    <figcaption data-i18n="gallery_skills">Habilidades</figcaption>
-                  </figure>
-                </li>
-                <li class="carousel-slide">
-                  <figure class="gallery-item">
-                    <img src="assets/images/screens/combat.webp" alt="Pantalla de combate en curso con las habilidades del jugador" data-i18n-alt="gallery_combat_alt" width="430" height="932" loading="lazy" decoding="async">
-                    <figcaption data-i18n="gallery_combat">Combate</figcaption>
-                  </figure>
-                </li>
-                <li class="carousel-slide">
-                  <figure class="gallery-item">
-                    <img src="assets/images/screens/dialogue.webp" alt="Pantalla de evento con un diálogo de Liria" data-i18n-alt="gallery_dialogue_alt" width="430" height="932" loading="lazy" decoding="async">
-                    <figcaption data-i18n="gallery_dialogue">Diálogo con Liria</figcaption>
-                  </figure>
-                </li>
-              </ul>
-              <button type="button" class="carousel-btn carousel-next" aria-label="Siguiente" data-i18n-aria-label="carousel_next"></button>
-              <div class="carousel-dots" role="tablist"></div>
-            </div>
-          </section>
-        </div>
-      </section>
-
-      <!-- Pruébalo: componentes del juego recreados en HTML (reto del día, habilidades y retos diarios) -->
+      <!-- Pruébalo: los retos del día (lista + ventana del reto, como en el juego) y las habilidades -->
       <section id="demo" class="demo-section">
         <div class="container">
           <div class="tryit">
             <h2 data-i18n="tryit_title">Pruébalo tú mismo</h2>
             <p class="muted" data-i18n="tryit_lead">Pulsa los botones y prueba algunas piezas clave del juego.</p>
-            <div class="tryit-grid">
-              <div class="tryit-item">
-                <span class="tryit-badge"><span class="tryit-badge-dot" aria-hidden="true"></span><span data-i18n="tryit_badge">Demo interactiva</span></span>
-                <h4 data-i18n="tryit_challenge_title">Configura tu reto del día</h4>
-                <p class="tryit-hint" data-i18n="tryit_challenge_hint">Ajusta la dificultad, cambia el reto o descártalo si no te encaja.</p>
-                <div class="dc-modal" id="dc-modal">
+
+            <div class="tryit-item tryit-wide challenge-demo" id="challenges">
+              <span class="tryit-badge"><span class="tryit-badge-dot" aria-hidden="true"></span><span data-i18n="tryit_badge">Demo interactiva</span></span>
+              <h3 class="tryit-heading" data-i18n="tryit_challenge_title">Tus retos del día</h3>
+              <p class="tryit-hint" data-i18n="tryit_challenge_hint">Pulsa el + para avanzar un reto, o pulsa el reto para abrir su ventana: ajusta la dificultad, cámbialo o arrastra la barra.</p>
+              <div class="challenge-demo-grid">
+                <div class="challenge-demo-list">
+                  <div class="liria-tip">
+                    <img class="liria-tip-img" src="assets/images/liria/liria-happy2.webp" alt="" width="240" height="294" loading="lazy" decoding="async">
+                    <p class="liria-bubble"><span class="liria-name">Liria</span><span data-i18n="liria_challenges">¡Pulsa el + para avanzar o el reto para abrirlo!</span></p>
+                  </div>
+                  <ul class="daily-list" id="daily-list" aria-label="Retos diarios" data-i18n-aria-label="challenges_title"></ul>
+                  <p class="daily-feedback" id="daily-feedback" role="status" aria-live="polite"></p>
+                </div>
+                <div class="challenge-demo-modal is-empty">
+                <p class="dc-empty" data-i18n="dc_empty">Elige un reto de la lista para abrir su ventana.</p>
+                <div class="dc-modal" id="dc-modal" role="dialog" aria-labelledby="dc-title">
+                  <button type="button" class="dc-close" id="dc-close" aria-label="Cerrar reto" data-i18n-aria-label="dc_close"></button>
                   <span class="dc-badge" aria-hidden="true"><span class="gt-icon" id="dc-icon" style="--icon:url(assets/icons/footprints.svg)"></span></span>
                   <p class="dc-title" id="dc-title" aria-live="polite">Camina 9000 pasos</p>
                   <div class="dc-progress"><span class="dc-progress-fill" id="dc-fill" aria-hidden="true"></span><input class="dc-range" id="dc-range" type="range" min="0" max="9000" step="100" value="2500" aria-label="Progreso del reto" data-i18n-aria-label="dc_range"></div>
@@ -336,12 +320,15 @@
                 </div>
                 <button type="button" class="dc-apply" id="dc-apply" data-i18n="dc_apply">Aplicar</button>
                 <p class="dc-toast" id="dc-toast" role="status"></p>
+                </div>
               </div>
+            </div>
 
-              <div class="tryit-item">
-                <span class="tryit-badge"><span class="tryit-badge-dot" aria-hidden="true"></span><span data-i18n="tryit_badge">Demo interactiva</span></span>
-                <h4 data-i18n="tryit_skills_title">Habilidades que se recargan con tus objetivos</h4>
-                <p class="tryit-hint" data-i18n="tryit_skills_hint">Elige una habilidad para ver qué hace y cuándo está lista.</p>
+            <div class="tryit-item tryit-wide skills-demo">
+              <span class="tryit-badge"><span class="tryit-badge-dot" aria-hidden="true"></span><span data-i18n="tryit_badge">Demo interactiva</span></span>
+              <h3 class="tryit-heading" data-i18n="tryit_skills_title">Habilidades que se recargan con tus objetivos</h3>
+              <p class="tryit-hint" data-i18n="tryit_skills_hint">Elige una habilidad para ver qué hace y cuándo está lista.</p>
+              <div class="skills-demo-grid">
                 <div class="skill-card" id="skill-card" aria-live="polite">
                   <div class="skill-card-head">
                     <span class="skill-glyph" id="skill-card-icon" aria-hidden="true"></span>
@@ -363,51 +350,9 @@
               </div>
             </div>
           </div>
-          <section id="challenges" class="challenges">
-            <h3 class="section-subtitle" data-i18n="challenges_title">Retos diarios</h3>
-            <div class="liria-tip">
-              <img class="liria-tip-img" src="assets/images/liria/liria-happy2.webp" alt="" width="240" height="294" loading="lazy" decoding="async">
-              <p class="liria-bubble"><span class="liria-name">Liria</span><span data-i18n="liria_challenges">¡Pulsa el + para avanzar y completar tus retos!</span></p>
-            </div>
-            <!-- Retos con el formato del juego: rombo con icono + barra de progreso; dorada si está completado -->
-            <ul class="daily-list">
-              <li class="daily" data-state="progress" style="--progress:60%">
-                <span class="daily-icon" aria-hidden="true"><span class="gt-icon" style="--icon:url(assets/icons/eye.svg)"></span></span>
-                <div class="daily-bar">
-                  <div class="daily-text">
-                    <span class="daily-type" data-i18n="challenge1_badge">Reto diario</span>
-                    <h4 data-i18n="challenge1_title">Concentración de 30 min</h4>
-                    <p data-i18n="challenge1_text">Evita las apps distractoras durante 30 minutos.</p>
-                  </div>
-                  <button type="button" class="daily-end" aria-label="Avanzar reto" data-i18n-aria-label="daily_advance"></button>
-                </div>
-              </li>
-              <li class="daily" data-state="progress" style="--progress:20%">
-                <span class="daily-icon" aria-hidden="true"><span class="gt-icon" style="--icon:url(assets/icons/runner.svg)"></span></span>
-                <div class="daily-bar">
-                  <div class="daily-text">
-                    <span class="daily-type" data-i18n="challenge2_badge">Reto de bienestar</span>
-                    <h4 data-i18n="challenge2_title">Paseo al aire libre</h4>
-                    <p data-i18n="challenge2_text">Pasa 20 minutos fuera del móvil.</p>
-                  </div>
-                  <button type="button" class="daily-end" aria-label="Avanzar reto" data-i18n-aria-label="daily_advance"></button>
-                </div>
-              </li>
-              <li class="daily" data-state="done" style="--progress:100%">
-                <span class="daily-icon" aria-hidden="true"><span class="gt-icon" style="--icon:url(assets/icons/book-open.svg)"></span></span>
-                <div class="daily-bar">
-                  <div class="daily-text">
-                    <span class="daily-type" data-i18n="challenge3_badge">Reto de aprendizaje</span>
-                    <h4 data-i18n="challenge3_title">Aprendizaje</h4>
-                    <p data-i18n="challenge3_text">Completa un objetivo de estudio o lectura.</p>
-                  </div>
-                  <button type="button" class="daily-end" aria-label="Avanzar reto" data-i18n-aria-label="daily_advance"></button>
-                </div>
-              </li>
-            </ul>
-          </section>
         </div>
       </section>
+
       </div>
 
       <div class="zone zone-universe" id="universo">
@@ -428,12 +373,6 @@
         <div class="container">
           <h2 data-i18n="universe_title">El mapa de Mindveil</h2>
           <section id="map" class="map">
-            <h3 class="section-subtitle" data-i18n="map_title">Mindveil, el Reino de la Compulsión</h3>
-            <p class="muted" data-i18n="map_text">Una isla con forma de cerebro. Toca cada lugar para descubrir qué te espera.</p>
-            <div class="liria-tip">
-              <img class="liria-tip-img" src="assets/images/liria/liria-surprised.webp" alt="" width="240" height="294" loading="lazy" decoding="async">
-              <p class="liria-bubble"><span class="liria-name">Liria</span><span data-i18n="liria_map">Mindveil es enorme… y cada lugar esconde un hábito por mejorar.</span></p>
-            </div>
 
             <!-- Mapa interactivo: el mar animado va por CSS; los puntos usan % sobre la imagen -->
             <div class="world-map">
@@ -457,6 +396,13 @@
                 </div>
               </div>
 
+              <div class="map-aside">
+                <h3 class="section-subtitle" data-i18n="map_title">Mindveil, el Reino de la Compulsión</h3>
+                <p class="muted" data-i18n="map_text">Una isla con forma de cerebro. Toca cada lugar para descubrir qué te espera.</p>
+                <div class="liria-tip">
+                  <img class="liria-tip-img" src="assets/images/liria/liria-surprised.webp" alt="" width="240" height="294" loading="lazy" decoding="async">
+                  <p class="liria-bubble"><span class="liria-name">Liria</span><span data-i18n="liria_map">Mindveil es enorme… y cada lugar esconde un hábito por mejorar.</span></p>
+                </div>
               <div class="region-panel" aria-live="polite">
                 <article class="region-card region-card-source" data-region="fuente">
                   <p class="region-chapter"><span data-i18n="act_prologue">Prólogo</span></p>
@@ -512,6 +458,7 @@
                   <p data-i18n="region_tiempo_text">En lo más alto del reino, donde el tiempo deja de correr igual. El final del Reino de la Compulsión.</p>
                   <p class="region-theme"><span data-i18n="region_theme">Tema</span>: <strong data-i18n="region_tiempo_theme">el valor de tu tiempo</strong></p>
                 </article>
+              </div>
               </div>
             </div>
 
@@ -906,29 +853,35 @@
         </div>
       </section>
 
-      <!-- Contacto -->
-      <section id="contact" class="investor-section contact-section">
-        <div class="container">
-          <h2 data-i18n="contact_title">Contacto</h2>
-          <p class="problem-subtitle" data-i18n="contact_subtitle">¿Centro educativo, AMPA, inversor o colaborador? Cuéntanos cómo podríamos colaborar.</p>
-          <div class="liria-tip">
-            <img class="liria-tip-img" src="assets/images/liria/liria-happy1.webp" alt="" width="240" height="294" loading="lazy" decoding="async">
-            <p class="liria-bubble"><span class="liria-name">Liria</span><span data-i18n="liria_contact">¡Me encantará saber de ti!</span></p>
-          </div>
-          <div class="contact-actions">
-            <a class="btn btn-primary" href="mailto:bellakotech@gmail.com" data-open-contact data-i18n="contact_write">Escríbenos</a>
-            <a class="btn btn-secondary" href="docs/GrowTale_PitchDeck.pdf" target="_blank" rel="noopener" data-doc-viewer data-doc-title="pitch_doc_title">Pitch Deck</a>
-          </div>
-          <p class="contact-alt"><span data-i18n="contact_alt">O directamente a</span> <a href="mailto:bellakotech@gmail.com">bellakotech@gmail.com</a></p>
-        </div>
-      </section>
       </div>
 
     </main>
 
-    <footer class="site-footer">
+    <!-- Contacto + pie: una misma franja final -->
+    <div class="contact-band">
+      <section id="contact" class="contact-section">
+        <div class="contact-grid">
+          <div class="contact-copy">
+            <p class="contact-eyebrow" data-i18n="contact_title">Contacto</p>
+            <h2 class="contact-heading" data-i18n="contact_heading">¿Construimos GrowTale juntos?</h2>
+            <p class="contact-lead" data-i18n="contact_subtitle">¿Centro educativo, AMPA, inversor o colaborador? Cuéntanos cómo podríamos colaborar.</p>
+            <div class="contact-actions">
+              <a class="btn btn-primary" href="mailto:bellakotech@gmail.com" data-open-contact data-i18n="contact_write">Escríbenos</a>
+              <a class="btn btn-secondary" href="docs/GrowTale_PitchDeck.pdf" target="_blank" rel="noopener" data-doc-viewer data-doc-title="pitch_doc_title">Pitch Deck</a>
+            </div>
+            <p class="contact-alt"><span data-i18n="contact_alt">O directamente a</span> <a href="mailto:bellakotech@gmail.com">bellakotech@gmail.com</a></p>
+          </div>
+          <div class="contact-liria">
+            <p class="liria-bubble"><span class="liria-name">Liria</span><span data-i18n="liria_contact">¡Me encantará saber de ti!</span></p>
+            <img src="assets/images/hero/liria-happy1.webp" alt="" width="420" height="513" loading="lazy" decoding="async">
+          </div>
+        </div>
+      </section>
+      <footer class="site-footer">
       <p class="footer-note">© 2026 GrowTale <span class="footer-sep" aria-hidden="true">·</span> <span data-i18n="footer_credit">Diseñada con la colaboración de José Manuel Ruiz</span></p>
-    </footer>
+      </footer>
+    </div>
+
 
     <!-- Pop-up de contacto -->
     <!-- Visor de documentos (informe y Pitch Deck) -->
@@ -1042,7 +995,7 @@
       <div class="cursor-inner"></div>
     </div>
 
-    <script src="app.js?v=20261106y" defer></script>
-    <script src="cursor.js?v=20261106y" defer></script>
+    <script src="app.js?v=20261107o" defer></script>
+    <script src="cursor.js?v=20261107o" defer></script>
   </body>
 </html>

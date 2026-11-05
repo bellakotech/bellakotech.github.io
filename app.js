@@ -117,7 +117,7 @@ const I18N_EN = {
   doc_open_pdf: 'Open the PDF',
   // cómo funciona
   how_title: 'How it works',
-  how_lead: 'Turn less time on distracting apps into progress in GrowTale.',
+  how_lead: "From a real challenge to progress in the game, step by step.",
   how_step1_title: 'Choose your challenge',
   how_step1_text: 'Pick the apps you want to avoid and set your goals.',
   how_step1_alt: 'GrowTale screen for choosing challenges',
@@ -155,14 +155,14 @@ const I18N_EN = {
   node_tip_text: 'Short stops with practical ideas about digital wellbeing and healthy habits.',
   liria_problem: 'How many times have you unlocked your phone today without noticing?',
   liria_how: 'Every challenge you complete away from the screen becomes progress in Mindveil.',
-  liria_challenges: 'Tap the + to move forward and complete your challenges!',
+  liria_challenges: "Tap the + to advance or the challenge to open it!",
   liria_map: 'Mindveil is huge… and every place hides a habit to improve.',
   liria_status: 'The prototype already works. Now it is time to take it to schools and families.',
   liria_contact: 'I\'d love to hear from you!',
   tryit_title: 'Try it yourself',
   tryit_lead: 'Press the buttons and try out some key pieces of the game.',
-  tryit_challenge_title: 'Set up today\'s challenge',
-  tryit_challenge_hint: 'Adjust the difficulty, swap the challenge or ban it if it doesn\'t suit you.',
+  tryit_challenge_title: "Today's challenges",
+  tryit_challenge_hint: "Tap the + to advance a challenge, or tap the challenge to open its window: adjust the difficulty, swap it or drag the bar.",
   dc_difficulty: 'Difficulty',
   dc_less: 'Lower difficulty',
   dc_more: 'Raise difficulty',
@@ -234,6 +234,32 @@ const I18N_EN = {
   solution3_text: "It does not block or blame: it rewards every step so the new habit sticks.",
   block_universe_title: 'THE GROWTALE UNIVERSE',
   block_universe_sub: 'Travel through Mindveil, meet its enemies and discover how we create its art.',
+  flow_label: "How GrowTale works, step by step",
+  flow1_title: "Pick your challenges",
+  flow1_text: "Every day you get real challenges: walking, focusing, switching off the apps you choose.",
+  flow2_title: "Switch off and complete them",
+  flow2_text: "The app tracks your steps and screen time as you work through today's challenges.",
+  flow3_title: "Travel through Mindveil",
+  flow3_text: "Every completed challenge moves you across the map and unlocks new areas and events.",
+  flow4_title: "Prepare your skills",
+  flow4_text: "Choose your skill deck: skills recharge when you reach your goals.",
+  flow5_title: "Defeat your distractions",
+  flow5_text: "Turn-based fights against enemies that represent everyday distractions.",
+  flow6_title: "Uncover the story",
+  flow6_text: "Liria and other characters guide you through a story about your relationship with technology.",
+  flow1_alt: "Goals screen with daily challenges and missions",
+  flow2_alt: "Daily progress screen with steps and screen time",
+  flow3_alt: "Mindveil world map screen",
+  flow4_alt: "Skill deck screen",
+  flow5_alt: "Combat screen against a distraction",
+  flow6_alt: "Event screen with a dialogue from Liria",
+  map_places: 'Places on the map',
+  flip_back: 'Back',
+  dc_empty: "Choose a challenge from the list to open its window.",
+  dc_close: "Close challenge",
+  contact_heading: "Shall we build GrowTale together?",
+  enemy_flip_hint: 'Tap to see attacks and strategy',
+  enemy_flip_back: 'Tap to go back',
   map_title: 'Mindveil, the Realm of Compulsion',
   map_text: 'A brain-shaped island. Tap each place to discover what awaits you.',
   map_alt: 'Map of Mindveil: a brain-shaped island',
@@ -379,6 +405,9 @@ const STRINGS = {
     music_on: 'Silenciar',
     music_off: 'Activar sonido',
     view_profile: 'Ver perfil completo',
+    enemy_flip_hint: 'Toca para ver ataques y estrategia',
+    enemy_flip_back: 'Toca para volver',
+    flip_back: 'Volver',
     enemy_more: 'Ver ataques y estrategia',
     enemy_less: 'Ocultar detalles',
     validation_doc_title: 'Evaluación profesional independiente',
@@ -397,6 +426,9 @@ const STRINGS = {
     music_on: 'Mute',
     music_off: 'Turn sound on',
     view_profile: 'View full profile',
+    enemy_flip_hint: 'Tap to see attacks and strategy',
+    enemy_flip_back: 'Tap to go back',
+    flip_back: 'Back',
     enemy_more: 'See attacks and strategy',
     enemy_less: 'Hide details',
     validation_doc_title: 'Independent professional assessment',
@@ -481,13 +513,48 @@ function initSfx(){
   document.addEventListener('click', e=>{
     const el = e.target.closest && e.target.closest('a, button')
     if(!el) return
-    if(el.id === 'discover-btn') return playSfx('nav-transition')
-    if(el.matches('a[href="index.html"]')) return playSfx('nav-transition-2')
-    if(el.matches('.hero-liria-stage, .enemy-toggle, [data-doc-viewer], [data-close-doc], .carousel-btn, .carousel-dot, .daily-end, .dc-modal button, .dc-apply, .skill-btn, #music-toggle, [data-open-contact], [data-close-contact], .lb-close, [type="submit"]')) return
+    if(el.id === 'discover-btn') return playSwoosh('in', 0.75)
+    if(el.matches('a[href="index.html"]')) return playSwoosh('out', 0.45)
+    if(el.matches('.dc-close, .daily-end, .flip-close, .view-profile, .hero-liria-stage, .enemy-toggle, [data-doc-viewer], [data-close-doc], .carousel-btn, .carousel-dot, .daily-end, .dc-modal button, .dc-apply, .skill-btn, #music-toggle, [data-open-contact], [data-close-contact], .lb-close, [type="submit"]')) return
     if(el.matches('.lang-switch, .nav-toggle')) return playSfx('tap2')
     if(el.matches('.nav-links a, .member-link, .lb-prev, .lb-next, .contact-alt a, .map-spot')) return playSfx('tap')
     playSfx('button')
   }, true)
+}
+
+// "Swoosh" sintetizado para la transición portada ⇄ proyecto: ruido filtrado cuyo filtro barre
+// de grave a agudo (ida) o de agudo a grave (vuelta), con paneo de un lado a otro.
+let swooshNoise = null
+function playSwoosh(direction = 'in', duration = 0.75){
+  if(!sfxCtx || !sfxEnabled()) return
+  const ctx = sfxCtx
+  if(ctx.state === 'suspended') ctx.resume()
+  if(!swooshNoise){
+    swooshNoise = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 1.5), ctx.sampleRate)
+    const d = swooshNoise.getChannelData(0)
+    for(let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1
+  }
+  const t = ctx.currentTime, end = t + duration
+  const src = ctx.createBufferSource(); src.buffer = swooshNoise
+  const band = ctx.createBiquadFilter(); band.type = 'bandpass'; band.Q.value = 1.4
+  const low = ctx.createBiquadFilter(); low.type = 'lowpass'; low.frequency.value = 5200
+  const gain = ctx.createGain()
+  const forward = direction !== 'out'
+  band.frequency.setValueAtTime(forward ? 260 : 3200, t)
+  band.frequency.exponentialRampToValueAtTime(forward ? 3600 : 240, end)
+  gain.gain.setValueAtTime(0.0001, t)
+  gain.gain.exponentialRampToValueAtTime(0.42, t + duration * 0.45)
+  gain.gain.exponentialRampToValueAtTime(0.0001, end)
+  let node = src.connect(band).connect(low).connect(gain)
+  if(ctx.createStereoPanner){
+    const pan = ctx.createStereoPanner()
+    pan.pan.setValueAtTime(forward ? -0.6 : 0.6, t)
+    pan.pan.linearRampToValueAtTime(forward ? 0.6 : -0.6, end)
+    node = node.connect(pan)
+  }
+  node.connect(ctx.destination)
+  src.start(t)
+  src.stop(end + 0.05)
 }
 
 const I18N_ATTRS = ['aria-label', 'title', 'alt', 'content']
@@ -687,42 +754,6 @@ function initNav(){
 }
 
 /* -----------------------------------------
-   Equipo: desplegar perfil completo
-   ----------------------------------------- */
-function initTeam(){
-  const buttons = Array.from(document.querySelectorAll('.team-section .view-profile'))
-  const sync = btn=>{
-    const expanded = btn.getAttribute('aria-expanded') === 'true'
-    btn.textContent = expanded ? t('hide_profile') : t('view_profile')
-  }
-  // El botón solo tiene sentido si la bio está recortada
-  const updateVisibility = ()=> buttons.forEach(btn=>{
-    const card = btn.closest('.member-card')
-    if(card.classList.contains('expanded')) return
-    const bio = card.querySelector('.bio-short')
-    btn.hidden = bio.scrollHeight <= bio.clientHeight + 1
-  })
-  buttons.forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const card = btn.closest('.member-card')
-      const bio = card.querySelector('.bio-short')
-      const opening = !card.classList.contains('expanded')
-      // El cambio de tamaño es instantáneo (animar la altura recalcula toda la rejilla del equipo en cada
-      // fotograma y daba tirones); el texto aparece con un fundido que solo usa opacidad y transform.
-      card.classList.toggle('expanded', opening)
-      btn.setAttribute('aria-expanded', opening ? 'true' : 'false')
-      sync(btn)
-      if(window.matchMedia('(prefers-reduced-motion: reduce)').matches || !bio.animate) return
-      bio.animate([{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'none' }],
-        { duration: 260, easing: 'cubic-bezier(.2,.8,.2,1)' })
-    })
-  })
-  document.addEventListener('growtale:langchange', ()=>{ buttons.forEach(sync); updateVisibility() })
-  window.addEventListener('resize', updateVisibility)
-  updateVisibility()
-}
-
-/* -----------------------------------------
    Lightbox para galería, pasos y mapa
    ----------------------------------------- */
 function initLightbox(){
@@ -737,7 +768,8 @@ function initLightbox(){
   let lastFocus = null
   const captionOf = img=>{
     const cap = img.closest('figure') && img.closest('figure').querySelector('figcaption')
-    return cap ? cap.textContent.trim() : ''
+    const strong = cap && cap.querySelector('strong')
+    return strong ? strong.textContent.trim() : (cap ? cap.textContent.trim() : '')
   }
   const show = i=>{
     current = (i + targets.length) % targets.length
@@ -905,6 +937,7 @@ function initCoverTransition(){
     void root.offsetWidth // reinicia las animaciones CSS
     root.classList.add('return')
     document.dispatchEvent(new CustomEvent('growtale:return'))
+    playSwoosh('out', 0.7)
   })
 }
 
@@ -935,7 +968,7 @@ function initWorldMap(){
   const spots = Array.from(map.querySelectorAll('.map-spot'))
   const cards = Array.from(map.querySelectorAll('.region-card'))
 
-  const select = region=>{
+  let select = region=>{
     cards.forEach(c=> c.hidden = c.dataset.region !== region)
     spots.forEach(s=> s.setAttribute('aria-pressed', s.dataset.region === region ? 'true' : 'false'))
   }
@@ -1009,7 +1042,7 @@ function initDailyChallenges(){
    ----------------------------------------- */
 const TRYIT = {
   es: {
-    levels: ['Fácil', 'Normal', 'Difícil'],
+    levels: ['Fácil', 'Normal', 'Difícil', 'Experto'],
     challenges: {
       walk: g => `Camina ${g.toLocaleString('es-ES')} pasos`,
       read: g => `Lee ${g} páginas`
@@ -1030,7 +1063,7 @@ const TRYIT = {
     }
   },
   en: {
-    levels: ['Easy', 'Normal', 'Hard'],
+    levels: ['Easy', 'Normal', 'Hard', 'Expert'],
     challenges: {
       walk: g => `Walk ${g.toLocaleString('en-GB')} steps`,
       read: g => `Read ${g} pages`
@@ -1061,51 +1094,170 @@ function initTryIt(){
   const L = () => TRYIT[currentLang()]
   const $ = id => document.getElementById(id)
 
-  // Reto diario
-  const CH = [
-    { id: 'walk', icon: 'footprints', goals: [6000, 9000, 12000], done: 2500 },
-    { id: 'read', icon: 'book-bookmark', goals: [10, 20, 40], done: 6 }
-  ]
-  let pool = CH.slice(), cur = 0, level = 1, toastTimer = null
+  // Retos del día: dos retos a la vez, como en la pantalla del juego. Al pulsar uno (o su "+")
+  // se abre su ventana a la derecha y la lista queda bloqueada hasta cerrarla o aplicar.
+  // Retos y objetivos por dificultad tomados de la Goals DB del Notion (niveles 1-4).
+  const one = (n, a, b) => n === 1 ? a : b
+  const CH_POOL = {
+    phone:     { cat: 'mental',   type: 'focus',      unit: 'min', targets: [10, 20, 45, 60], es: n => `Deja el móvil fuera de tu vista ${n} min`, en: n => `Keep your phone out of sight for ${n} min` },
+    walk:      { cat: 'physical', type: 'exercise',   unit: 'min', targets: [10, 20, 45, 60], es: n => `Sal a caminar ${n} min`, en: n => `Go outside and walk for ${n} min` },
+    task:      { cat: 'mental',   type: 'focus',      unit: 'min', targets: [10, 20, 45, 60], es: n => `Céntrate en una sola tarea ${n} min`, en: n => `Focus on a single task for ${n} min` },
+    light:     { cat: 'physical', type: 'nature',     unit: 'min', targets: [5, 10, 20, 30], es: n => `Toma luz natural ${n} min`, en: n => `Get natural light for ${n} min` },
+    plank:     { cat: 'physical', type: 'exercise',   unit: 's',   targets: [20, 30, 60, 90], es: n => `Aguanta una plancha de ${n} s`, en: n => `Hold a ${n}-second plank` },
+    breaths:   { cat: 'mental',   type: 'clarity',    unit: '',    targets: [3, 4, 6, 7], es: n => `Haz ${n} pausas para respirar despacio`, en: n => `Take ${n} pauses to breathe slowly` },
+    noaudio:   { cat: 'mental',   type: 'focus',      unit: 'min', targets: [10, 20, 45, 60], es: n => `Trabaja sin audio de fondo ${n} min`, en: n => `Work with no background audio for ${n} min` },
+    gratitude: { cat: 'mental',   type: 'gratitude',  unit: '',    targets: [1, 2, 3, 5], es: n => `Escribe ${n} ${one(n, 'cosa', 'cosas')} que agradeces`, en: n => `Write ${n} ${one(n, 'thing', 'things')} you are grateful for` },
+    reps:      { cat: 'physical', type: 'exercise',   unit: '',    targets: [10, 25, 75, 100], es: n => `Haz ${n} repeticiones de un ejercicio`, en: n => `Do ${n} reps of a single exercise` },
+    ground:    { cat: 'mental',   type: 'meditation', unit: 'min', targets: [2, 4, 8, 10], es: n => `Siente el suelo al caminar ${n} min`, en: n => `Feel the ground as you walk for ${n} min` },
+    outdoors:  { cat: 'physical', type: 'nature',     unit: 'min', targets: [10, 20, 45, 60], es: n => `Pasa ${n} min al aire libre sin el móvil`, en: n => `Spend ${n} min outdoors without your phone` },
+    pomodoro:  { cat: 'mental',   type: 'focus',      unit: '',    targets: [1, 2, 4, 6], es: n => `Completa ${n} ${one(n, 'sesión', 'sesiones')} Pomodoro`, en: n => `Complete ${n} Pomodoro ${one(n, 'session', 'sessions')}` },
+    notif:     { cat: 'mental',   type: 'focus',      unit: 'min', targets: [10, 30, 60, 120], es: n => `Apaga las notificaciones ${n} min`, en: n => `Turn off notifications for ${n} min` },
+    mobility:  { cat: 'physical', type: 'exercise',   unit: 'min', targets: [5, 10, 20, 25], es: n => `Haz ${n} min de movilidad`, en: n => `Do ${n} min of mobility work` },
+    stretch:   { cat: 'physical', type: 'exercise',   unit: 'min', targets: [3, 10, 15, 20], es: n => `Estira ${n} min después de entrenar`, en: n => `Stretch for ${n} min after training` },
+    sunrise:   { cat: 'physical', type: 'nature',     unit: 'min', targets: [10, 20, 45, 60], es: n => `Toma el sol ${n} min al despertar`, en: n => `Get sunlight for ${n} min after waking` },
+    call:      { cat: 'mental',   type: 'caring',     unit: '',    targets: [1, 2, 3, 4], es: n => n === 1 ? 'Llama a un amigo' : `Llama a ${n} amigos`, en: n => n === 1 ? 'Call a friend' : `Call ${n} friends` },
+    texts:     { cat: 'mental',   type: 'caring',     unit: '',    targets: [1, 3, 5, 8], es: n => n === 1 ? 'Escribe a un ser querido' : `Escribe a ${n} seres queridos`, en: n => n === 1 ? 'Text a loved one' : `Text ${n} loved ones` },
+    thanks:    { cat: 'mental',   type: 'gratitude',  unit: '',    targets: [1, 2, 4, 5], es: n => `Di «gracias» con intención ${n === 1 ? 'una vez' : n + ' veces'}`, en: n => `Say “thank you” with intention ${n === 1 ? 'once' : n + ' times'}` },
+    beautiful: { cat: 'mental',   type: 'gratitude',  unit: '',    targets: [1, 2, 3, 4], es: n => n === 1 ? 'Fíjate en algo bonito' : `Fíjate en ${n} cosas bonitas`, en: n => n === 1 ? 'Notice something beautiful' : `Notice ${n} beautiful things` },
+    why:       { cat: 'mental',   type: 'intention',  unit: '',    targets: [1, 2, 4, 5], es: n => `Pregúntate «¿por qué hago esto?» ${n === 1 ? 'una vez' : n + ' veces'}`, en: n => `Ask yourself “why am I doing this?” ${n === 1 ? 'once' : n + ' times'}` },
+    emotion:   { cat: 'mental',   type: 'awareness',  unit: '',    targets: [1, 3, 5, 7], es: n => `Pon nombre a tu emoción ${n === 1 ? 'una vez' : n + ' veces'} hoy`, en: n => `Name your current emotion ${n === 1 ? 'once' : n + ' times'} today` }
+  }
+  const CH_TYPES = {
+    es: { focus: 'Concentración', exercise: 'Ejercicio', nature: 'Naturaleza', clarity: 'Claridad', gratitude: 'Gratitud', meditation: 'Meditación', caring: 'Cuidar', intention: 'Intención', awareness: 'Conciencia' },
+    en: { focus: 'Focus', exercise: 'Exercise', nature: 'Nature', clarity: 'Clarity', gratitude: 'Gratitude', meditation: 'Meditation', caring: 'Caring', intention: 'Intention', awareness: 'Awareness' }
+  }
+  const CH_TXT = {
+    es: { open: 'Abrir reto', advance: 'Avanzar reto', restart: 'Reiniciar reto', done: 'Completado', locked: 'Primero cierra o aplica el reto abierto.', applied: '¡Reto aplicado! Ya cuenta para tu progreso.' },
+    en: { open: 'Open challenge', advance: 'Advance challenge', restart: 'Restart challenge', done: 'Completed', locked: 'First close or apply the open challenge.', applied: 'Challenge applied! It now counts towards your progress.' }
+  }
+  let list = [ { id: 'phone', level: 1, done: 12 }, { id: 'walk', level: 1, done: 7 } ]
+  const banned = new Set(), seen = new Set(list.map(c => c.id))
+  let cur = -1, toastTimer = null, fbTimer = null
+  const listEl = $('daily-list'), listBox = listEl.closest('.challenge-demo-list')
+  const modalBox = modal.closest('.challenge-demo-modal')
+  const feedback = $('daily-feedback')
+  const goalOf = c => CH_POOL[c.id].targets[c.level]
+  const titleOf = c => CH_POOL[c.id][currentLang()](goalOf(c))
+  const fmt = n => n.toLocaleString(currentLang() === 'en' ? 'en-GB' : 'es-ES')
   const toast = msg =>{
     const el = $('dc-toast'); el.textContent = msg; el.classList.add('show')
     clearTimeout(toastTimer); toastTimer = setTimeout(()=> el.classList.remove('show'), 2600)
   }
+  const say = (msg, kind) =>{
+    feedback.textContent = msg; feedback.dataset.kind = kind || ''
+    feedback.classList.remove('show'); void feedback.offsetWidth; feedback.classList.add('show')
+    clearTimeout(fbTimer); fbTimer = setTimeout(()=> feedback.classList.remove('show'), 2400)
+  }
+  const isOpen = () => cur >= 0
+  const renderList = () =>{
+    const lang = currentLang()
+    listEl.innerHTML = ''
+    list.forEach((c, i) =>{
+      const goal = goalOf(c), pct = Math.min(100, c.done / goal * 100), done = c.done >= goal
+      const li = document.createElement('li')
+      li.className = 'daily' + (i === cur ? ' is-selected' : '')
+      li.dataset.state = done ? 'done' : 'progress'
+      li.style.setProperty('--progress', pct + '%')
+      li.innerHTML = `<span class="daily-icon" aria-hidden="true"><span class="gt-icon" style="--icon:url(assets/icons/challenges/${CH_POOL[c.id].cat}.svg)"></span></span>
+        <div class="daily-bar"><div class="daily-text"><span class="daily-type">${CH_TYPES[lang][CH_POOL[c.id].type]}</span><h4></h4></div>
+        <button type="button" class="daily-end"></button></div>`
+      li.querySelector('h4').textContent = titleOf(c)
+      const btn = li.querySelector('.daily-end')
+      btn.setAttribute('aria-label', `${done ? CH_TXT[lang].restart : CH_TXT[lang].advance}: ${titleOf(c)}`)
+      // el "+" avanza el reto; pulsar en el resto de la barra abre su ventana
+      btn.addEventListener('click', e =>{ e.stopPropagation(); advance(i, li) })
+      li.tabIndex = 0
+      li.setAttribute('aria-label', `${CH_TXT[lang].open}: ${titleOf(c)}${done ? ' · ' + CH_TXT[lang].done : ''}`)
+      li.addEventListener('click', ()=> open(i))
+      li.addEventListener('keydown', e =>{ if(e.target === li && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); open(i) } })
+      listEl.appendChild(li)
+    })
+    listBox.classList.toggle('is-locked', isOpen())
+    listEl.setAttribute('aria-disabled', isOpen() ? 'true' : 'false')
+  }
   const renderDc = () =>{
-    const c = pool[cur], goal = c.goals[level]
-    $('dc-icon').style.setProperty('--icon', `url(assets/icons/${c.icon}.svg)`)
-    $('dc-title').textContent = L().challenges[c.id](goal)
+    modalBox.classList.toggle('is-empty', !isOpen())
+    modalBox.closest('.challenge-demo-grid').classList.toggle('is-open', isOpen())
+    if(!isOpen()) return
+    const c = list[cur], goal = goalOf(c), unit = CH_POOL[c.id].unit
+    $('dc-icon').style.setProperty('--icon', `url(assets/icons/challenges/${CH_POOL[c.id].cat}.svg)`)
+    $('dc-title').textContent = titleOf(c)
     const range = $('dc-range')
-    range.max = goal; range.step = Math.max(1, Math.round(goal / 90)); range.value = Math.min(c.done, goal)
+    range.max = goal; range.step = Math.max(1, Math.round(goal / 40)); range.value = Math.min(c.done, goal)
     $('dc-fill').style.width = Math.min(100, c.done / goal * 100) + '%'
     modal.classList.toggle('done', c.done >= goal)
-    const fmt = n => n.toLocaleString(currentLang() === 'en' ? 'en-GB' : 'es-ES')
-    $('dc-count').textContent = `${fmt(c.done)} / ${fmt(goal)}`
-    $('dc-level').textContent = L().levels[level]
-    $('dc-minus').disabled = level === 0
-    $('dc-plus').disabled = level === 2
-    $('dc-ban').disabled = pool.length < 2
+    $('dc-count').textContent = `${fmt(c.done)} / ${fmt(goal)}${unit ? ' ' + unit : ''}`
+    $('dc-level').textContent = L().levels[c.level]
+    $('dc-minus').disabled = c.level === 0
+    $('dc-plus').disabled = c.level === 3
   }
+  const renderAll = () =>{ renderList(); renderDc() }
   const bump = () =>{ modal.classList.remove('bump'); void modal.offsetWidth; modal.classList.add('bump') }
-  $('dc-minus').addEventListener('click', ()=>{ if(level > 0){ level--; playSfx('toggle-off'); renderDc() } })
-  $('dc-plus').addEventListener('click', ()=>{ if(level < 2){ level++; playSfx('toggle-on'); renderDc() } })
-  $('dc-swap').addEventListener('click', ()=>{ cur = (cur + 1) % pool.length; playSfx('tap'); bump(); renderDc() })
-  $('dc-ban').addEventListener('click', ()=>{
-    if(pool.length < 2){ playSfx('error'); return toast(L().lastOne) }
-    pool.splice(cur, 1); cur = cur % pool.length
-    playSfx('error'); bump(); renderDc(); toast(L().banned)
-  })
-  $('dc-apply').addEventListener('click', ()=>{ playSfx('success'); toast(L().applied) })
+  // "+": suma un 20 % del objetivo; la barra se llena con animación y, al llegar al final,
+  // pasa a completada (dorada y ✓). Con el reto ya completado, el ✓ lo reinicia.
+  let advanceTimer = null
+  const advance = (i, li) =>{
+    if(isOpen() && i !== cur){ open(i); return } // con otra ventana abierta, mismo aviso que al pulsar la barra
+    const c = list[i], goal = goalOf(c)
+    if(c.done >= goal){ c.done = 0; playSfx('toggle-off'); renderAll(); return }
+    c.done = Math.min(goal, c.done + Math.max(1, Math.round(goal * 0.2)))
+    li.style.setProperty('--progress', Math.min(100, c.done / goal * 100) + '%')
+    playSfx('tap')
+    if(i === cur) renderDc()
+    if(c.done >= goal){
+      clearTimeout(advanceTimer)
+      advanceTimer = setTimeout(()=>{
+        playSfx('success'); say(L().completed, 'ok')
+        renderAll()
+        const done = listEl.children[i]
+        if(done){ done.classList.add('just-done'); const b = done.querySelector('.daily-end'); if(b) b.focus({ preventScroll: true }) }
+      }, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 480)
+    }
+  }
+  const open = i =>{
+    if(isOpen()){
+      // la lista está bloqueada mientras hay una ventana abierta
+      playSfx('error'); say(CH_TXT[currentLang()].locked, 'warn')
+      listBox.classList.remove('shake'); void listBox.offsetWidth; listBox.classList.add('shake')
+      bump(); return
+    }
+    cur = i; playSfx('modal-open'); renderAll(); bump()
+    modal.closest('.tryit-item').classList.add('touched')
+    if(window.matchMedia('(max-width: 900px)').matches) modal.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    else $('dc-close').focus({ preventScroll: true })
+  }
+  const close = msg =>{
+    const was = cur
+    cur = -1; renderAll()
+    if(msg) say(msg, 'ok')
+    const li = listEl.children[was]
+    if(li) li.querySelector('.daily-end').focus({ preventScroll: true })
+  }
+  const replaceCurrent = ()=>{
+    const used = new Set(list.map(c => c.id))
+    let options = Object.keys(CH_POOL).filter(id => !used.has(id) && !banned.has(id) && !seen.has(id))
+    if(!options.length){ seen.clear(); list.forEach(c => seen.add(c.id)); options = Object.keys(CH_POOL).filter(id => !used.has(id) && !banned.has(id)) }
+    const pick = options[Math.floor(Math.random() * options.length)] || list[cur].id
+    seen.add(pick)
+    list[cur] = { id: pick, level: 1, done: 0 }
+  }
+  $('dc-minus').addEventListener('click', ()=>{ const c = list[cur]; if(c && c.level > 0){ c.level--; c.done = Math.min(c.done, goalOf(c)); playSfx('toggle-off'); renderAll() } })
+  $('dc-plus').addEventListener('click', ()=>{ const c = list[cur]; if(c && c.level < 3){ c.level++; playSfx('toggle-on'); renderAll() } })
+  $('dc-swap').addEventListener('click', ()=>{ replaceCurrent(); playSfx('tap'); bump(); renderAll() })
+  $('dc-ban').addEventListener('click', ()=>{ banned.add(list[cur].id); replaceCurrent(); playSfx('error'); bump(); renderAll(); toast(L().banned) })
+  $('dc-apply').addEventListener('click', ()=>{ playSfx('success'); close(CH_TXT[currentLang()].applied) })
+  $('dc-close').addEventListener('click', ()=>{ playSfx('modal-close'); close() })
+  modal.addEventListener('keydown', e =>{ if(e.key === 'Escape'){ playSfx('modal-close'); close() } })
   let lastTick = 0
   $('dc-range').addEventListener('input', e =>{
-    const c = pool[cur], goal = c.goals[level], wasDone = c.done >= goal
+    const c = list[cur], goal = goalOf(c), wasDone = c.done >= goal
     c.done = Math.min(goal, Number(e.target.value))
     if(c.done >= goal - Number(e.target.step) / 2) c.done = goal
-    renderDc()
+    renderAll()
     if(c.done >= goal && !wasDone){ playSfx('success'); bump(); toast(L().completed) }
     else if(performance.now() - lastTick > 90){ lastTick = performance.now(); playSfx('hover') }
-    modal.closest('.tryit-item').classList.add('touched')
   })
+  document.addEventListener('growtale:langchange', renderAll)
 
   // Habilidades
   const SK = { smite: 0, gust: 2386, frost: 0, heal: 1150 } // pasos que faltan para recargar
@@ -1136,7 +1288,7 @@ function initTryIt(){
     const card = $('skill-card'); card.classList.remove('bump'); void card.offsetWidth; card.classList.add('bump')
   }))
 
-  renderDc(); renderSkills()
+  renderAll(); renderSkills()
   document.addEventListener('growtale:langchange', ()=>{ renderDc(); renderSkills() })
 }
 
@@ -1193,6 +1345,30 @@ function initCarousel(){
       if(e.key === 'ArrowRight'){ e.preventDefault(); go(active + 1) }
       if(e.key === 'ArrowLeft'){ e.preventDefault(); go(active - 1) }
     })
+    // Arrastrar con el ratón (en táctil ya funciona el desplazamiento nativo)
+    let dragX = 0, dragLeft = 0, dragging = false, moved = false
+    track.querySelectorAll('img').forEach(img => img.draggable = false)
+    track.addEventListener('pointerdown', e =>{
+      if(e.pointerType !== 'mouse' || e.button !== 0) return
+      dragging = true; moved = false; dragX = e.clientX; dragLeft = track.scrollLeft
+      track.classList.add('is-dragging')
+    })
+    window.addEventListener('pointermove', e =>{
+      if(!dragging) return
+      const dx = e.clientX - dragX
+      if(Math.abs(dx) > 5) moved = true
+      track.scrollLeft = dragLeft - dx
+    })
+    const endDrag = ()=>{
+      if(!dragging) return
+      dragging = false
+      track.classList.remove('is-dragging')
+      update(); go(active)
+    }
+    window.addEventListener('pointerup', endDrag)
+    window.addEventListener('pointercancel', endDrag)
+    // si se ha arrastrado, el clic no abre la imagen ampliada
+    track.addEventListener('click', e =>{ if(moved){ e.preventDefault(); e.stopPropagation(); moved = false } }, true)
     let raf = 0
     track.addEventListener('scroll', ()=>{ cancelAnimationFrame(raf); raf = requestAnimationFrame(update) }, { passive: true })
     window.addEventListener('resize', update)
@@ -1364,36 +1540,147 @@ function initLiriaSpeech(){
   }else start()
 }
 
-/* Enemigos: tarjetas desplegables con ataques y estrategia */
-function initEnemyCards(){
-  const toggles = Array.from(document.querySelectorAll('.enemy-toggle'))
-  const label = btn => btn.querySelector('.enemy-toggle-text').textContent = t(btn.getAttribute('aria-expanded') === 'true' ? 'enemy_less' : 'enemy_more')
-  toggles.forEach(btn =>{
-    const panel = document.getElementById(btn.getAttribute('aria-controls'))
-    btn.addEventListener('click', ()=>{
-      const opening = btn.getAttribute('aria-expanded') !== 'true'
-      btn.setAttribute('aria-expanded', opening ? 'true' : 'false')
-      btn.closest('.enemy-card').classList.toggle('is-open', opening)
-      label(btn)
-      playSfx(opening ? 'modal-open' : 'modal-close')
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      if(reduce || !panel.animate){ panel.hidden = !opening; return }
-      if(opening){
-        panel.hidden = false
-        const h = panel.scrollHeight
-        panel.animate([{ height: '0px', opacity: 0 }, { height: h + 'px', opacity: 1 }], { duration: 320, easing: 'cubic-bezier(.2,.8,.2,1)' })
-      }else{
-        const h = panel.scrollHeight
-        const anim = panel.animate([{ height: h + 'px', opacity: 1 }, { height: '0px', opacity: 0 }], { duration: 260, easing: 'ease-in' })
-        let done = false
-        const end = ()=>{ if(done) return; done = true; if(btn.getAttribute('aria-expanded') !== 'true') panel.hidden = true }
-        anim.onfinish = end
-        setTimeout(end, 320)
-      }
-    })
+/* -----------------------------------------
+   Aparición al hacer scroll: los elementos entran con un fundido y un leve ascenso.
+   Solo usa opacidad y transform (barato), se observa una vez por elemento y, dentro de
+   una misma rejilla, las tarjetas entran escalonadas.
+   ----------------------------------------- */
+const REVEAL_SELECTORS = [
+  '.block-sep', '.story-steps', '.story-eyebrow', '.story-statement', '.story-copy > p', '.story-aside',
+  '.solution-card', '.validation-seal', '.validation-card', '.validation-quote', '.validator-author',
+  '.zone > section > h2', 'section > .container > h2', 'section > .container > .problem-subtitle', '.how > h2', '.how > p',
+  '.liria-tip', '.step', '.carousel', '.tryit-item', '.daily', '.map-aside > *', '.contact-copy', '.contact-liria', '.world-map',
+  '.node-type', '.enemy-card', '.ba-item', '.process-step', '.making-process-title',
+  '.advantage-mini', '.roadmap-step', '.member-card', '.ask-card', '.contact-actions', '.contact-alt'
+]
+function initReveal(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return
+  const scope = document.getElementById('main')
+  if(!scope) return
+  const items = Array.from(new Set(REVEAL_SELECTORS.flatMap(sel => Array.from(scope.querySelectorAll(sel)))))
+  // escalonado: posición del elemento entre sus hermanos que también aparecen
+  const set = new Set(items)
+  items.forEach(el =>{
+    const sibs = el.parentElement ? Array.from(el.parentElement.children).filter(c => set.has(c)) : [el]
+    const i = Math.max(0, sibs.indexOf(el))
+    el.style.setProperty('--reveal-delay', `${Math.min(i, 5) * 80}ms`)
+    el.classList.add('reveal')
   })
-  document.addEventListener('growtale:langchange', ()=> toggles.forEach(label))
-  toggles.forEach(label)
+  document.documentElement.classList.add('reveal-ready')
+  const io = new IntersectionObserver(entries =>{
+    entries.forEach(en =>{
+      if(!en.isIntersecting) return
+      en.target.classList.add('is-visible')
+      io.unobserve(en.target)
+    })
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 })
+  items.forEach(el => io.observe(el))
+}
+
+/* -----------------------------------------
+   Tarjetas que se dan la vuelta (enemigos y equipo): la cara trasera ocupa exactamente
+   el mismo espacio que la delantera, así la tarjeta nunca cambia de tamaño.
+   Solo se anima un transform (rotateY), que es barato para el navegador.
+   ----------------------------------------- */
+function buildFlip(card, frontNodes, backNodes, withClose = true){
+  const inner = document.createElement('div'); inner.className = 'flip-inner'
+  const front = document.createElement('div'); front.className = 'flip-face flip-front'
+  const back = document.createElement('div'); back.className = 'flip-face flip-back'
+  back.setAttribute('aria-hidden', 'true')
+  frontNodes.forEach(n => front.appendChild(n))
+  backNodes.forEach(n => back.appendChild(n))
+  let close = null
+  if(withClose){
+    close = document.createElement('button')
+    close.type = 'button'; close.className = 'flip-close'
+    close.innerHTML = '<span class="flip-close-icon" aria-hidden="true"></span><span data-i18n="flip_back" data-i18n-es="Volver">' + t('flip_back') + '</span>'
+    back.appendChild(close)
+  }
+  inner.append(front, back)
+  card.appendChild(inner)
+  card.classList.add('flip-card')
+  return { front, back, close }
+}
+function setFlipped(card, flipped, opener){
+  card.classList.toggle('is-flipped', flipped)
+  const front = card.querySelector('.flip-front'), back = card.querySelector('.flip-back')
+  back.setAttribute('aria-hidden', flipped ? 'false' : 'true')
+  front.setAttribute('aria-hidden', flipped ? 'true' : 'false')
+  // que el teclado no entre en la cara oculta
+  ;[front, back].forEach(face => face.querySelectorAll('a, button').forEach(el =>{
+    const hidden = face.getAttribute('aria-hidden') === 'true'
+    if(hidden) el.setAttribute('tabindex', '-1'); else el.removeAttribute('tabindex')
+  }))
+  if(opener) opener.setAttribute('aria-expanded', flipped ? 'true' : 'false')
+  playSfx(flipped ? 'modal-open' : 'modal-close')
+}
+
+function initEnemyCards(){
+  const ES = { front: 'Toca para ver ataques y estrategia', back: 'Toca para volver' }
+  document.querySelectorAll('.enemy-card').forEach(card =>{
+    const art = card.querySelector('.enemy-art'), body = card.querySelector('.enemy-body')
+    const more = card.querySelector('.enemy-more'), toggle = card.querySelector('.enemy-toggle')
+    if(!art || !body || !more) return
+    if(toggle) toggle.remove()
+    more.hidden = false
+    const hint = (key, es) =>{
+      const el = document.createElement('p'); el.className = 'enemy-flip-hint'
+      el.innerHTML = `<span class="enemy-flip-icon" aria-hidden="true"></span><span data-i18n="${key}" data-i18n-es="${es}">${t(key) || es}</span>`
+      return el
+    }
+    body.appendChild(hint('enemy_flip_hint', ES.front))
+    const head = document.createElement('div'); head.className = 'enemy-back-head'
+    head.append(body.querySelector('.enemy-dist').cloneNode(true), body.querySelector('h3').cloneNode(true))
+    buildFlip(card, [art, body], [head, more, hint('enemy_flip_back', ES.back)], false)
+    card.tabIndex = 0
+    card.setAttribute('role', 'button')
+    const name = body.querySelector('h3').textContent
+    const flip = ()=>{
+      const on = !card.classList.contains('is-flipped')
+      setFlipped(card, on)
+      card.setAttribute('aria-pressed', on ? 'true' : 'false')
+    }
+    card.setAttribute('aria-label', name)
+    card.setAttribute('aria-pressed', 'false')
+    card.addEventListener('click', flip)
+    card.addEventListener('keydown', e =>{ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); flip() } })
+    card.classList.remove('is-flipped')
+  })
+}
+
+function initTeam(){
+  const cards = Array.from(document.querySelectorAll('.team-section .member-card'))
+  const buttons = []
+  cards.forEach(card =>{
+    const btn = card.querySelector('.view-profile')
+    const name = card.querySelector('.member-name'), role = card.querySelector('.role')
+    const bio = card.querySelector('.bio-short'), link = card.querySelector('.member-link')
+    if(!btn || !bio) return
+    const frontNodes = Array.from(card.childNodes)
+    const head = document.createElement('div'); head.className = 'member-back-head'
+    head.append(name.cloneNode(true), role.cloneNode(true))
+    const full = bio.cloneNode(true); full.removeAttribute('id'); full.className = 'bio-full'
+    const backNodes = [head, full]
+    if(link) backNodes.push(link.cloneNode(true))
+    const { close } = buildFlip(card, frontNodes, backNodes)
+    btn.removeAttribute('aria-controls')
+    btn.addEventListener('click', ()=>{ setFlipped(card, true, btn); close.focus({ preventScroll: true }) })
+    close.addEventListener('click', ()=>{ setFlipped(card, false, btn); btn.focus({ preventScroll: true }) })
+    setFlipped(card, false, btn)
+    buttons.push(btn)
+  })
+  const sync = ()=> buttons.forEach(b => b.textContent = t('view_profile'))
+  // El botón solo tiene sentido si la bio está recortada en la cara delantera
+  const updateVisibility = ()=> buttons.forEach(btn =>{
+    const card = btn.closest('.member-card')
+    if(card.classList.contains('is-flipped')) return
+    const bio = card.querySelector('.flip-front .bio-short')
+    btn.hidden = bio.scrollHeight <= bio.clientHeight + 1
+  })
+  document.addEventListener('growtale:langchange', ()=>{ sync(); updateVisibility() })
+  window.addEventListener('resize', updateVisibility)
+  sync()
+  updateVisibility()
 }
 
 document.addEventListener('DOMContentLoaded', ()=>{
@@ -1406,6 +1693,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   initCarousel()
   initLiriaSpeech()
   initHeroVisibility()
+  initReveal()
   initDocViewer()
   initLightbox()
   initContact()
@@ -1413,7 +1701,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   initScreenTimeCounter()
   initCoverTransition()
   initWorldMap()
-  initDailyChallenges()
   initTryIt()
   initBeforeAfter()
   initBackToCover()
