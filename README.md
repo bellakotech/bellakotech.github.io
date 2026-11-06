@@ -1,6 +1,6 @@
 # GrowTale — Web oficial
 
-Web estática de GrowTale, publicada con GitHub Pages en https://bellakotech.github.io/ (cada push a `main` se despliega automáticamente).
+Web estática de GrowTale, publicada con GitHub Pages en https://growtale.app/ (dominio propio; el archivo `CNAME` lo indica a GitHub). Cada push a `main` se despliega automáticamente.
 
 ## Páginas
 
