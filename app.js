@@ -260,6 +260,17 @@ const I18N_EN = {
   contact_heading: "Shall we build GrowTale together?",
   enemy_flip_hint: 'Tap to see attacks and strategy',
   enemy_flip_back: 'Tap to go back',
+  map_prev: "Previous",
+  map_next: "Next place",
+  manifesto_eyebrow: "Why we make GrowTale",
+  manifesto_title: "Growing shouldn't feel like punishment.",
+  manifesto_p1: "We want GrowTale to become a go-to tool for healthy personal development: helping people work on themselves while actually enjoying the process.",
+  manifesto_p2: "We think of people struggling with low self-esteem, lack of discipline or inconsistency. They don't need another app that blocks screens or shows cold stats. They need a safe place to come back to every day without feeling judged.",
+  manifesto_p3: "That's why GrowTale turns every challenge into part of an adventure: you are the one reclaiming Mindveil, place by place, and every small win in your real life shows in the game world. Narrative, exploration and small meaningful wins make self-work something you want to play.",
+  manifesto_quote: "What we're really building is not just a tool, but a companion for change.",
+  manifesto_quote_by: "The GrowTale team · from our mission",
+  band_alt: "Final art of Vigilaris Castle: a blue stone castle beside a turquoise river",
+  band_caption: "Vigilaris Castle, Act I · the team's final art",
   map_title: 'Mindveil, the Realm of Compulsion',
   map_text: 'A brain-shaped island. Tap each place to discover what awaits you.',
   map_alt: 'Map of Mindveil: a brain-shaped island',
@@ -973,6 +984,34 @@ function initWorldMap(){
     spots.forEach(s=> s.setAttribute('aria-pressed', s.dataset.region === region ? 'true' : 'false'))
   }
   spots.forEach(spot=> spot.addEventListener('click', ()=> select(spot.dataset.region)))
+
+  // Recorrido en orden: Prólogo → Acto I → Acto II → Acto III (el orden de las tarjetas)
+  const order = cards.map(c => c.dataset.region)
+  const nav = map.querySelector('.map-nav')
+  if(nav){
+    const prev = nav.querySelector('.map-nav-prev'), next = nav.querySelector('.map-nav-next')
+    const now = nav.querySelector('.map-nav-now')
+    nav.querySelector('.map-nav-total').textContent = order.length
+    let current = order[0]
+    const base = select
+    select = region =>{
+      base(region)
+      current = region
+      const i = order.indexOf(region)
+      now.textContent = i + 1
+      prev.disabled = i <= 0
+      next.disabled = i >= order.length - 1
+    }
+    nav.addEventListener('click', e =>{
+      const btn = e.target.closest('[data-map-step]')
+      if(!btn || btn.disabled) return
+      const i = order.indexOf(current) + Number(btn.dataset.mapStep)
+      if(i < 0 || i >= order.length) return
+      select(order[i])
+      const spot = spots.find(s => s.dataset.region === order[i])
+      if(spot){ spot.classList.remove('is-pinged'); void spot.offsetWidth; spot.classList.add('is-pinged') }
+    })
+  }
   select('fuente')
 }
 
@@ -1550,7 +1589,7 @@ const REVEAL_SELECTORS = [
   '.block-sep', '.story-steps', '.story-eyebrow', '.story-statement', '.story-copy > p', '.story-aside',
   '.solution-card', '.validation-seal', '.validation-card', '.validation-quote', '.validator-author',
   '.zone > section > h2', 'section > .container > h2', 'section > .container > .problem-subtitle', '.how > h2', '.how > p',
-  '.liria-tip', '.step', '.carousel', '.tryit-item', '.daily', '.map-aside > *', '.contact-copy', '.contact-liria', '.world-map',
+  '.liria-tip', '.step', '.carousel', '.tryit-item', '.daily', '.map-aside > *', '.manifesto-inner > *', '.art-band', '.contact-copy', '.contact-liria', '.world-map',
   '.node-type', '.enemy-card', '.ba-item', '.process-step', '.making-process-title',
   '.advantage-mini', '.roadmap-step', '.member-card', '.ask-card', '.contact-actions', '.contact-alt'
 ]

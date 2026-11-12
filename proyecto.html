@@ -27,7 +27,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Poppins:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <!-- Entrada suave al llegar desde el botón "Descubre GrowTale" de la portada -->
     <script>try{if(sessionStorage.getItem('growtale_enter')){document.documentElement.classList.add('arrive');sessionStorage.removeItem('growtale_enter')}}catch(e){}</script>
-    <link rel="stylesheet" href="styles.css?v=20261107q">
+    <link rel="stylesheet" href="styles.css?v=20261112d">
   </head>
   <body>
     <a class="skip-link" href="#main" data-i18n="skip_to_content">Saltar al contenido</a>
@@ -210,6 +210,21 @@
           </div>
         </section>
       </div>
+
+      <!-- Por qué hacemos GrowTale: texto largo en una sola columna (basado en la misión del equipo) -->
+      <section class="manifesto" id="por-que" aria-labelledby="manifesto-title">
+        <div class="manifesto-inner">
+          <p class="manifesto-eyebrow" data-i18n="manifesto_eyebrow">Por qué hacemos GrowTale</p>
+          <h2 class="manifesto-title" id="manifesto-title" data-i18n="manifesto_title">Crecer no debería sentirse como un castigo.</h2>
+          <p class="manifesto-lead" data-i18n="manifesto_p1">Queremos que GrowTale sea una herramienta de referencia en el desarrollo personal sano: que la gente trabaje en sí misma y, de verdad, disfrute haciéndolo.</p>
+          <p data-i18n="manifesto_p2">Pensamos en quien lucha con la baja autoestima, la falta de disciplina o la inconstancia. A esas personas no les sirve otra app que bloquee pantallas o les enseñe estadísticas frías. Les sirve un lugar seguro donde volver cada día sin sentirse juzgadas.</p>
+          <p data-i18n="manifesto_p3">Por eso GrowTale convierte cada reto en parte de una aventura: tú eres quien recupera Mindveil, lugar a lugar, y cada pequeña victoria en tu vida real se nota en el mundo del juego. La narrativa, la exploración y los logros pequeños pero con sentido hacen que el trabajo personal sea algo que apetece jugar.</p>
+          <figure class="manifesto-quote">
+            <blockquote data-i18n="manifesto_quote">Lo que de verdad estamos construyendo no es solo una herramienta, sino un compañero para el cambio.</blockquote>
+            <figcaption data-i18n="manifesto_quote_by">Equipo GrowTale · de nuestra misión</figcaption>
+          </figure>
+        </div>
+      </section>
 
       <div class="zone zone-game" id="videojuego">
       <!-- BLOQUE: EL VIDEOJUEGO -->
@@ -458,6 +473,11 @@
                   <p data-i18n="region_tiempo_text">En lo más alto del reino, donde el tiempo deja de correr igual. El final del Reino de la Compulsión.</p>
                   <p class="region-theme"><span data-i18n="region_theme">Tema</span>: <strong data-i18n="region_tiempo_theme">el valor de tu tiempo</strong></p>
                 </article>
+                <div class="map-nav">
+                  <button type="button" class="map-nav-btn map-nav-prev" data-map-step="-1"><span class="map-nav-arrow" aria-hidden="true"></span><span data-i18n="map_prev">Anterior</span></button>
+                  <p class="map-nav-count" aria-live="polite"><span class="map-nav-now">1</span> / <span class="map-nav-total">9</span></p>
+                  <button type="button" class="map-nav-btn map-nav-next" data-map-step="1"><span data-i18n="map_next">Siguiente lugar</span><span class="map-nav-arrow" aria-hidden="true"></span></button>
+                </div>
               </div>
               </div>
             </div>
@@ -635,6 +655,18 @@
           </ol>
         </div>
       </section>
+
+      <!-- Imagen a sangre: arte final del Castillo Vigilaris -->
+      <figure class="art-band">
+        <img src="assets/images/hero/vigilaris-band.webp"
+             srcset="assets/images/hero/vigilaris-band-960.webp 960w, assets/images/hero/vigilaris-band.webp 1920w"
+             sizes="100vw" width="1920" height="816" loading="lazy" decoding="async"
+             alt="Arte final del Castillo Vigilaris: un castillo de piedra azul junto a un río turquesa" data-i18n-alt="band_alt">
+        <figcaption class="art-band-caption">
+          <span class="art-band-motto">Fight back. Focus forward.</span>
+          <span class="art-band-note" data-i18n="band_caption">Castillo Vigilaris, Acto I · arte final del equipo</span>
+        </figcaption>
+      </figure>
       </div>
 
       <div class="zone zone-project" id="proyecto">
@@ -995,7 +1027,7 @@
       <div class="cursor-inner"></div>
     </div>
 
-    <script src="app.js?v=20261107q" defer></script>
-    <script src="cursor.js?v=20261107q" defer></script>
+    <script src="app.js?v=20261112d" defer></script>
+    <script src="cursor.js?v=20261112d" defer></script>
   </body>
 </html>
