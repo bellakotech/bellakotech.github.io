@@ -27,7 +27,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Poppins:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <!-- Entrada suave al llegar desde el botón "Descubre GrowTale" de la portada -->
     <script>try{if(sessionStorage.getItem('growtale_enter')){document.documentElement.classList.add('arrive');sessionStorage.removeItem('growtale_enter')}}catch(e){}</script>
-    <link rel="stylesheet" href="styles.css?v=20261112d">
+    <link rel="stylesheet" href="styles.css?v=20261114f">
   </head>
   <body>
     <a class="skip-link" href="#main" data-i18n="skip_to_content">Saltar al contenido</a>
@@ -211,21 +211,6 @@
         </section>
       </div>
 
-      <!-- Por qué hacemos GrowTale: texto largo en una sola columna (basado en la misión del equipo) -->
-      <section class="manifesto" id="por-que" aria-labelledby="manifesto-title">
-        <div class="manifesto-inner">
-          <p class="manifesto-eyebrow" data-i18n="manifesto_eyebrow">Por qué hacemos GrowTale</p>
-          <h2 class="manifesto-title" id="manifesto-title" data-i18n="manifesto_title">Crecer no debería sentirse como un castigo.</h2>
-          <p class="manifesto-lead" data-i18n="manifesto_p1">Queremos que GrowTale sea una herramienta de referencia en el desarrollo personal sano: que la gente trabaje en sí misma y, de verdad, disfrute haciéndolo.</p>
-          <p data-i18n="manifesto_p2">Pensamos en quien lucha con la baja autoestima, la falta de disciplina o la inconstancia. A esas personas no les sirve otra app que bloquee pantallas o les enseñe estadísticas frías. Les sirve un lugar seguro donde volver cada día sin sentirse juzgadas.</p>
-          <p data-i18n="manifesto_p3">Por eso GrowTale convierte cada reto en parte de una aventura: tú eres quien recupera Mindveil, lugar a lugar, y cada pequeña victoria en tu vida real se nota en el mundo del juego. La narrativa, la exploración y los logros pequeños pero con sentido hacen que el trabajo personal sea algo que apetece jugar.</p>
-          <figure class="manifesto-quote">
-            <blockquote data-i18n="manifesto_quote">Lo que de verdad estamos construyendo no es solo una herramienta, sino un compañero para el cambio.</blockquote>
-            <figcaption data-i18n="manifesto_quote_by">Equipo GrowTale · de nuestra misión</figcaption>
-          </figure>
-        </div>
-      </section>
-
       <div class="zone zone-game" id="videojuego">
       <!-- BLOQUE: EL VIDEOJUEGO -->
       <div class="block-sep block-sep-immersive" data-block="videojuego">
@@ -368,6 +353,13 @@
         </div>
       </section>
 
+      </div>
+
+      <!-- Ventana con parallax al mundo del juego: arte final del Castillo Vigilaris -->
+      <div class="parallax-band" aria-hidden="true">
+        <img src="assets/images/hero/vigilaris-parallax.webp"
+             srcset="assets/images/hero/vigilaris-parallax-960.webp 960w, assets/images/hero/vigilaris-parallax.webp 1920w"
+             sizes="100vw" width="1920" height="1200" alt="" loading="lazy" decoding="async">
       </div>
 
       <div class="zone zone-universe" id="universo">
@@ -523,8 +515,16 @@
       <!-- Bestiario: cada distracción es un enemigo del juego -->
       <section id="bestiary" class="bestiary">
         <div class="container">
-          <h2 data-i18n="bestiary_title">Algunos enemigos de Mindveil</h2>
-          <p class="problem-subtitle" data-i18n="bestiary_subtitle">Cada distracción del día a día toma forma de criatura en el juego.</p>
+          <div class="bestiary-head">
+            <figure class="bestiary-hero">
+              <img src="assets/images/characters/soren.webp" alt="Soren, el arquero" data-i18n-alt="soren_alt" width="760" height="734" loading="lazy" decoding="async">
+              <figcaption><strong>Soren</strong> <span data-i18n="soren_role">el arquero</span></figcaption>
+            </figure>
+            <div class="bestiary-head-text">
+              <h2 data-i18n="bestiary_title">Algunos enemigos de Mindveil</h2>
+              <p class="problem-subtitle" data-i18n="bestiary_subtitle">Cada distracción del día a día toma forma de criatura en el juego.</p>
+            </div>
+          </div>
           <ul class="enemy-grid">
               <li class="enemy-card">
                 <div class="enemy-art">
@@ -653,23 +653,28 @@
                 <p><strong data-i18n="making_city3_title">Línea final</strong> <span data-i18n="making_city3_text">El dibujo definitivo, listo para el color.</span></p>
               </li>
           </ol>
+          <h3 class="section-subtitle making-process-title" data-i18n="making_soren_title">Soren, el arquero, paso a paso</h3>
+          <ol class="process">
+              <li class="process-step">
+                <img src="assets/images/making/soren-1-proportions.webp" alt="" width="1200" height="676" loading="lazy" decoding="async">
+                <p><strong data-i18n="making_soren1_title">Proporciones</strong> <span data-i18n="making_soren1_text">Se fija la altura en cabezas y la silueta del personaje.</span></p>
+              </li>
+              <li class="process-step">
+                <img src="assets/images/making/soren-2-anatomy.webp" alt="" width="1200" height="602" loading="lazy" decoding="async">
+                <p><strong data-i18n="making_soren2_title">Cuerpo y vestuario</strong> <span data-i18n="making_soren2_text">Anatomía y ropa por separado, para que funcione en cualquier pose.</span></p>
+              </li>
+              <li class="process-step">
+                <img src="assets/images/making/soren-3-final.webp" alt="" width="1200" height="676" loading="lazy" decoding="async">
+                <p><strong data-i18n="making_soren3_title">Personaje final</strong> <span data-i18n="making_soren3_text">Soren con su arco, listo para entrar en el juego.</span></p>
+              </li>
+          </ol>
         </div>
       </section>
 
-      <!-- Imagen a sangre: arte final del Castillo Vigilaris -->
-      <figure class="art-band">
-        <img src="assets/images/hero/vigilaris-band.webp"
-             srcset="assets/images/hero/vigilaris-band-960.webp 960w, assets/images/hero/vigilaris-band.webp 1920w"
-             sizes="100vw" width="1920" height="816" loading="lazy" decoding="async"
-             alt="Arte final del Castillo Vigilaris: un castillo de piedra azul junto a un río turquesa" data-i18n-alt="band_alt">
-        <figcaption class="art-band-caption">
-          <span class="art-band-motto">Fight back. Focus forward.</span>
-          <span class="art-band-note" data-i18n="band_caption">Castillo Vigilaris, Acto I · arte final del equipo</span>
-        </figcaption>
-      </figure>
       </div>
 
       <div class="zone zone-project" id="proyecto">
+      <div class="zone-fixed-bg" aria-hidden="true"></div>
       <!-- BLOQUE: PROYECTO E INVERSIÓN -->
       <div class="block-sep" data-block="proyecto">
         <div class="block-inner container">
@@ -1027,7 +1032,7 @@
       <div class="cursor-inner"></div>
     </div>
 
-    <script src="app.js?v=20261112d" defer></script>
-    <script src="cursor.js?v=20261112d" defer></script>
+    <script src="app.js?v=20261114f" defer></script>
+    <script src="cursor.js?v=20261114f" defer></script>
   </body>
 </html>

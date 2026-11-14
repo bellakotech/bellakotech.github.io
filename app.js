@@ -262,15 +262,15 @@ const I18N_EN = {
   enemy_flip_back: 'Tap to go back',
   map_prev: "Previous",
   map_next: "Next place",
-  manifesto_eyebrow: "Why we make GrowTale",
-  manifesto_title: "Growing shouldn't feel like punishment.",
-  manifesto_p1: "We want GrowTale to become a go-to tool for healthy personal development: helping people work on themselves while actually enjoying the process.",
-  manifesto_p2: "We think of people struggling with low self-esteem, lack of discipline or inconsistency. They don't need another app that blocks screens or shows cold stats. They need a safe place to come back to every day without feeling judged.",
-  manifesto_p3: "That's why GrowTale turns every challenge into part of an adventure: you are the one reclaiming Mindveil, place by place, and every small win in your real life shows in the game world. Narrative, exploration and small meaningful wins make self-work something you want to play.",
-  manifesto_quote: "What we're really building is not just a tool, but a companion for change.",
-  manifesto_quote_by: "The GrowTale team · from our mission",
-  band_alt: "Final art of Vigilaris Castle: a blue stone castle beside a turquoise river",
-  band_caption: "Vigilaris Castle, Act I · the team's final art",
+  soren_alt: "Soren, the archer",
+  soren_role: "the archer",
+  making_soren_title: "Soren the archer, step by step",
+  making_soren1_title: "Proportions",
+  making_soren1_text: "The character's height in heads and silhouette are set.",
+  making_soren2_title: "Body and outfit",
+  making_soren2_text: "Anatomy and clothing drawn separately, so it works in any pose.",
+  making_soren3_title: "Final character",
+  making_soren3_text: "Soren with his bow, ready to enter the game.",
   map_title: 'Mindveil, the Realm of Compulsion',
   map_text: 'A brain-shaped island. Tap each place to discover what awaits you.',
   map_alt: 'Map of Mindveil: a brain-shaped island',
@@ -1015,6 +1015,53 @@ function initWorldMap(){
   select('fuente')
 }
 
+/* -----------------------------------------
+   Proyecto: el arte fijo del fondo se desplaza y acerca despacio (parallax)
+   ----------------------------------------- */
+function initZoneBgParallax(){
+  const bg = document.querySelector('.zone-fixed-bg')
+  if(!bg || matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  const zone = bg.parentElement
+  let raf = 0
+  const update = ()=>{
+    raf = 0
+    const r = zone.getBoundingClientRect()
+    if(r.bottom < 0 || r.top > innerHeight) return
+    // 0 cuando el bloque entra por abajo, 1 cuando sale por arriba
+    const p = Math.min(1, Math.max(0, (innerHeight - r.top) / (r.height + innerHeight)))
+    bg.style.setProperty('--bg-y', `${((.5 - p) * 200).toFixed(1)}px`)
+    bg.style.setProperty('--bg-s', (1 + .1 * p).toFixed(3))
+  }
+  addEventListener('scroll', ()=>{ if(!raf) raf = requestAnimationFrame(update) }, { passive: true })
+  addEventListener('resize', update)
+  update()
+}
+
+/* -----------------------------------------
+   Franja del castillo: la imagen se desplaza más lenta que la página (parallax)
+   ----------------------------------------- */
+function initBandParallax(){
+  const bands = Array.from(document.querySelectorAll('.parallax-band'))
+  if(!bands.length || matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  let raf = 0
+  const update = ()=>{
+    raf = 0
+    bands.forEach(band =>{
+      const img = band.querySelector('img')
+      const r = band.getBoundingClientRect()
+      if(r.bottom < 0 || r.top > innerHeight) return
+      // -1 cuando la franja entra por abajo, 1 cuando sale por arriba
+      const p = Math.max(-1, Math.min(1, (innerHeight / 2 - (r.top + r.height / 2)) / (innerHeight / 2 + r.height / 2)))
+      const travel = (img.offsetHeight - r.height) / 2
+      img.style.transform = `translate3d(0, ${(-travel + p * travel).toFixed(1)}px, 0)`
+    })
+  }
+  addEventListener('scroll', ()=>{ if(!raf) raf = requestAnimationFrame(update) }, { passive: true })
+  addEventListener('resize', update)
+  bands.forEach(b => b.querySelector('img').addEventListener('load', update))
+  update()
+}
+
 function initScreenTimeCounter(){
   const counter = document.getElementById('screen-time-counter')
   if(!counter || prefersReducedMotion()) return
@@ -1409,6 +1456,13 @@ function initCarousel(){
     window.addEventListener('pointercancel', endDrag)
     // si se ha arrastrado, el clic no abre la imagen ampliada
     track.addEventListener('click', e =>{ if(moved){ e.preventDefault(); e.stopPropagation(); moved = false } }, true)
+    // una tarjeta que no está seleccionada se selecciona (no abre la imagen ampliada)
+    track.addEventListener('click', e =>{
+      const i = slides.findIndex(s => s.contains(e.target))
+      if(i < 0 || i === active) return
+      e.preventDefault(); e.stopPropagation()
+      playSfx('tap'); go(i)
+    }, true)
     let raf = 0
     track.addEventListener('scroll', ()=>{ cancelAnimationFrame(raf); raf = requestAnimationFrame(update) }, { passive: true })
     window.addEventListener('resize', update)
@@ -1589,7 +1643,7 @@ const REVEAL_SELECTORS = [
   '.block-sep', '.story-steps', '.story-eyebrow', '.story-statement', '.story-copy > p', '.story-aside',
   '.solution-card', '.validation-seal', '.validation-card', '.validation-quote', '.validator-author',
   '.zone > section > h2', 'section > .container > h2', 'section > .container > .problem-subtitle', '.how > h2', '.how > p',
-  '.liria-tip', '.step', '.carousel', '.tryit-item', '.daily', '.map-aside > *', '.manifesto-inner > *', '.art-band', '.contact-copy', '.contact-liria', '.world-map',
+  '.liria-tip', '.step', '.carousel', '.tryit-item', '.daily', '.map-aside > *', '.bestiary-head', '.contact-copy', '.contact-liria', '.world-map',
   '.node-type', '.enemy-card', '.ba-item', '.process-step', '.making-process-title',
   '.advantage-mini', '.roadmap-step', '.member-card', '.ask-card', '.contact-actions', '.contact-alt'
 ]
@@ -1732,6 +1786,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
   initEnemyCards()
   initCarousel()
   initLiriaSpeech()
+  initZoneBgParallax()
+  initBandParallax()
   initHeroVisibility()
   initReveal()
   initDocViewer()
