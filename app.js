@@ -260,10 +260,8 @@ const I18N_EN = {
   contact_heading: "Shall we build GrowTale together?",
   enemy_flip_hint: 'Tap to see attacks and strategy',
   enemy_flip_back: 'Tap to go back',
-  map_prev: "Previous",
+  map_prev: "Previous place",
   map_next: "Next place",
-  soren_alt: "Soren, the archer",
-  soren_role: "the archer",
   making_soren_title: "Soren the archer, step by step",
   making_soren1_title: "Proportions",
   making_soren1_text: "The character's height in heads and silhouette are set.",
@@ -271,6 +269,7 @@ const I18N_EN = {
   making_soren2_text: "Anatomy and clothing drawn separately, so it works in any pose.",
   making_soren3_title: "Final character",
   making_soren3_text: "Soren with his bow, ready to enter the game.",
+  region_hushgrove_char: "the village archer",
   map_title: 'Mindveil, the Realm of Compulsion',
   map_text: 'A brain-shaped island. Tap each place to discover what awaits you.',
   map_alt: 'Map of Mindveil: a brain-shaped island',
@@ -1015,53 +1014,6 @@ function initWorldMap(){
   select('fuente')
 }
 
-/* -----------------------------------------
-   Proyecto: el arte fijo del fondo se desplaza y acerca despacio (parallax)
-   ----------------------------------------- */
-function initZoneBgParallax(){
-  const bg = document.querySelector('.zone-fixed-bg')
-  if(!bg || matchMedia('(prefers-reduced-motion: reduce)').matches) return
-  const zone = bg.parentElement
-  let raf = 0
-  const update = ()=>{
-    raf = 0
-    const r = zone.getBoundingClientRect()
-    if(r.bottom < 0 || r.top > innerHeight) return
-    // 0 cuando el bloque entra por abajo, 1 cuando sale por arriba
-    const p = Math.min(1, Math.max(0, (innerHeight - r.top) / (r.height + innerHeight)))
-    bg.style.setProperty('--bg-y', `${((.5 - p) * 200).toFixed(1)}px`)
-    bg.style.setProperty('--bg-s', (1 + .1 * p).toFixed(3))
-  }
-  addEventListener('scroll', ()=>{ if(!raf) raf = requestAnimationFrame(update) }, { passive: true })
-  addEventListener('resize', update)
-  update()
-}
-
-/* -----------------------------------------
-   Franja del castillo: la imagen se desplaza más lenta que la página (parallax)
-   ----------------------------------------- */
-function initBandParallax(){
-  const bands = Array.from(document.querySelectorAll('.parallax-band'))
-  if(!bands.length || matchMedia('(prefers-reduced-motion: reduce)').matches) return
-  let raf = 0
-  const update = ()=>{
-    raf = 0
-    bands.forEach(band =>{
-      const img = band.querySelector('img')
-      const r = band.getBoundingClientRect()
-      if(r.bottom < 0 || r.top > innerHeight) return
-      // -1 cuando la franja entra por abajo, 1 cuando sale por arriba
-      const p = Math.max(-1, Math.min(1, (innerHeight / 2 - (r.top + r.height / 2)) / (innerHeight / 2 + r.height / 2)))
-      const travel = (img.offsetHeight - r.height) / 2
-      img.style.transform = `translate3d(0, ${(-travel + p * travel).toFixed(1)}px, 0)`
-    })
-  }
-  addEventListener('scroll', ()=>{ if(!raf) raf = requestAnimationFrame(update) }, { passive: true })
-  addEventListener('resize', update)
-  bands.forEach(b => b.querySelector('img').addEventListener('load', update))
-  update()
-}
-
 function initScreenTimeCounter(){
   const counter = document.getElementById('screen-time-counter')
   if(!counter || prefersReducedMotion()) return
@@ -1643,7 +1595,7 @@ const REVEAL_SELECTORS = [
   '.block-sep', '.story-steps', '.story-eyebrow', '.story-statement', '.story-copy > p', '.story-aside',
   '.solution-card', '.validation-seal', '.validation-card', '.validation-quote', '.validator-author',
   '.zone > section > h2', 'section > .container > h2', 'section > .container > .problem-subtitle', '.how > h2', '.how > p',
-  '.liria-tip', '.step', '.carousel', '.tryit-item', '.daily', '.map-aside > *', '.bestiary-head', '.contact-copy', '.contact-liria', '.world-map',
+  '.liria-tip', '.step', '.carousel', '.tryit-item', '.daily', '.map-aside > *', '.contact-copy', '.contact-liria', '.world-map',
   '.node-type', '.enemy-card', '.ba-item', '.process-step', '.making-process-title',
   '.advantage-mini', '.roadmap-step', '.member-card', '.ask-card', '.contact-actions', '.contact-alt'
 ]
@@ -1786,8 +1738,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   initEnemyCards()
   initCarousel()
   initLiriaSpeech()
-  initZoneBgParallax()
-  initBandParallax()
   initHeroVisibility()
   initReveal()
   initDocViewer()

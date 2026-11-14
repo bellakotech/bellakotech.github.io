@@ -27,7 +27,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Poppins:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <!-- Entrada suave al llegar desde el botón "Descubre GrowTale" de la portada -->
     <script>try{if(sessionStorage.getItem('growtale_enter')){document.documentElement.classList.add('arrive');sessionStorage.removeItem('growtale_enter')}}catch(e){}</script>
-    <link rel="stylesheet" href="styles.css?v=20261114f">
+    <link rel="stylesheet" href="styles.css?v=20261114i">
   </head>
   <body>
     <a class="skip-link" href="#main" data-i18n="skip_to_content">Saltar al contenido</a>
@@ -355,13 +355,6 @@
 
       </div>
 
-      <!-- Ventana con parallax al mundo del juego: arte final del Castillo Vigilaris -->
-      <div class="parallax-band" aria-hidden="true">
-        <img src="assets/images/hero/vigilaris-parallax.webp"
-             srcset="assets/images/hero/vigilaris-parallax-960.webp 960w, assets/images/hero/vigilaris-parallax.webp 1920w"
-             sizes="100vw" width="1920" height="1200" alt="" loading="lazy" decoding="async">
-      </div>
-
       <div class="zone zone-universe" id="universo">
       <!-- BLOQUE: EL UNIVERSO -->
       <div class="block-sep block-sep-immersive" data-block="universo">
@@ -385,6 +378,11 @@
             <div class="world-map">
               <div class="world-map-stage">
                 <div class="world-sea" aria-hidden="true"></div>
+                <div class="map-nav">
+                  <button type="button" class="map-nav-btn map-nav-prev" data-map-step="-1" aria-label="Lugar anterior" data-i18n-aria-label="map_prev"></button>
+                  <button type="button" class="map-nav-btn map-nav-next" data-map-step="1" aria-label="Siguiente lugar" data-i18n-aria-label="map_next"></button>
+                  <p class="map-nav-count" aria-live="polite"><span class="map-nav-now">1</span> / <span class="map-nav-total">9</span></p>
+                </div>
                 <div class="world-island">
                   <img src="assets/images/map/mindveil-1400.webp"
                        srcset="assets/images/map/mindveil-800.webp 800w, assets/images/map/mindveil-1400.webp 1400w"
@@ -434,6 +432,10 @@
                   <h4 data-i18n="region_hushgrove">Aldea Hushgrove</h4>
                   <p data-i18n="region_hushgrove_text">Un pueblo con su molino y un consejo que debe decidir cómo resistir a los monstruos.</p>
                   <p class="region-theme"><span data-i18n="region_theme">Tema</span>: <strong data-i18n="region_hushgrove_theme">comunidad: nadie avanza solo</strong></p>
+                  <div class="region-character">
+                    <img src="assets/images/characters/soren-bust.webp" alt="" width="320" height="320" loading="lazy" decoding="async">
+                    <p><strong>Soren</strong> <span data-i18n="region_hushgrove_char">el arquero de la aldea</span></p>
+                  </div>
                 </article>
                 <article class="region-card" data-region="laberinto" hidden>
                   <p class="region-chapter"><span data-i18n="act_2">Acto II</span></p>
@@ -465,11 +467,6 @@
                   <p data-i18n="region_tiempo_text">En lo más alto del reino, donde el tiempo deja de correr igual. El final del Reino de la Compulsión.</p>
                   <p class="region-theme"><span data-i18n="region_theme">Tema</span>: <strong data-i18n="region_tiempo_theme">el valor de tu tiempo</strong></p>
                 </article>
-                <div class="map-nav">
-                  <button type="button" class="map-nav-btn map-nav-prev" data-map-step="-1"><span class="map-nav-arrow" aria-hidden="true"></span><span data-i18n="map_prev">Anterior</span></button>
-                  <p class="map-nav-count" aria-live="polite"><span class="map-nav-now">1</span> / <span class="map-nav-total">9</span></p>
-                  <button type="button" class="map-nav-btn map-nav-next" data-map-step="1"><span data-i18n="map_next">Siguiente lugar</span><span class="map-nav-arrow" aria-hidden="true"></span></button>
-                </div>
               </div>
               </div>
             </div>
@@ -515,16 +512,8 @@
       <!-- Bestiario: cada distracción es un enemigo del juego -->
       <section id="bestiary" class="bestiary">
         <div class="container">
-          <div class="bestiary-head">
-            <figure class="bestiary-hero">
-              <img src="assets/images/characters/soren.webp" alt="Soren, el arquero" data-i18n-alt="soren_alt" width="760" height="734" loading="lazy" decoding="async">
-              <figcaption><strong>Soren</strong> <span data-i18n="soren_role">el arquero</span></figcaption>
-            </figure>
-            <div class="bestiary-head-text">
-              <h2 data-i18n="bestiary_title">Algunos enemigos de Mindveil</h2>
-              <p class="problem-subtitle" data-i18n="bestiary_subtitle">Cada distracción del día a día toma forma de criatura en el juego.</p>
-            </div>
-          </div>
+          <h2 data-i18n="bestiary_title">Algunos enemigos de Mindveil</h2>
+          <p class="problem-subtitle" data-i18n="bestiary_subtitle">Cada distracción del día a día toma forma de criatura en el juego.</p>
           <ul class="enemy-grid">
               <li class="enemy-card">
                 <div class="enemy-art">
@@ -654,27 +643,37 @@
               </li>
           </ol>
           <h3 class="section-subtitle making-process-title" data-i18n="making_soren_title">Soren, el arquero, paso a paso</h3>
-          <ol class="process">
-              <li class="process-step">
-                <img src="assets/images/making/soren-1-proportions.webp" alt="" width="1200" height="676" loading="lazy" decoding="async">
-                <p><strong data-i18n="making_soren1_title">Proporciones</strong> <span data-i18n="making_soren1_text">Se fija la altura en cabezas y la silueta del personaje.</span></p>
+          <div class="carousel flow-carousel soren-carousel" data-carousel aria-roledescription="carrusel" aria-label="Soren, el arquero, paso a paso" data-i18n-aria-label="making_soren_title">
+            <button type="button" class="carousel-btn carousel-prev" aria-label="Anterior" data-i18n-aria-label="carousel_prev"></button>
+            <ul class="carousel-track" tabindex="0">
+              <li class="carousel-slide">
+                <figure class="gallery-item flow-slide soren-slide">
+                  <img src="assets/images/making/soren-1-proportions.webp" alt="" width="1200" height="676" loading="lazy" decoding="async">
+                  <figcaption><span class="flow-step">1</span><strong data-i18n="making_soren1_title">Proporciones</strong><span class="flow-text" data-i18n="making_soren1_text">Se fija la altura en cabezas y la silueta del personaje.</span></figcaption>
+                </figure>
               </li>
-              <li class="process-step">
-                <img src="assets/images/making/soren-2-anatomy.webp" alt="" width="1200" height="602" loading="lazy" decoding="async">
-                <p><strong data-i18n="making_soren2_title">Cuerpo y vestuario</strong> <span data-i18n="making_soren2_text">Anatomía y ropa por separado, para que funcione en cualquier pose.</span></p>
+              <li class="carousel-slide">
+                <figure class="gallery-item flow-slide soren-slide">
+                  <img src="assets/images/making/soren-2-anatomy.webp" alt="" width="1200" height="602" loading="lazy" decoding="async">
+                  <figcaption><span class="flow-step">2</span><strong data-i18n="making_soren2_title">Cuerpo y vestuario</strong><span class="flow-text" data-i18n="making_soren2_text">Anatomía y ropa por separado, para que funcione en cualquier pose.</span></figcaption>
+                </figure>
               </li>
-              <li class="process-step">
-                <img src="assets/images/making/soren-3-final.webp" alt="" width="1200" height="676" loading="lazy" decoding="async">
-                <p><strong data-i18n="making_soren3_title">Personaje final</strong> <span data-i18n="making_soren3_text">Soren con su arco, listo para entrar en el juego.</span></p>
+              <li class="carousel-slide">
+                <figure class="gallery-item flow-slide soren-slide">
+                  <img src="assets/images/making/soren-3-final.webp" alt="" width="1200" height="676" loading="lazy" decoding="async">
+                  <figcaption><span class="flow-step">3</span><strong data-i18n="making_soren3_title">Personaje final</strong><span class="flow-text" data-i18n="making_soren3_text">Soren con su arco, listo para entrar en el juego.</span></figcaption>
+                </figure>
               </li>
-          </ol>
+            </ul>
+            <button type="button" class="carousel-btn carousel-next" aria-label="Siguiente" data-i18n-aria-label="carousel_next"></button>
+            <div class="carousel-dots" role="tablist"></div>
+          </div>
         </div>
       </section>
 
       </div>
 
       <div class="zone zone-project" id="proyecto">
-      <div class="zone-fixed-bg" aria-hidden="true"></div>
       <!-- BLOQUE: PROYECTO E INVERSIÓN -->
       <div class="block-sep" data-block="proyecto">
         <div class="block-inner container">
@@ -1032,7 +1031,7 @@
       <div class="cursor-inner"></div>
     </div>
 
-    <script src="app.js?v=20261114f" defer></script>
-    <script src="cursor.js?v=20261114f" defer></script>
+    <script src="app.js?v=20261114i" defer></script>
+    <script src="cursor.js?v=20261114i" defer></script>
   </body>
 </html>
