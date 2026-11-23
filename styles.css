@@ -3019,3 +3019,20 @@ body *::-webkit-scrollbar-thumb:hover{background-color:#36b6c4}
 }
 @keyframes dialogArrowBob{0%,100%{transform:translateY(0);opacity:.7}50%{transform:translateY(3px);opacity:1}}
 @media (prefers-reduced-motion:reduce){ #vision.intro-mode .hero-speech-next{animation:none} }
+
+/* Habilidades en móvil: el marco del juego tiene proporción fija; el texto se ajusta para caber
+   dentro (nombre en 2 líneas como máximo + estado), centrado junto al icono */
+@media (max-width:700px){
+  .skills-demo .skill-buttons{width:100%;gap:8px}
+  .skills-demo .skill-buttons .skill-btn{padding:4px 12px 4px 14px;gap:6px;justify-content:flex-start}
+  .skills-demo .skill-buttons .skill-glyph{width:22px;height:22px;flex:0 0 22px}
+  .skills-demo .skill-buttons .skill-btn-text{flex:1 1 auto;min-width:0;align-items:center;text-align:center}
+  .skills-demo .skill-buttons .skill-btn-name{font-size:.76rem;line-height:1.08;white-space:normal;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word}
+  .skills-demo .skill-buttons .skill-btn-state{font-size:.64rem;margin-top:1px}
+}
+@media (max-width:700px){
+  /* sin cortar palabras a mitad: más hueco para el texto (menos relleno, icono algo menor) */
+  .skills-demo .skill-buttons .skill-btn{padding:4px 8px 4px 11px;gap:4px}
+  .skills-demo .skill-buttons .skill-glyph{width:20px;height:20px;flex:0 0 20px}
+  .skills-demo .skill-buttons .skill-btn-name{font-size:.72rem;letter-spacing:-.01em;hyphens:manual;-webkit-hyphens:manual;overflow-wrap:normal}
+}
