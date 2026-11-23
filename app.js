@@ -1521,6 +1521,10 @@ function initLiriaSpeech(){
 
   let index = 0, typing = null, autoNext = null, full = ''
   const lines = () => LIRIA_LINES[currentLang()]
+  // el HTML trae la primera frase en español (para quien no tenga JS): hasta que Liria
+  // empiece a hablar, el bocadillo queda vacío con el cursor, sin mostrar otro idioma
+  textEl.textContent = ''
+  bubble.classList.add('is-typing')
   // Cambio de expresión sin doble imagen: Liria se encoge y atenúa un instante,
   // se cambia la expresión en el punto más bajo y vuelve a su tamaño (como un parpadeo)
   let swapToken = 0

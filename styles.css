@@ -2699,3 +2699,24 @@ body *::-webkit-scrollbar-thumb:hover{background-color:#36b6c4}
 .team-section .member-card.flip-card .flip-front{display:flex;flex-direction:column}
 .team-section .bio-full{font-size:.84rem;line-height:1.45}
 .member-flip-hint{margin-top:auto !important}
+
+/* =========================================
+   Portada en móvil: Liria y su bocadillo en una fila, justo bajo el titular,
+   para que se vea nada más entrar (sin tener que bajar)
+   ========================================= */
+@media (max-width:700px){
+  #vision.hero-full .vision-grid{row-gap:12px}
+  #vision.hero-full .vision-copy{display:contents}
+  #vision.hero-full .hero-eyebrow{order:1;justify-self:center}
+  #vision.hero-full .vision-copy h1{order:2}
+  #vision.hero-full .vision-image{order:3;flex-direction:row;align-items:center;justify-content:center;gap:12px;width:100%;margin:2px 0 4px}
+  #vision.hero-full .vision-copy .lead{order:4}
+  #vision.hero-full .hero-ctas{order:5;justify-self:center;justify-content:center}
+  #vision.hero-full .hero-contact{order:6;justify-self:center}
+  #vision.hero-full .hero-facts{order:7;justify-self:center}
+  #vision.hero-full .hero-liria-stage{order:-1;flex:0 0 104px;width:104px}
+  #vision.hero-full .vision-image .hero-liria-stage img{max-width:none}
+  .hero-speech{flex:1 1 auto;width:auto;max-width:240px;min-height:0;padding:10px 14px 16px;font-size:.9rem;text-align:left}
+  .hero-speech::after{left:-10px;top:50%;bottom:auto;margin:-8px 0 0;border-right:0;border-bottom:3px solid #12505c;border-left:3px solid #12505c}
+  .hero-halo{top:50%;left:18%}
+}
