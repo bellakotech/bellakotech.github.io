@@ -2800,3 +2800,222 @@ body *::-webkit-scrollbar-thumb:hover{background-color:#36b6c4}
   .challenge-demo-grid,.challenge-demo-grid.is-open{min-height:470px}
   .challenge-demo-grid .challenge-demo-modal{justify-content:flex-start;padding-top:36px}
 }
+
+/* =========================================
+   Portada en móvil: conversación con Liria como en el juego
+   (caja de diálogo "Light" y botones de opción de la UI del juego)
+   ========================================= */
+.hero-choices,.hero-skip{display:none}
+@media (max-width:700px){
+  #vision.hero-full.intro-mode{padding:12px 0 14px;align-items:stretch}
+  #vision.hero-full.intro-mode .hero-scroll{display:none}
+  #vision.hero-full.intro-mode .vision-grid{display:flex;flex-direction:column;align-items:center;row-gap:10px;
+    min-height:calc(100svh - var(--nav-height, 56px) - 26px)}
+  /* los elementos del banner esperan su turno en la conversación (ocupan su sitio, sin saltos) */
+  #vision.intro-mode .vision-copy > *{animation:none}
+  #vision.intro-mode .hero-eyebrow,#vision.intro-mode .vision-copy h1,#vision.intro-mode .vision-copy .lead,#vision.intro-mode .hero-facts{
+    opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+  #vision.intro-mode.step-1 .hero-eyebrow,#vision.intro-mode.step-1 .vision-copy h1,
+  #vision.intro-mode.step-2 .vision-copy .lead,#vision.intro-mode.step-3 .hero-facts{opacity:1;transform:none}
+  #vision.intro-mode.step-1 .vision-copy h1{transition-delay:.12s}
+  #vision.intro-mode .hero-facts{order:4}
+  #vision.intro-mode .hero-ctas,#vision.intro-mode .hero-contact{display:none}
+
+  /* Liria y el diálogo, abajo, como en la pantalla de conversación del juego */
+  #vision.intro-mode .vision-image{order:8;margin-top:auto;flex-direction:column;align-items:center;gap:0;width:100%}
+  #vision.intro-mode .hero-liria-stage{order:-1;flex:none;width:clamp(120px,36vw,150px);margin-bottom:-6px;
+    animation:liriaEnter .9s cubic-bezier(.2,.8,.2,1) both,liriaIdle 3.4s ease-in-out .9s infinite}
+  #vision.intro-mode .vision-image .hero-liria-stage img{animation:none}
+  #vision.intro-mode .hero-liria-stage:hover{transform:none}
+  #vision.intro-mode .hero-halo{top:30%;left:50%}
+
+  #vision.intro-mode .hero-speech{position:relative;width:100%;max-width:380px;min-height:104px;padding:24px 22px 22px;
+    border:0;border-radius:0;box-shadow:none;background:url(/assets/images/dialogue/box-light.svg) center/100% 100% no-repeat;
+    filter:drop-shadow(0 10px 18px rgba(0,0,0,.4));text-align:center;color:#1d2e2c;font-size:1rem;line-height:1.4;
+    animation:heroIn .5s .75s cubic-bezier(.2,.8,.2,1) both}
+  #vision.intro-mode .hero-speech::after{display:none}
+  #vision.intro-mode .hero-speech-name{position:absolute;left:9%;top:0;margin:0;padding:3px 16px;border-radius:12px;background:#4E918A;
+    font-family:var(--font-game);font-size:.85rem;font-weight:500;letter-spacing:0;text-transform:none;color:#e2e9ca}
+  #vision.intro-mode .hero-speech-text{color:#1d2e2c}
+  #vision.intro-mode .hero-speech-caret{background:#1d2e2c}
+  #vision.intro-mode .hero-speech-next{right:20px;bottom:14px;width:14px;height:8px;border:0;transform:none;background:#3e7c75;
+    -webkit-mask:url(/assets/images/dialogue/arrow.svg) center/contain no-repeat;mask:url(/assets/images/dialogue/arrow.svg) center/contain no-repeat}
+  #vision.intro-mode.show-choices .hero-speech-next{display:none}
+
+  /* opciones del final de la conversación */
+  #vision.intro-mode .hero-choices{display:flex;flex-direction:column;gap:8px;width:100%;max-width:380px;margin-top:10px}
+  #vision.intro-mode:not(.show-choices) .hero-choices{display:none}
+  .hero-choice{display:block;padding:12px 14px;border-radius:10px;background:#061721;color:#e2e9ca;text-align:center;text-decoration:none;
+    font-family:var(--font-game);font-size:.98rem;line-height:1.2;animation:heroIn .45s cubic-bezier(.2,.8,.2,1) both}
+  .hero-choice:nth-child(2){animation-delay:.08s}
+  .hero-choice:nth-child(3){animation-delay:.16s}
+  .hero-choice:hover,.hero-choice:active,.hero-choice:focus-visible{background:#143941;color:#fff;outline:none}
+
+  /* saltar la conversación */
+  #vision.intro-mode .hero-skip{display:inline-flex;align-items:center;gap:6px;align-self:flex-end;margin-top:8px;padding:5px 12px;
+    border:1px solid rgba(226,233,202,.25);border-radius:999px;background:rgba(3,18,24,.55);color:#cfe6e2;
+    font:600 .75rem/1 var(--font-ui);letter-spacing:.04em;cursor:pointer}
+  #vision.intro-mode .hero-skip::after{content:"»";font-size:.95rem;line-height:1}
+  #vision.intro-mode.show-choices .hero-skip{display:none}
+}
+@media (max-width:700px) and (max-height:700px){
+  #vision.intro-mode .vision-copy h1{font-size:1.5rem}
+  #vision.intro-mode .vision-copy .lead{font-size:.86rem}
+  #vision.intro-mode .hero-liria-stage{width:104px}
+  #vision.intro-mode .hero-speech{min-height:92px;padding:22px 18px 18px;font-size:.92rem}
+  .hero-choice{padding:10px 12px;font-size:.92rem}
+}
+@keyframes liriaEnter{from{opacity:0;transform:translateY(60px)}to{opacity:1;transform:none}}
+@keyframes liriaIdle{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@media (max-width:700px){
+  #vision.intro-mode .hero-speech{display:flex;flex-direction:column;justify-content:center}
+  #vision.intro-mode .hero-liria-stage{transition:width .45s cubic-bezier(.2,.8,.2,1)}
+}
+@media (max-width:700px) and (max-height:700px){
+  /* con las opciones en pantalla, Liria se encoge para que todo quepa sin scroll */
+  #vision.intro-mode.show-choices .hero-liria-stage{width:78px}
+  #vision.intro-mode.show-choices .hero-choices{gap:6px;margin-top:8px}
+  #vision.intro-mode.show-choices .hero-choice{padding:9px 12px}
+}
+
+/* Intro móvil, fase de conversación: pantalla de juego (Liria grande, a tamaño de la referencia),
+   página bloqueada; al terminar, el banner se despliega y Liria pasa a su tamaño compacto */
+@media (max-width:700px){
+  html.intro-lock,html.intro-lock body{overflow:hidden;overscroll-behavior:none}
+  html.intro-lock body{touch-action:none}
+  #vision.intro-mode .vision-grid{transition:row-gap .8s cubic-bezier(.2,.8,.2,1)}
+  #vision.intro-mode .hero-eyebrow,#vision.intro-mode .vision-copy h1,#vision.intro-mode .vision-copy .lead,#vision.intro-mode .hero-facts{
+    max-height:260px;transition:opacity .6s ease .25s,transform .7s cubic-bezier(.2,.8,.2,1) .25s,max-height .8s cubic-bezier(.2,.8,.2,1),margin .8s ease}
+  #vision.intro-mode.is-talking .vision-grid{row-gap:0}
+  #vision.intro-mode.is-talking .hero-eyebrow,#vision.intro-mode.is-talking .vision-copy h1,
+  #vision.intro-mode.is-talking .vision-copy .lead,#vision.intro-mode.is-talking .hero-facts{max-height:0;margin:0;overflow:hidden}
+  #vision.intro-mode .hero-liria-stage{position:relative;z-index:1;transition:width .8s cubic-bezier(.2,.8,.2,1),margin .8s cubic-bezier(.2,.8,.2,1)}
+  #vision.intro-mode.is-talking .hero-liria-stage{width:min(80vw,320px,46svh);margin-bottom:-38px}
+  #vision.intro-mode .hero-speech{z-index:2}
+  #vision.intro-mode.is-talking .vision-image{margin-bottom:3svh}
+  #vision.intro-mode .vision-image{transition:margin .8s cubic-bezier(.2,.8,.2,1)}
+}
+@media (max-width:700px) and (max-height:700px){
+  #vision.intro-mode.is-talking .hero-liria-stage{width:min(80vw,300px,44svh)}
+}
+
+/* Intro móvil v3: Liria algo más pequeña, composición centrada y el banner apareciendo
+   poco a poco mientras avanza la conversación; Liria se va haciendo pequeña a la vez */
+@media (max-width:700px){
+  #vision.intro-mode .vision-grid,#vision.intro-mode.is-talking .vision-grid{row-gap:0}
+  #vision.intro-mode .hero-eyebrow,#vision.intro-mode .vision-copy h1,#vision.intro-mode .vision-copy .lead{margin:0 0 10px}
+  #vision.intro-mode .hero-facts{margin:0 0 10px}
+  /* durante la conversación, cada paso despliega su parte del banner */
+  #vision.intro-mode.is-talking.step-1 .hero-eyebrow,#vision.intro-mode.is-talking.step-1 .vision-copy h1,
+  #vision.intro-mode.is-talking.step-2 .vision-copy .lead,#vision.intro-mode.is-talking.step-3 .hero-facts{max-height:260px;margin:0 0 10px;overflow:visible}
+  /* Liria + diálogo centrados en la pantalla, como en la referencia; bajan a su sitio al terminar */
+  #vision.intro-mode.is-talking .vision-image{margin-bottom:12svh}
+  #vision.intro-mode.is-talking.step-2 .vision-image{margin-bottom:7svh}
+  #vision.intro-mode.is-talking.step-3 .vision-image{margin-bottom:3svh}
+  #vision.intro-mode.is-talking .hero-liria-stage{width:min(64vw,250px,38svh)}
+  #vision.intro-mode.is-talking.step-1 .hero-liria-stage{width:min(56vw,215px,32svh)}
+  #vision.intro-mode.is-talking.step-2 .hero-liria-stage{width:min(48vw,185px,27svh)}
+  #vision.intro-mode.is-talking.step-3 .hero-liria-stage{width:min(42vw,165px,23svh)}
+  /* visitas siguientes: estado final directo, sin animaciones */
+  #vision.intro-instant .hero-liria-stage{animation:liriaIdle 3.4s ease-in-out infinite}
+  #vision.intro-instant .hero-speech,#vision.intro-instant .hero-choice{animation:none}
+  #vision.intro-instant .vision-copy > *,#vision.intro-instant .hero-liria-stage,#vision.intro-instant .vision-image,#vision.intro-instant .vision-grid{transition:none}
+}
+@media (max-width:700px) and (max-height:700px){
+  #vision.intro-mode.is-talking .hero-liria-stage{width:min(62vw,230px,36svh)}
+}
+@media (max-width:700px) and (max-height:700px){
+  #vision.intro-mode.show-choices .hero-eyebrow,#vision.intro-mode.show-choices .vision-copy h1,
+  #vision.intro-mode.show-choices .vision-copy .lead,#vision.intro-mode.show-choices .hero-facts{margin-bottom:5px}
+  #vision.intro-mode.show-choices .hero-choices{margin-top:6px}
+}
+
+/* Intro móvil v4: "Saltar" fijo y centrado abajo; con las opciones en pantalla Liria se hace
+   pequeña para que todo quepa mientras la página sigue bloqueada */
+@media (max-width:700px){
+  #vision.intro-mode.show-choices .hero-skip{display:inline-flex}
+  #vision.intro-mode:not(.is-talking) .hero-skip{display:none}
+  #vision.intro-mode.is-talking .hero-skip{position:fixed;left:50%;bottom:max(14px,env(safe-area-inset-bottom));z-index:30;margin:0;align-self:auto;
+    transform:translateX(-50%)}
+  #vision.intro-mode.is-talking .vision-grid{padding-bottom:40px}
+  #vision.intro-mode.is-talking.show-choices .vision-image{margin-bottom:0}
+  #vision.intro-mode.is-talking.show-choices .hero-liria-stage{width:clamp(92px,28vw,124px)}
+}
+@media (max-width:700px) and (max-height:700px){
+  #vision.intro-mode.is-talking.show-choices .hero-liria-stage{width:78px}
+  #vision.intro-mode.is-talking.show-choices .hero-eyebrow,#vision.intro-mode.is-talking.show-choices .vision-copy h1,
+  #vision.intro-mode.is-talking.show-choices .vision-copy .lead,#vision.intro-mode.is-talking.show-choices .hero-facts{margin-bottom:5px}
+}
+
+/* Intro móvil v5: en la selección de opciones Liria se pone a un lado del diálogo (como el
+   banner original) y todo cabe sin scroll. "Saltar" se mantiene pulsado 1 s (barra de progreso) */
+@media (max-width:700px){
+  #vision.intro-mode.show-choices .vision-image{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:center;column-gap:10px}
+  #vision.intro-mode.show-choices .hero-liria-stage,#vision.intro-mode.is-talking.show-choices .hero-liria-stage{flex:0 0 auto;width:96px;margin:0}
+  #vision.intro-mode.show-choices .hero-speech{flex:1 1 0;min-width:0;width:auto;max-width:270px;min-height:86px;padding:22px 14px 16px;font-size:.9rem}
+  #vision.intro-mode.show-choices .hero-speech-name{left:12%}
+  #vision.intro-mode.show-choices .hero-choices{flex:0 0 100%;max-width:380px;margin-top:12px}
+
+  #vision.intro-mode .hero-skip{position:relative;isolation:isolate;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none}
+  #vision.intro-mode .hero-skip::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;z-index:-1;background:rgba(78,145,138,.75);transition:width .15s ease}
+  #vision.intro-mode .hero-skip.is-holding::before{width:100%;transition:width 1s linear}
+  #vision.intro-mode.is-talking .hero-skip{position:fixed}
+}
+@media (max-width:700px) and (max-height:700px){
+  #vision.intro-mode.show-choices .hero-liria-stage,#vision.intro-mode.is-talking.show-choices .hero-liria-stage{width:80px}
+  #vision.intro-mode.show-choices .hero-speech{min-height:78px;padding:20px 12px 14px;font-size:.86rem}
+  #vision.intro-mode.show-choices .hero-choices{margin-top:8px}
+}
+
+/* Intro móvil v6: con Liria al lado, el bocadillo apunta hacia ella (pico a la izquierda) y la
+   composición final queda centrada en pantalla, opciones incluidas */
+@media (max-width:700px){
+  #vision.intro-mode.show-choices .hero-speech{background-image:url(/assets/images/dialogue/box-light-side.svg);padding-left:20px}
+  #vision.intro-mode.show-choices .vision-grid{justify-content:center}
+  #vision.intro-mode.show-choices .vision-image{margin-top:18px;margin-bottom:0}
+  #vision.intro-mode.is-talking.show-choices .vision-grid{padding-bottom:52px}
+}
+@media (max-width:700px) and (max-height:700px){
+  #vision.intro-mode.show-choices .vision-image{margin-top:10px}
+}
+
+/* Intro móvil v7: sin "popeos" al cargar. Mientras se cargan Liria y el fondo, la escena espera
+   (animaciones en pausa); después el fondo se funde y Liria entra. Loader solo si tarda */
+.hero-loader{display:none}
+@media (max-width:700px){
+  #vision.speech-pending #hero-speech-text{visibility:hidden}
+  #vision.hero-full.intro-mode::before{transition:opacity .7s ease}
+  #vision.intro-wait.hero-full::before{opacity:0}
+  #vision.intro-wait .vision-grid{visibility:hidden}
+  #vision.intro-wait .hero-liria-stage,#vision.intro-wait .hero-speech{animation-play-state:paused}
+  #vision.intro-wait .hero-skip{visibility:hidden}
+  #vision.intro-wait .hero-loader{position:absolute;left:50%;top:50%;z-index:5;display:flex;gap:8px;transform:translate(-50%,-50%);
+    opacity:0;animation:heroLoaderIn .3s ease .5s forwards}
+  .hero-loader span{width:9px;height:9px;border-radius:50%;background:#4E918A;animation:heroLoaderDot 1s ease-in-out infinite}
+  .hero-loader span:nth-child(2){animation-delay:.15s}
+  .hero-loader span:nth-child(3){animation-delay:.3s}
+}
+@keyframes heroLoaderIn{to{opacity:1}}
+@keyframes heroLoaderDot{0%,100%{transform:translateY(0);opacity:.45}50%{transform:translateY(-6px);opacity:1}}
+
+/* Intro móvil v8: opción elegida resaltada y el resto atenuadas; la flecha para bajar vuelve
+   en cuanto termina la conversación */
+@media (max-width:700px){
+  .hero-choice{transition:opacity .25s ease,filter .25s ease,background .2s ease,box-shadow .2s ease}
+  .hero-choices.has-choice .hero-choice:not(.is-chosen){opacity:.42;filter:saturate(.5)}
+  .hero-choice.is-chosen{background:#143941;color:#fff;box-shadow:inset 0 0 0 2px #4E918A}
+  #vision.intro-mode:not(.is-talking) .hero-scroll{display:grid}
+  #vision.intro-mode:not(.is-talking).hero-full{padding-bottom:56px}
+}
+@media (max-width:700px){
+  /* la animación de entrada (fill both) fijaba la opacidad: al elegir, se quita para poder atenuar */
+  .hero-choices.has-choice .hero-choice{animation:none}
+  /* al terminar, el banner cabe en pantalla con la flecha de bajar incluida */
+  #vision.intro-mode:not(.is-talking) .vision-grid{min-height:calc(100svh - var(--nav-height, 56px) - 68px)}
+}
+@media (max-width:700px){
+  /* la flecha del diálogo (Flechita del juego) no gira: solo rebota en vertical */
+  #vision.intro-mode .hero-speech-next{transform:none;animation:dialogArrowBob 1.4s ease-in-out infinite}
+}
+@keyframes dialogArrowBob{0%,100%{transform:translateY(0);opacity:.7}50%{transform:translateY(3px);opacity:1}}
+@media (prefers-reduced-motion:reduce){ #vision.intro-mode .hero-speech-next{animation:none} }

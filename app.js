@@ -270,6 +270,12 @@ const I18N_EN = {
   making_soren3_text: "Soren with his bow, ready to enter the game.",
   region_hushgrove_char: "the village archer",
   team_flip_hint: 'Tap to see more',
+  liria_choices: "Options",
+  liria_choice_game: "Discover the game",
+  liria_choice_pitch: "See the Pitch Deck",
+  liria_choice_talk: "I'm an investor, let's talk!",
+  liria_skip: "Skip",
+  liria_skip_hold: "Press and hold to skip",
   map_title: 'Mindveil, the Realm of Compulsion',
   map_text: 'A brain-shaped island. Tap each place to discover what awaits you.',
   map_alt: 'Map of Mindveil: a brain-shaped island',
@@ -1521,10 +1527,93 @@ function initLiriaSpeech(){
 
   let index = 0, typing = null, autoNext = null, full = ''
   const lines = () => LIRIA_LINES[currentLang()]
+  // Móvil: la portada empieza como una conversación del juego (Liria grande y su diálogo)
+  // con la página bloqueada. Al llegar a la última frase, o al pulsar "Saltar", se despliega
+  // el banner completo con las opciones y se libera el scroll.
+  const hero = document.getElementById('vision')
+  // la disposición de conversación es la del móvil; la animación completa, solo la primera visita
+  const mobileConv = !!hero && window.matchMedia('(max-width: 700px)').matches && !reduce
+  const INTRO_KEY = 'growtale_intro_seen'
+  let seen = false
+  try{ seen = localStorage.getItem(INTRO_KEY) === '1' }catch(e){}
+  const intro = mobileConv && !seen && !location.hash && window.scrollY < 10
+  const last = () => lines().length - 1
+  const INTRO_LAST = { es: '¿Te lo enseño? Elige por dónde empezamos.', en: 'Shall I show you? Choose where to start.' }
+  const INTRO_FINAL = { es: '¡Genial! Baja conmigo y te enseño cómo se juega.', en: "Great! Scroll down with me and I'll show you how it's played." }
+  const FINAL = () => last() + 1
+  const textFor = i => !mobileConv ? lines()[i][1] : i === FINAL() ? INTRO_FINAL[currentLang()] : i === last() ? INTRO_LAST[currentLang()] : lines()[i][1]
+  const exprFor = i => i >= lines().length ? 'happy2' : lines()[i][0]
+  const root = document.documentElement
+  let talking = intro
+  const endIntro = ()=>{
+    if(!talking) return
+    talking = false
+    hero.classList.add('step-1', 'step-2', 'step-3', 'show-choices')
+    hero.classList.remove('is-talking')
+    // la navegación se libera cuando termina la animación del banner
+    setTimeout(()=> root.classList.remove('intro-lock'), 900)
+  }
+  // Cambio de disposición (Liria encima -> Liria al lado) con fundido: se desvanecen Liria y el
+  // diálogo, se aplica el cambio y vuelven a aparecer ya en su nuevo sitio
+  const fadeLayout = mutate =>{
+    const els = [document.getElementById('hero-liria-stage'), bubble].filter(Boolean)
+    if(!els.length || !els[0].animate){ mutate(); return }
+    const outs = els.map(e => e.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 240, easing: 'ease-in', fill: 'forwards' }))
+    // temporizador en vez de animation.finished: no depende de que el navegador pinte fotogramas
+    setTimeout(()=>{
+      els.forEach(e => e.style.transition = 'none')
+      mutate()
+      void els[0].offsetWidth
+      outs.forEach(a => a.cancel())
+      els.forEach(e => e.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }],
+        { duration: 420, easing: 'cubic-bezier(.2,.8,.2,1)' }))
+      requestAnimationFrame(()=> els.forEach(e => e.style.transition = ''))
+    }, 250)
+  }
+  // los elementos del banner aparecen poco a poco según avanza la conversación
+  const revealUpTo = i =>{
+    if(!intro) return
+    for(let k = 1; k <= Math.min(i, 3); k++) hero.classList.add('step-' + k)
+    // solo hay fundido cuando Liria cambia de sitio (al aparecer las opciones)
+    const layoutChange = i >= last() && !hero.classList.contains('show-choices')
+    const apply = ()=>{
+      if(i >= last()) hero.classList.add('show-choices')
+      if(i >= FINAL()) endIntro()
+    }
+    if(layoutChange) fadeLayout(apply); else apply()
+  }
+  if(intro){
+    hero.classList.add('intro-mode', 'is-talking')
+    root.classList.add('intro-lock')
+    if('scrollRestoration' in history) history.scrollRestoration = 'manual'
+    window.scrollTo(0, 0)
+    try{ localStorage.setItem(INTRO_KEY, '1') }catch(e){}
+  }else if(mobileConv){
+    // visitas siguientes: la conversación ya aparece terminada, sin animación ni bloqueo
+    hero.classList.remove('is-talking', 'intro-wait')
+    root.classList.remove('intro-lock')
+    hero.classList.add('intro-mode', 'intro-instant', 'step-1', 'step-2', 'step-3', 'show-choices')
+  }
+  // primera visita: la escena no arranca hasta que Liria y el fondo están cargados (máx. 3 s);
+  // mientras tanto solo se ve el fondo oscuro y, si tarda, un loader discreto
+  const imgReady = el => new Promise(res =>{
+    if(el.complete && el.naturalWidth) return res()
+    el.addEventListener('load', res, { once: true }); el.addEventListener('error', res, { once: true })
+  })
+  const bgReady = ()=> new Promise(res =>{
+    const m = /url\(["']?([^"')]+)/.exec(getComputedStyle(hero, '::before').backgroundImage || '')
+    if(!m) return res()
+    const im = new Image(); im.onload = im.onerror = res; im.src = m[1]
+  })
+  const ready = intro
+    ? Promise.race([Promise.all([imgReady(img), bgReady()]), new Promise(r => setTimeout(r, 3000))])
+        .then(()=>{ hero.classList.remove('intro-wait') })
+    : Promise.resolve()
   // el HTML trae la primera frase en español (para quien no tenga JS): hasta que Liria
   // empiece a hablar, el bocadillo queda vacío con el cursor, sin mostrar otro idioma
   textEl.textContent = ''
   bubble.classList.add('is-typing')
+  if(hero) hero.classList.remove('speech-pending')
   // Cambio de expresión sin doble imagen: Liria se encoge y atenúa un instante,
   // se cambia la expresión en el punto más bajo y vuelve a su tamaño (como un parpadeo)
   let swapToken = 0
@@ -1555,12 +1644,13 @@ function initLiriaSpeech(){
     bubble.classList.remove('is-typing')
     bubble.classList.toggle('is-last', index === lines().length - 1)
     clearTimeout(autoNext)
-    if(index < lines().length - 1) autoNext = setTimeout(next, 4200)
+    if(!mobileConv && index < lines().length - 1) autoNext = setTimeout(next, 4200)
   }
   const show = i =>{
     index = i
-    const [expr, text] = lines()[index]
-    full = text
+    const expr = exprFor(index)
+    full = textFor(index)
+    revealUpTo(index)
     setExpression(expr)
     clearInterval(typing); clearTimeout(autoNext)
     if(reduce){ finish(); return }
@@ -1575,16 +1665,67 @@ function initLiriaSpeech(){
   }
   const next = ()=>{
     if(typing){ finish(); return }
+    // en la conversación del móvil, la última frase (con opciones) no vuelve a empezar
+    if(mobileConv && index >= last()) return
     show((index + 1) % lines().length)
   }
+  const skip = hero && hero.querySelector('.hero-skip')
+  // "Saltar" pide mantenerlo pulsado un momento (1 s), para no saltarse la intro sin querer
+  if(skip){
+    const HOLD_MS = 1000
+    let holdTimer = null
+    const startHold = ()=>{
+      if(holdTimer || !talking) return
+      skip.classList.add('is-holding')
+      holdTimer = setTimeout(()=>{
+        holdTimer = null
+        skip.classList.remove('is-holding')
+        playSfx('tap2')
+        show(FINAL()); finish()
+      }, HOLD_MS)
+    }
+    const cancelHold = ()=>{
+      clearTimeout(holdTimer); holdTimer = null
+      skip.classList.remove('is-holding')
+    }
+    skip.addEventListener('pointerdown', e =>{ e.preventDefault(); startHold() })
+    ;['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => skip.addEventListener(ev, cancelHold))
+    skip.addEventListener('contextmenu', e => e.preventDefault())
+    skip.addEventListener('keydown', e =>{ if((e.key === 'Enter' || e.key === ' ') && !e.repeat){ e.preventDefault(); startHold() } })
+    skip.addEventListener('keyup', e =>{ if(e.key === 'Enter' || e.key === ' ') cancelHold() })
+  }
+  // al elegir una opción, las demás quedan atenuadas (siguen pudiéndose pulsar)
+  const choiceBox = hero && hero.querySelector('.hero-choices')
+  if(choiceBox) choiceBox.querySelectorAll('.hero-choice').forEach(c => c.addEventListener('click', ()=>{
+    choiceBox.classList.add('has-choice')
+    choiceBox.querySelectorAll('.hero-choice').forEach(o => o.classList.toggle('is-chosen', o === c))
+  }))
+  // "Descubrir el juego" durante la conversación: Liria se despide y se libera la navegación
+  const discover = hero && hero.querySelector('.hero-choice[href="#how"]')
+  if(discover) discover.addEventListener('click', e =>{
+    if(!mobileConv) return
+    e.preventDefault()
+    if(talking){ playSfx('tap2'); show(FINAL()); return }
+    // ya en libertad: en vez de saltar a "Cómo funciona", la página baja suavemente al
+    // contenido que hay justo después de la portada
+    const main = document.getElementById('main')
+    const navH = parseFloat(getComputedStyle(root).getPropertyValue('--nav-height')) || 56
+    const target = main ? main.getBoundingClientRect().top + window.scrollY - navH : window.scrollY + window.innerHeight * .8
+    window.scrollTo({ top: target, behavior: 'smooth' })
+  }, true)
   bubble.addEventListener('click', ()=>{ playSfx('tap2'); next() })
   const stage = document.getElementById('hero-liria-stage')
   if(stage) stage.addEventListener('click', ()=>{ playSfx('tap2'); next() })
   bubble.addEventListener('keydown', e =>{ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); next() } })
   document.addEventListener('growtale:langchange', ()=> show(index))
   // empieza cuando Liria está a la vista (en móvil queda debajo del texto de presentación)
-  const start = ()=> setTimeout(()=> show(0), reduce ? 0 : 500)
-  if('IntersectionObserver' in window){
+  const start = ()=>{
+    // visitas siguientes en móvil: directamente la última frase con sus opciones
+    if(mobileConv && !intro){ show(FINAL()); finish(); return }
+    ready.then(()=> setTimeout(()=> show(0), reduce ? 0 : (intro ? 1000 : 500)))
+  }
+  if(mobileConv && !intro) start()
+  else if('IntersectionObserver' in window){
     const io = new IntersectionObserver(entries =>{
       if(entries.some(e => e.isIntersecting)){ io.disconnect(); start() }
     }, { threshold: 0.6 })

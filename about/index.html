@@ -27,7 +27,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Poppins:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <!-- Entrada suave al llegar desde el botón "Descubre GrowTale" de la portada -->
     <script>try{if(sessionStorage.getItem('growtale_enter')){document.documentElement.classList.add('arrive');sessionStorage.removeItem('growtale_enter')}}catch(e){}</script>
-    <link rel="stylesheet" href="/styles.css?v=20261123j">
+    <link rel="preload" as="image" href="/assets/images/hero/liria-happy1.webp" fetchpriority="high">
+    <link rel="stylesheet" href="/styles.css?v=20261123y">
   </head>
   <body>
     <a class="skip-link" href="#main" data-i18n="skip_to_content">Saltar al contenido</a>
@@ -76,6 +77,10 @@
 
     <!-- PORTADA DEL PROYECTO: pantalla completa con el valle de Mindveil y Liria -->
     <header id="vision" class="vision-section hero-full">
+      <!-- Móvil: se decide aquí, antes de pintar, si toca la conversación de Liria (primera visita)
+           o su estado final (visitas siguientes), para que nada aparezca y desaparezca -->
+      <script>(function(){try{var h=document.getElementById('vision');if(!matchMedia('(max-width: 700px)').matches||matchMedia('(prefers-reduced-motion: reduce)').matches)return;var seen=false;try{seen=localStorage.getItem('growtale_intro_seen')==='1'}catch(e){}h.classList.add('intro-mode','speech-pending');if(!seen&&!location.hash){h.classList.add('is-talking','intro-wait');document.documentElement.classList.add('intro-lock')}else{h.classList.add('intro-instant','step-1','step-2','step-3','show-choices')}}catch(e){}})()</script>
+      <div class="hero-loader" aria-hidden="true"><span></span><span></span><span></span></div>
       <div class="hero-motes" aria-hidden="true"><span style="--x:43%;--y:54%;--s:6px;--d:11.6s;--delay:-0.9s"></span><span style="--x:70%;--y:47%;--s:5px;--d:11.1s;--delay:-10.9s"></span><span style="--x:29%;--y:39%;--s:3px;--d:10.0s;--delay:-0.8s"></span><span style="--x:13%;--y:89%;--s:3px;--d:12.8s;--delay:-1.5s"></span><span style="--x:30%;--y:42%;--s:6px;--d:7.3s;--delay:-2.7s"></span><span style="--x:73%;--y:52%;--s:5px;--d:9.9s;--delay:-6.5s"></span><span style="--x:75%;--y:74%;--s:4px;--d:7.7s;--delay:-6.9s"></span><span style="--x:26%;--y:82%;--s:3px;--d:10.8s;--delay:-0.8s"></span><span style="--x:9%;--y:61%;--s:6px;--d:11.8s;--delay:-5.1s"></span><span style="--x:42%;--y:94%;--s:6px;--d:9.5s;--delay:-3.0s"></span><span style="--x:25%;--y:66%;--s:3px;--d:11.0s;--delay:-6.3s"></span><span style="--x:45%;--y:92%;--s:5px;--d:11.3s;--delay:-0.9s"></span><span style="--x:67%;--y:88%;--s:4px;--d:12.3s;--delay:-1.8s"></span><span style="--x:64%;--y:88%;--s:3px;--d:13.7s;--delay:-0.9s"></span><span style="--x:73%;--y:75%;--s:5px;--d:11.9s;--delay:-7.1s"></span><span style="--x:76%;--y:93%;--s:3px;--d:12.9s;--delay:-11.3s"></span><span style="--x:62%;--y:43%;--s:3px;--d:12.1s;--delay:-3.7s"></span><span style="--x:75%;--y:92%;--s:5px;--d:12.0s;--delay:-10.6s"></span></div>
       <div class="container vision-grid">
         <div class="vision-copy">
@@ -102,6 +107,12 @@
           <button type="button" class="hero-liria-stage" id="hero-liria-stage" aria-label="Hablar con Liria" data-i18n-aria-label="hero_liria_talk">
             <img id="hero-liria" src="/assets/images/hero/liria-happy1.webp" alt="Liria, la guía de GrowTale" data-i18n-alt="hero_liria_alt" width="420" height="513" fetchpriority="high">
           </button>
+          <div class="hero-choices" role="group" aria-label="Opciones" data-i18n-aria-label="liria_choices">
+            <a class="hero-choice" href="#how" data-i18n="liria_choice_game">Descubrir el juego</a>
+            <a class="hero-choice" href="/docs/GrowTale_PitchDeck.pdf" target="_blank" rel="noopener" data-doc-viewer data-doc-title="pitch_doc_title" data-i18n="liria_choice_pitch">Ver el Pitch Deck</a>
+            <a class="hero-choice" href="mailto:bellakotech@gmail.com" data-open-contact data-i18n="liria_choice_talk">Soy inversor, ¡hablemos!</a>
+          </div>
+          <button type="button" class="hero-skip" aria-label="Mantén pulsado para saltar" data-i18n-aria-label="liria_skip_hold"><span data-i18n="liria_skip">Saltar</span></button>
         </div>
       </div>
       <a class="hero-scroll" href="#main" aria-label="Seguir bajando" data-i18n-aria-label="hero_scroll"><span aria-hidden="true"></span></a>
@@ -1030,7 +1041,7 @@
       <div class="cursor-inner"></div>
     </div>
 
-    <script src="/app.js?v=20261123j" defer></script>
-    <script src="/cursor.js?v=20261123j" defer></script>
+    <script src="/app.js?v=20261123y" defer></script>
+    <script src="/cursor.js?v=20261123y" defer></script>
   </body>
 </html>
