@@ -1694,18 +1694,20 @@ function initLiriaSpeech(){
     skip.addEventListener('keydown', e =>{ if((e.key === 'Enter' || e.key === ' ') && !e.repeat){ e.preventDefault(); startHold() } })
     skip.addEventListener('keyup', e =>{ if(e.key === 'Enter' || e.key === ' ') cancelHold() })
   }
-  // al elegir una opción, las demás quedan atenuadas (siguen pudiéndose pulsar)
+  // Pitch Deck y "hablemos" abren su ventana y dejan las opciones como están; solo al elegir
+  // "Descubrir el juego" (que cierra la conversación) se resalta y las demás se atenúan
   const choiceBox = hero && hero.querySelector('.hero-choices')
-  if(choiceBox) choiceBox.querySelectorAll('.hero-choice').forEach(c => c.addEventListener('click', ()=>{
+  const markChosen = c =>{
+    if(!choiceBox) return
     choiceBox.classList.add('has-choice')
     choiceBox.querySelectorAll('.hero-choice').forEach(o => o.classList.toggle('is-chosen', o === c))
-  }))
+  }
   // "Descubrir el juego" durante la conversación: Liria se despide y se libera la navegación
   const discover = hero && hero.querySelector('.hero-choice[href="#how"]')
   if(discover) discover.addEventListener('click', e =>{
     if(!mobileConv) return
     e.preventDefault()
-    if(talking){ playSfx('tap2'); show(FINAL()); return }
+    if(talking){ playSfx('tap2'); markChosen(discover); show(FINAL()); return }
     // ya en libertad: en vez de saltar a "Cómo funciona", la página baja suavemente al
     // contenido que hay justo después de la portada
     const main = document.getElementById('main')
