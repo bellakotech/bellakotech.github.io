@@ -2720,3 +2720,22 @@ body *::-webkit-scrollbar-thumb:hover{background-color:#36b6c4}
   .hero-speech::after{left:-10px;top:50%;bottom:auto;margin:-8px 0 0;border-right:0;border-bottom:3px solid #12505c;border-left:3px solid #12505c}
   .hero-halo{top:50%;left:18%}
 }
+
+/* Portada en móvil, compacta: el subtítulo pegado al titular y todo el banner cabe en pantalla */
+@media (max-width:700px){
+  #vision.hero-full{padding:14px 0 54px}
+  #vision.hero-full .vision-grid{row-gap:16px}
+  #vision.hero-full .hero-eyebrow{order:1;font-size:.68rem;padding:5px 12px;margin:0}
+  #vision.hero-full .vision-copy h1{order:2;font-size:clamp(1.65rem,7.6vw,2.05rem);line-height:1.08;margin:0}
+  #vision.hero-full .vision-copy .lead{order:3;margin:-6px auto 0;font-size:.92rem;line-height:1.4;max-width:32ch}
+  #vision.hero-full .vision-image{order:4;margin:0;gap:10px}
+  #vision.hero-full .hero-liria-stage{flex:0 0 84px;width:84px}
+  .hero-speech{max-width:220px;padding:8px 12px 13px;font-size:.84rem;line-height:1.35}
+  .hero-speech-name{font-size:.62rem;margin-bottom:2px}
+  #vision.hero-full .hero-ctas{order:5;margin:4px 0 0;flex-wrap:nowrap;gap:8px}
+  #vision.hero-full .hero-ctas .btn{padding:10px 16px;font-size:.9rem;white-space:nowrap}
+  #vision.hero-full .hero-contact{order:6;margin:0;font-size:.82rem}
+  #vision.hero-full .hero-facts{order:7;margin:4px 0 0;gap:4px 20px}
+  #vision.hero-full .hero-facts strong{font-size:.95rem}
+  #vision.hero-full .hero-facts span{font-size:.72rem}
+}
