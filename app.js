@@ -496,14 +496,14 @@ function unlockSfx(){
 }
 
 // force: suena aunque el sonido esté desactivado (p. ej. el "clic" al silenciar)
-function playSfx(name, force){
+function playSfx(name, force, volume){
   if(!sfxCtx || (!force && !sfxEnabled())) return
   const buf = sfxBuffers[name]
   if(!buf) return
   if(sfxCtx.state === 'suspended') sfxCtx.resume()
   const src = sfxCtx.createBufferSource()
   const gain = sfxCtx.createGain()
-  gain.gain.value = SFX[name]
+  gain.gain.value = volume == null ? SFX[name] : volume
   src.buffer = buf
   src.connect(gain).connect(sfxCtx.destination)
   src.start()
@@ -533,7 +533,7 @@ function initSfx(){
     if(!el) return
     if(el.id === 'discover-btn') return playSwoosh('in', 0.75)
     if(el.matches('a[href="index.html"]')) return playSwoosh('out', 0.45)
-    if(el.matches('.dc-close, .daily-end, .flip-close, .view-profile, .hero-liria-stage, .enemy-toggle, [data-doc-viewer], [data-close-doc], .carousel-btn, .carousel-dot, .daily-end, .dc-modal button, .dc-apply, .skill-btn, #music-toggle, [data-open-contact], [data-close-contact], .lb-close, [type="submit"]')) return
+    if(el.matches('.hero-skip, .hero-choice[href="#how"], .dc-close, .daily-end, .flip-close, .view-profile, .hero-liria-stage, .enemy-toggle, [data-doc-viewer], [data-close-doc], .carousel-btn, .carousel-dot, .daily-end, .dc-modal button, .dc-apply, .skill-btn, #music-toggle, [data-open-contact], [data-close-contact], .lb-close, [type="submit"]')) return
     if(el.matches('.lang-switch, .nav-toggle')) return playSfx('tap2')
     if(el.matches('.nav-links a, .member-link, .lb-prev, .lb-next, .contact-alt a, .map-spot')) return playSfx('tap')
     playSfx('button')
@@ -543,6 +543,48 @@ function initSfx(){
 // "Swoosh" sintetizado para la transición portada ⇄ proyecto: ruido filtrado cuyo filtro barre
 // de grave a agudo (ida) o de agudo a grave (vuelta), con paneo de un lado a otro.
 let swooshNoise = null
+// "Blip" de diálogo de juego: un tono muy corto con una ligera variación de altura
+function playBlip(){
+  if(!sfxCtx || !sfxEnabled()) return
+  const ctx = sfxCtx
+  if(ctx.state === 'suspended') ctx.resume()
+  const t = ctx.currentTime
+  const osc = ctx.createOscillator(), gain = ctx.createGain()
+  osc.type = 'triangle'
+  osc.frequency.setValueAtTime(600 + Math.random() * 120, t)
+  gain.gain.setValueAtTime(0.0001, t)
+  gain.gain.exponentialRampToValueAtTime(0.05, t + 0.004)
+  gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.045)
+  osc.connect(gain).connect(ctx.destination)
+  osc.start(t); osc.stop(t + 0.05)
+}
+
+// Tono que sube mientras se mantiene pulsado un botón; devuelve la función que lo detiene
+function playHoldTone(duration = 1){
+  if(!sfxCtx || !sfxEnabled()) return ()=>{}
+  const ctx = sfxCtx
+  if(ctx.state === 'suspended') ctx.resume()
+  const t = ctx.currentTime
+  const osc = ctx.createOscillator(), gain = ctx.createGain()
+  osc.type = 'sine'
+  osc.frequency.setValueAtTime(320, t)
+  osc.frequency.exponentialRampToValueAtTime(880, t + duration)
+  gain.gain.setValueAtTime(0.0001, t)
+  gain.gain.exponentialRampToValueAtTime(0.05, t + 0.08)
+  osc.connect(gain).connect(ctx.destination)
+  osc.start(t)
+  let stopped = false
+  return ()=>{
+    if(stopped) return
+    stopped = true
+    const n = ctx.currentTime
+    gain.gain.cancelScheduledValues(n)
+    gain.gain.setValueAtTime(Math.max(gain.gain.value, 0.0001), n)
+    gain.gain.exponentialRampToValueAtTime(0.0001, n + 0.08)
+    osc.stop(n + 0.1)
+  }
+}
+
 function playSwoosh(direction = 'in', duration = 0.75){
   if(!sfxCtx || !sfxEnabled()) return
   const ctx = sfxCtx
@@ -1573,7 +1615,13 @@ function initLiriaSpeech(){
   // los elementos del banner aparecen poco a poco según avanza la conversación
   const revealUpTo = i =>{
     if(!intro) return
-    for(let k = 1; k <= Math.min(i, 3); k++) hero.classList.add('step-' + k)
+    let revealed = false
+    for(let k = 1; k <= Math.min(i, 3); k++){
+      if(!hero.classList.contains('step-' + k)) revealed = true
+      hero.classList.add('step-' + k)
+    }
+    if(revealed && talking) playSfx('hover', false, 0.32)
+    if(i === last() && talking && !hero.classList.contains('show-choices')) setTimeout(()=> playSfx('modal-open', false, 0.22), 300)
     // solo hay fundido cuando Liria cambia de sitio (al aparecer las opciones)
     const layoutChange = i >= last() && !hero.classList.contains('show-choices')
     const apply = ()=>{
@@ -1660,6 +1708,7 @@ function initLiriaSpeech(){
     typing = setInterval(()=>{
       n += 1
       textEl.textContent = full.slice(0, n)
+      if(mobileConv && n % 3 === 0 && full[n - 1] !== ' ') playBlip()
       if(n >= full.length) finish()
     }, 28)
   }
@@ -1673,18 +1722,24 @@ function initLiriaSpeech(){
   // "Saltar" pide mantenerlo pulsado un momento (1 s), para no saltarse la intro sin querer
   if(skip){
     const HOLD_MS = 1000
-    let holdTimer = null
+    let holdTimer = null, stopTone = ()=>{}
     const startHold = ()=>{
       if(holdTimer || !talking) return
       skip.classList.add('is-holding')
+      stopTone = playHoldTone(HOLD_MS / 1000)
       holdTimer = setTimeout(()=>{
         holdTimer = null
         skip.classList.remove('is-holding')
-        playSfx('tap2')
+        stopTone(); stopTone = ()=>{}
+        playSfx('success')
+        // saltar equivale a elegir "Descubrir el juego": las otras opciones quedan atenuadas
+        markChosen(hero.querySelector('.hero-choice[href="#how"]'))
         show(FINAL()); finish()
       }, HOLD_MS)
     }
     const cancelHold = ()=>{
+      if(holdTimer) stopTone()
+      stopTone = ()=>{}
       clearTimeout(holdTimer); holdTimer = null
       skip.classList.remove('is-holding')
     }
@@ -1707,7 +1762,8 @@ function initLiriaSpeech(){
   if(discover) discover.addEventListener('click', e =>{
     if(!mobileConv) return
     e.preventDefault()
-    if(talking){ playSfx('tap2'); markChosen(discover); show(FINAL()); return }
+    if(talking){ playSfx('success'); markChosen(discover); show(FINAL()); return }
+    playSfx('tap')
     // ya en libertad: en vez de saltar a "Cómo funciona", la página baja suavemente al
     // contenido que hay justo después de la portada
     const main = document.getElementById('main')
