@@ -1,5 +1,5 @@
 /* =========================================
-   GrowTale — interacciones compartidas por index.html y proyecto.html
+   GrowTale — interacciones compartidas por la portada (/) y /about/
    ========================================= */
 
 const LANG_KEY = 'growtale_lang'
@@ -479,7 +479,7 @@ function unlockSfx(){
   if(!AC) return
   sfxCtx = new AC()
   Object.keys(SFX).forEach(name=>{
-    fetch(`assets/audio/ui/${name}.mp3`)
+    fetch(`/assets/audio/ui/${name}.mp3`)
       .then(r=> r.arrayBuffer())
       .then(data=> new Promise((ok, ko)=> sfxCtx.decodeAudioData(data, ok, ko)))
       .then(buf=>{ sfxBuffers[name] = buf })
@@ -889,7 +889,7 @@ function initContact(){
     playSfx('success')
   })
 
-  // Los enlaces antiguos a contacto.html redirigen a proyecto.html#contacto
+  // /contact/ y el antiguo contacto.html redirigen a /about/#contacto
   if(location.hash === '#contacto'){
     const section = document.getElementById('contact')
     if(section) section.scrollIntoView()
@@ -921,7 +921,7 @@ function initParallax(){
 }
 
 // Portada: al pulsar "Descubre GrowTale" el contenido se desvanece, el fondo se ilumina
-// (shader.js escucha growtale:leave) y después se navega; proyecto.html entra con un fundido.
+// (shader.js escucha growtale:leave) y después se navega; /about/ entra con un fundido.
 function initCoverTransition(){
   const btn = document.getElementById('discover-btn')
   if(!btn) return
@@ -1196,7 +1196,7 @@ function initTryIt(){
       li.className = 'daily' + (i === cur ? ' is-selected' : '')
       li.dataset.state = done ? 'done' : 'progress'
       li.style.setProperty('--progress', pct + '%')
-      li.innerHTML = `<span class="daily-icon" aria-hidden="true"><span class="gt-icon" style="--icon:url(assets/icons/challenges/${CH_POOL[c.id].cat}.svg)"></span></span>
+      li.innerHTML = `<span class="daily-icon" aria-hidden="true"><span class="gt-icon" style="--icon:url(/assets/icons/challenges/${CH_POOL[c.id].cat}.svg)"></span></span>
         <div class="daily-bar"><div class="daily-text"><span class="daily-type">${CH_TYPES[lang][CH_POOL[c.id].type]}</span><h4></h4></div>
         <button type="button" class="daily-end"></button></div>`
       li.querySelector('h4').textContent = titleOf(c)
@@ -1218,7 +1218,7 @@ function initTryIt(){
     modalBox.closest('.challenge-demo-grid').classList.toggle('is-open', isOpen())
     if(!isOpen()) return
     const c = list[cur], goal = goalOf(c), unit = CH_POOL[c.id].unit
-    $('dc-icon').style.setProperty('--icon', `url(assets/icons/challenges/${CH_POOL[c.id].cat}.svg)`)
+    $('dc-icon').style.setProperty('--icon', `url(/assets/icons/challenges/${CH_POOL[c.id].cat}.svg)`)
     $('dc-title').textContent = titleOf(c)
     const range = $('dc-range')
     range.max = goal; range.step = Math.max(1, Math.round(goal / 40)); range.value = Math.min(c.done, goal)
@@ -1301,7 +1301,7 @@ function initTryIt(){
   // Habilidades
   const SK = { smite: 0, gust: 2386, frost: 0, heal: 1150 } // pasos que faltan para recargar
   let selected = 'frost'
-  const glyph = (el, id) =>{ el.style.setProperty('--icon', `url(assets/icons/skills/${id}.svg)`); el.dataset.skill = id }
+  const glyph = (el, id) =>{ el.style.setProperty('--icon', `url(/assets/icons/skills/${id}.svg)`); el.dataset.skill = id }
   const renderSkills = () =>{
     const l = L()
     document.querySelectorAll('.skill-btn').forEach(b =>{
@@ -1515,7 +1515,7 @@ function initLiriaSpeech(){
   if(!bubble || !textEl || !img) return
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   // precargar las expresiones para que el cambio sea instantáneo
-  new Set(LIRIA_LINES.es.map(l => l[0])).forEach(e =>{ const i = new Image(); i.src = `assets/images/hero/liria-${e}.webp` })
+  new Set(LIRIA_LINES.es.map(l => l[0])).forEach(e =>{ const i = new Image(); i.src = `/assets/images/hero/liria-${e}.webp` })
 
   let index = 0, typing = null, autoNext = null, full = ''
   const lines = () => LIRIA_LINES[currentLang()]
@@ -1523,7 +1523,7 @@ function initLiriaSpeech(){
   // se cambia la expresión en el punto más bajo y vuelve a su tamaño (como un parpadeo)
   let swapToken = 0
   const setExpression = expr =>{
-    const src = `assets/images/hero/liria-${expr}.webp`
+    const src = `/assets/images/hero/liria-${expr}.webp`
     if(img.getAttribute('src') === src) return
     if(reduce || !img.animate){ img.setAttribute('src', src); return }
     const token = ++swapToken

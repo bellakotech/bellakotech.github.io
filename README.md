@@ -7,8 +7,10 @@ Web estática de GrowTale, publicada con GitHub Pages en https://growtale.app/ (
 | Archivo | Contenido |
 | --- | --- |
 | `index.html` | Portada: fondo animado (WebGL), logo, música y botón "Descubre GrowTale". |
-| `proyecto.html` | Página principal del proyecto: visión, impacto, videojuego, equipo y contacto (con formulario en pop-up). |
-| `contacto.html` | Redirección a `proyecto.html#contacto` para no romper enlaces antiguos. |
+| `about/index.html` | Página principal (growtale.app/about/): visión, impacto, videojuego, universo, equipo y contacto (con formulario en pop-up). Usa rutas desde la raíz (`/assets/…`). |
+| `contact/index.html` | growtale.app/contact/: redirige a `/about/#contacto`. |
+| `proyecto.html` | Dirección antigua: redirige a `/about/`. |
+| `contacto.html` | Dirección antigua: redirige a `/about/#contacto`. |
 
 ## Código
 
@@ -23,7 +25,7 @@ El español es el texto que aparece en el HTML. Para que un texto se traduzca, a
 
 ### Formulario de contacto
 
-No hay servidor: al enviar, se abre el cliente de correo del visitante con el mensaje ya redactado. El destinatario se define en `data-email` del `<form>` en `proyecto.html` (y en los enlaces `mailto:` de la sección Contacto).
+No hay servidor: al enviar, se abre el cliente de correo del visitante con el mensaje ya redactado. El destinatario se define en `data-email` del `<form>` en `about/index.html` (y en los enlaces `mailto:` de la sección Contacto).
 
 ### Música
 
