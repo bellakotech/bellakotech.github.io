@@ -211,7 +211,6 @@ const I18N_EN = {
   hero_fact1_label: 'prototype',
   hero_fact2_value: 'Validated',
   hero_fact2_label: 'by professionals',
-  hero_fact3_label: 'people on the team',
   hero_liria_alt: 'Liria, the GrowTale guide',
   hero_scroll: 'Scroll down',
   tryit_badge: 'Interactive demo',
@@ -270,6 +269,7 @@ const I18N_EN = {
   making_soren3_title: "Final character",
   making_soren3_text: "Soren with his bow, ready to enter the game.",
   region_hushgrove_char: "the village archer",
+  team_flip_hint: 'Tap to see more',
   map_title: 'Mindveil, the Realm of Compulsion',
   map_text: 'A brain-shaped island. Tap each place to discover what awaits you.',
   map_alt: 'Map of Mindveil: a brain-shaped island',
@@ -342,8 +342,8 @@ const I18N_EN = {
   team_title: 'Team',
   team_lead: 'Technical and creative team with experience in product, AAA and operations — ready to execute and scale.',
   view_profile: 'View full profile',
-  role_daniel: 'CPO & Head of Product',
-  bio_daniel: 'Technical Producer at Foundever and former Head of Product at BrytSpace. Engineer and manager combining his passion for technology and psychology to improve mental health through software.',
+  role_daniel: 'Coach & Health Advisor',
+  bio_daniel: "The team's coach and health advisor. An engineer passionate about technology and psychology, making sure every GrowTale mechanic genuinely supports players' wellbeing. Technical Producer at Foundever and former Head of Product at BrytSpace.",
   role_charlie: 'Creative Director',
   bio_charlie: 'Senior Game Designer at Gameloft Barcelona, lecturer at U-Tad and founder of Beast Arts. Gamification specialist with over seven years of experience.',
   role_raquel: 'Full-Stack Developer',
@@ -415,6 +415,7 @@ const STRINGS = {
     music_on: 'Silenciar',
     music_off: 'Activar sonido',
     view_profile: 'Ver perfil completo',
+    team_flip_hint: 'Toca para ver más',
     enemy_flip_hint: 'Toca para ver ataques y estrategia',
     enemy_flip_back: 'Toca para volver',
     flip_back: 'Volver',
@@ -436,6 +437,7 @@ const STRINGS = {
     music_on: 'Mute',
     music_off: 'Turn sound on',
     view_profile: 'View full profile',
+    team_flip_hint: 'Tap to see more',
     enemy_flip_hint: 'Tap to see attacks and strategy',
     enemy_flip_back: 'Tap to go back',
     flip_back: 'Back',
@@ -1695,38 +1697,44 @@ function initEnemyCards(){
 }
 
 function initTeam(){
-  const cards = Array.from(document.querySelectorAll('.team-section .member-card'))
-  const buttons = []
-  cards.forEach(card =>{
-    const btn = card.querySelector('.view-profile')
+  const ES = { front: 'Toca para ver más', back: 'Toca para volver' }
+  const hint = (key, es) =>{
+    const el = document.createElement('p'); el.className = 'enemy-flip-hint member-flip-hint'
+    el.innerHTML = `<span class="enemy-flip-icon" aria-hidden="true"></span><span data-i18n="${key}" data-i18n-es="${es}">${t(key) || es}</span>`
+    return el
+  }
+  document.querySelectorAll('.team-section .member-card').forEach(card =>{
     const name = card.querySelector('.member-name'), role = card.querySelector('.role')
     const bio = card.querySelector('.bio-short'), link = card.querySelector('.member-link')
-    if(!btn || !bio) return
+    if(!bio) return
+    const btn = card.querySelector('.view-profile')
+    if(btn) btn.remove()
+    card.appendChild(hint('team_flip_hint', ES.front))
     const frontNodes = Array.from(card.childNodes)
     const head = document.createElement('div'); head.className = 'member-back-head'
     head.append(name.cloneNode(true), role.cloneNode(true))
     const full = bio.cloneNode(true); full.removeAttribute('id'); full.className = 'bio-full'
     const backNodes = [head, full]
     if(link) backNodes.push(link.cloneNode(true))
-    const { close } = buildFlip(card, frontNodes, backNodes)
-    btn.removeAttribute('aria-controls')
-    btn.addEventListener('click', ()=>{ setFlipped(card, true, btn); close.focus({ preventScroll: true }) })
-    close.addEventListener('click', ()=>{ setFlipped(card, false, btn); btn.focus({ preventScroll: true }) })
-    setFlipped(card, false, btn)
-    buttons.push(btn)
+    backNodes.push(hint('enemy_flip_back', ES.back))
+    buildFlip(card, frontNodes, backNodes, false)
+    card.tabIndex = 0
+    card.setAttribute('role', 'button')
+    card.setAttribute('aria-label', name.textContent.trim())
+    card.setAttribute('aria-pressed', 'false')
+    const flip = ()=>{
+      const on = !card.classList.contains('is-flipped')
+      setFlipped(card, on)
+      card.setAttribute('aria-pressed', on ? 'true' : 'false')
+    }
+    // el enlace a LinkedIn abre el perfil sin girar la tarjeta
+    card.addEventListener('click', e =>{ if(e.target.closest('a')) return; flip() })
+    card.addEventListener('keydown', e =>{
+      if(e.target !== card) return
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); flip() }
+    })
+    card.classList.remove('is-flipped')
   })
-  const sync = ()=> buttons.forEach(b => b.textContent = t('view_profile'))
-  // El botón solo tiene sentido si la bio está recortada en la cara delantera
-  const updateVisibility = ()=> buttons.forEach(btn =>{
-    const card = btn.closest('.member-card')
-    if(card.classList.contains('is-flipped')) return
-    const bio = card.querySelector('.flip-front .bio-short')
-    btn.hidden = bio.scrollHeight <= bio.clientHeight + 1
-  })
-  document.addEventListener('growtale:langchange', ()=>{ sync(); updateVisibility() })
-  window.addEventListener('resize', updateVisibility)
-  sync()
-  updateVisibility()
 }
 
 document.addEventListener('DOMContentLoaded', ()=>{

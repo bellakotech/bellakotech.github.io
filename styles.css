@@ -2684,3 +2684,18 @@ body *::-webkit-scrollbar-thumb:hover{background-color:#36b6c4}
   .soren-carousel .soren-slide img{height:auto}
 }
 .world-map-stage .map-nav .map-nav-btn:hover,.world-map-stage .map-nav .map-nav-btn:active{background:transparent;border:0;transform:none}
+
+/* =========================================
+   Equipo: la tarjeta entera gira al tocarla (como los enemigos)
+   ========================================= */
+.team-section .member-card.flip-card{cursor:pointer;outline:none;border-radius:14px}
+.team-section .member-card.flip-card:focus-visible .flip-face{box-shadow:0 0 0 3px var(--btn-gold-pressed)}
+.member-flip-hint{color:#d7c178}
+.team-section .member-card.flip-card:hover .member-flip-hint{color:#f0dc98;opacity:1}
+/* la tarjeta toma la altura de su cara más alta: la trasera cabe entera sin scroll */
+.team-section .member-card.flip-card .flip-inner{display:grid;height:100%}
+.team-section .member-card.flip-card .flip-face{grid-area:1/1;position:relative;inset:auto}
+.team-section .member-card.flip-card .flip-back{overflow:visible;display:flex;flex-direction:column}
+.team-section .member-card.flip-card .flip-front{display:flex;flex-direction:column}
+.team-section .bio-full{font-size:.84rem;line-height:1.45}
+.member-flip-hint{margin-top:auto !important}
