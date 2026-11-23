@@ -27,7 +27,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Poppins:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <!-- Entrada suave al llegar desde el botón "Descubre GrowTale" de la portada -->
     <script>try{if(sessionStorage.getItem('growtale_enter')){document.documentElement.classList.add('arrive');sessionStorage.removeItem('growtale_enter')}}catch(e){}</script>
-    <link rel="stylesheet" href="/styles.css?v=20261123c">
+    <link rel="stylesheet" href="/styles.css?v=20261123j">
   </head>
   <body>
     <a class="skip-link" href="#main" data-i18n="skip_to_content">Saltar al contenido</a>
@@ -100,7 +100,7 @@
             <span class="hero-speech-next" aria-hidden="true"></span>
           </div>
           <button type="button" class="hero-liria-stage" id="hero-liria-stage" aria-label="Hablar con Liria" data-i18n-aria-label="hero_liria_talk">
-            <img id="hero-liria" src="/assets/images/hero/liria-happy2.webp" alt="Liria, la guía de GrowTale" data-i18n-alt="hero_liria_alt" width="420" height="513" fetchpriority="high">
+            <img id="hero-liria" src="/assets/images/hero/liria-happy1.webp" alt="Liria, la guía de GrowTale" data-i18n-alt="hero_liria_alt" width="420" height="513" fetchpriority="high">
           </button>
         </div>
       </div>
@@ -772,13 +772,13 @@
 
           <ul class="team-collage">
             <li class="member-card">
-              <div class="avatar-wrap"><img class="avatar" src="/assets/images/team/daniel.webp" alt="" width="88" height="88" loading="lazy"></div>
+              <div class="avatar-wrap"><img class="avatar avatar-zoom" src="/assets/images/team/sergio.webp" alt="" width="88" height="88" loading="lazy"></div>
               <div class="member-meta">
-                <h3 class="member-name">Daniel Robledo</h3>
-                <div class="role" data-i18n="role_daniel">Coach y asesor de salud</div>
-                <p class="bio-short" id="bio-daniel" data-i18n="bio_daniel">Coach y asesor de salud del equipo. Ingeniero apasionado por la tecnología y la psicología, vela por que cada mecánica de GrowTale cuide de verdad el bienestar de quien juega. Technical Producer en Foundever y anterior Director de Producto en BrytSpace.</p>
-                <a class="member-link" href="https://www.linkedin.com/in/danielcrobledo/" target="_blank" rel="noopener" aria-label="Daniel Robledo · LinkedIn">LinkedIn ↗</a>
-                <button class="btn view-profile" aria-expanded="false" aria-controls="bio-daniel">Ver perfil completo</button>
+                <h3 class="member-name">Sergio Ruiz</h3>
+                <div class="role" data-i18n="role_sergio">Business & Operaciones</div>
+                <p class="bio-short" id="bio-sergio" data-i18n="bio_sergio">Ingeniero de Apoyo al Ciclo de Vida en Navantia. Formado en la Universidad de Málaga, aporta método y visión de ingeniería al desarrollo de GrowTale.</p>
+                <a class="member-link" href="https://www.linkedin.com/in/sergio-ruiz-p%C3%A9rez-536897249/" target="_blank" rel="noopener" aria-label="Sergio Ruiz · LinkedIn">LinkedIn ↗</a>
+                <button class="btn view-profile" aria-expanded="false" aria-controls="bio-sergio">Ver perfil completo</button>
               </div>
             </li>
 
@@ -790,17 +790,6 @@
                 <p class="bio-short" id="bio-charlie" data-i18n="bio_charlie">Senior Game Designer en Gameloft Barcelona, profesor en U-Tad y fundador de Beast Arts. Especialista en gamificación con más de siete años de experiencia.</p>
                 <a class="member-link" href="https://www.linkedin.com/in/charliesnchez/" target="_blank" rel="noopener" aria-label="Charlie Sánchez · LinkedIn">LinkedIn ↗</a>
                 <button class="btn view-profile" aria-expanded="false" aria-controls="bio-charlie">Ver perfil completo</button>
-              </div>
-            </li>
-
-            <li class="member-card">
-              <div class="avatar-wrap"><img class="avatar avatar-zoom" src="/assets/images/team/sergio.webp" alt="" width="88" height="88" loading="lazy"></div>
-              <div class="member-meta">
-                <h3 class="member-name">Sergio Ruiz</h3>
-                <div class="role" data-i18n="role_sergio">Business & Operaciones</div>
-                <p class="bio-short" id="bio-sergio" data-i18n="bio_sergio">Ingeniero de Apoyo al Ciclo de Vida en Navantia. Formado en la Universidad de Málaga, aporta método y visión de ingeniería al desarrollo de GrowTale.</p>
-                <a class="member-link" href="https://www.linkedin.com/in/sergio-ruiz-p%C3%A9rez-536897249/" target="_blank" rel="noopener" aria-label="Sergio Ruiz · LinkedIn">LinkedIn ↗</a>
-                <button class="btn view-profile" aria-expanded="false" aria-controls="bio-sergio">Ver perfil completo</button>
               </div>
             </li>
 
@@ -856,6 +845,17 @@
                 <p class="bio-short" id="bio-andrea" data-i18n="bio_andrea">Concept artist y estudiante de Marketing. Compagina la ilustración con la comunicación del proyecto.</p>
                 <a class="member-link" href="https://www.linkedin.com/in/andrea-calvar-prieto-308182278/" target="_blank" rel="noopener" aria-label="Andrea Calvar · LinkedIn">LinkedIn ↗</a>
                 <button class="btn view-profile" aria-expanded="false" aria-controls="bio-andrea">Ver perfil completo</button>
+              </div>
+            </li>
+
+            <li class="member-card">
+              <div class="avatar-wrap"><img class="avatar" src="/assets/images/team/daniel.webp" alt="" width="88" height="88" loading="lazy"></div>
+              <div class="member-meta">
+                <h3 class="member-name">Daniel Robledo</h3>
+                <div class="role" data-i18n="role_daniel">Coach y asesor de salud</div>
+                <p class="bio-short" id="bio-daniel" data-i18n="bio_daniel">Uno de los fundadores de GrowTale. Ingeniero apasionado por la tecnología y la psicología, vela por que cada mecánica de GrowTale cuide de verdad el bienestar de quien juega. Technical Producer en Foundever y anterior Director de Producto en BrytSpace.</p>
+                <a class="member-link" href="https://www.linkedin.com/in/danielcrobledo/" target="_blank" rel="noopener" aria-label="Daniel Robledo · LinkedIn">LinkedIn ↗</a>
+                <button class="btn view-profile" aria-expanded="false" aria-controls="bio-daniel">Ver perfil completo</button>
               </div>
             </li>
           </ul>
@@ -1030,7 +1030,7 @@
       <div class="cursor-inner"></div>
     </div>
 
-    <script src="/app.js?v=20261123c" defer></script>
-    <script src="/cursor.js?v=20261123c" defer></script>
+    <script src="/app.js?v=20261123j" defer></script>
+    <script src="/cursor.js?v=20261123j" defer></script>
   </body>
 </html>

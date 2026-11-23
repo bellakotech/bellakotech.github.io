@@ -343,7 +343,7 @@ const I18N_EN = {
   team_lead: 'Technical and creative team with experience in product, AAA and operations — ready to execute and scale.',
   view_profile: 'View full profile',
   role_daniel: 'Coach & Health Advisor',
-  bio_daniel: "The team's coach and health advisor. An engineer passionate about technology and psychology, making sure every GrowTale mechanic genuinely supports players' wellbeing. Technical Producer at Foundever and former Head of Product at BrytSpace.",
+  bio_daniel: "One of GrowTale's founders. An engineer passionate about technology and psychology, making sure every GrowTale mechanic genuinely supports players' wellbeing. Technical Producer at Foundever and former Head of Product at BrytSpace.",
   role_charlie: 'Creative Director',
   bio_charlie: 'Senior Game Designer at Gameloft Barcelona, lecturer at U-Tad and founder of Beast Arts. Gamification specialist with over seven years of experience.',
   role_raquel: 'Full-Stack Developer',
@@ -1487,15 +1487,15 @@ function initDocViewer(){
    ----------------------------------------- */
 const LIRIA_LINES = {
   es: [
-    ['happy2', '¡Hola! Soy Liria, tu guía en Mindveil.'],
-    ['happy1', 'Bienvenido a GrowTale: aquí cada hábito saludable te hace más fuerte.'],
+    ['happy1', '¡Hola! Soy Liria, tu guía en Mindveil.'],
+    ['happy2', 'Bienvenido a GrowTale: aquí cada hábito saludable te hace más fuerte.'],
     ['explicative', 'Cuando dejas el móvil y cumples tus retos, tu aventura avanza.'],
     ['surprised', '¡Y hay todo un mundo por descubrir, lleno de distracciones con forma de monstruo!'],
     ['thinking', '¿Te lo enseño? Baja conmigo y descubre cómo lo hacemos.']
   ],
   en: [
-    ['happy2', "Hi! I'm Liria, your guide in Mindveil."],
-    ['happy1', 'Welcome to GrowTale: here every healthy habit makes you stronger.'],
+    ['happy1', "Hi! I'm Liria, your guide in Mindveil."],
+    ['happy2', 'Welcome to GrowTale: here every healthy habit makes you stronger.'],
     ['explicative', 'When you put your phone down and complete your challenges, your adventure moves forward.'],
     ['surprised', "And there's a whole world to discover, full of distractions shaped like monsters!"],
     ['thinking', 'Shall I show you? Scroll down with me and see how we do it.']
@@ -1741,12 +1741,57 @@ function initTeam(){
   })
 }
 
+/* -----------------------------------------
+   Equipo en móvil: galería deslizable (una persona por pantalla) con puntos.
+   En escritorio la lista es una rejilla y esto no hace nada visible.
+   ----------------------------------------- */
+function initTeamSwipe(){
+  const list = document.querySelector('.team-section .team-collage')
+  if(!list) return
+  const cards = Array.from(list.children)
+  const isSwipe = ()=> list.scrollWidth > list.clientWidth + 2
+  const goTo = card => list.scrollTo({ left: card.offsetLeft - (list.clientWidth - card.offsetWidth) / 2,
+    behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })
+  const dots = document.createElement('div')
+  dots.className = 'team-dots'
+  dots.setAttribute('aria-hidden', 'true')
+  cards.forEach(card =>{
+    const b = document.createElement('button')
+    b.type = 'button'; b.className = 'carousel-dot'; b.tabIndex = -1
+    b.addEventListener('click', ()=> goTo(card))
+    dots.appendChild(b)
+  })
+  list.after(dots)
+  let current = 0
+  const update = ()=>{
+    const mid = list.scrollLeft + list.clientWidth / 2
+    let best = 0, dist = Infinity
+    cards.forEach((c, i)=>{ const d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if(d < dist){ dist = d; best = i } })
+    current = best
+    cards.forEach((c, i)=> c.classList.toggle('is-current', i === best))
+    Array.from(dots.children).forEach((d, i)=> d.setAttribute('aria-selected', i === best ? 'true' : 'false'))
+  }
+  // tocar a una persona que no está centrada la trae al centro (no gira su tarjeta)
+  list.addEventListener('click', e =>{
+    if(!isSwipe()) return
+    const i = cards.findIndex(c => c.contains(e.target))
+    if(i < 0 || i === current) return
+    e.preventDefault(); e.stopPropagation()
+    goTo(cards[i])
+  }, true)
+  let raf = 0
+  list.addEventListener('scroll', ()=>{ cancelAnimationFrame(raf); raf = requestAnimationFrame(update) }, { passive: true })
+  addEventListener('resize', update)
+  update()
+}
+
 document.addEventListener('DOMContentLoaded', ()=>{
   initSfx()
   initLanguage()
   initMusic()
   initNav()
   initTeam()
+  initTeamSwipe()
   initEnemyCards()
   initCarousel()
   initLiriaSpeech()
