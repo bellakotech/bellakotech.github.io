@@ -276,6 +276,19 @@ const I18N_EN = {
   liria_choice_talk: "I'm an investor, let's talk!",
   liria_skip: "Skip",
   liria_skip_hold: "Press and hold to skip",
+  social_label: "Social media",
+  social_instagram: "GrowTale on Instagram",
+  social_x_soon: "X · Coming soon",
+  social_tiktok_soon: "TikTok · Coming soon",
+  social_follow: "Follow us",
+  bio_sergio_short: "Navantia engineer who brings method to development.",
+  bio_charlie_short: "Senior Game Designer at Gameloft and gamification expert.",
+  bio_raquel_short: "Developer at MELT Studio, formerly at Péndulo Studios.",
+  bio_david_short: "Programmer at Huhaa Studios and systems expert.",
+  bio_rober_short: "Video game music composer and writer.",
+  bio_ismael_short: "Concept artist and graphic designer at Infinite Thread.",
+  bio_andrea_short: "Concept artist who also handles communication.",
+  bio_daniel_short: "Engineer who brings technology and psychology together.",
   map_title: 'Mindveil, the Realm of Compulsion',
   map_text: 'A brain-shaped island. Tap each place to discover what awaits you.',
   map_alt: 'Map of Mindveil: a brain-shaped island',
@@ -349,11 +362,11 @@ const I18N_EN = {
   team_lead: 'Technical and creative team with experience in product, AAA and operations — ready to execute and scale.',
   view_profile: 'View full profile',
   role_daniel: 'Coach & Health Advisor',
-  bio_daniel: "One of GrowTale's founders. An engineer passionate about technology and psychology, making sure every GrowTale mechanic genuinely supports players' wellbeing. Technical Producer at Foundever and former Head of Product at BrytSpace.",
+  bio_daniel: "One of GrowTale's founders. An engineer passionate about technology and psychology, and former Head of Product at BrytSpace.",
   role_charlie: 'Creative Director',
   bio_charlie: 'Senior Game Designer at Gameloft Barcelona, lecturer at U-Tad and founder of Beast Arts. Gamification specialist with over seven years of experience.',
   role_raquel: 'Full-Stack Developer',
-  bio_raquel: 'Former gameplay and systems developer at Péndulo Studios. Specialist in Unity, Unreal Engine and interfaces.',
+  bio_raquel: 'Developer at MELT Studio, previously gameplay and systems developer at Péndulo Studios. Specialist in Unity, Unreal Engine and interfaces.',
   role_david: 'Full-Stack Developer & DevSecOps',
   bio_david: 'Rigging and IT programmer at Huhaa Studios. Industrial Engineering graduate and expert in systems and backend.',
   role_rober: 'Composer & Sound Designer',
@@ -769,6 +782,22 @@ function initMusic(){
   window.addEventListener('pagehide', ()=>{
     storage.set(MUSIC_TIME_KEY, String(audio.currentTime || 0), sessionStorage)
   })
+
+  // Al salir de la web (cambiar de app o de pestaña, bloquear el móvil) la música se pausa y los
+  // efectos se suspenden; al volver, la música sigue donde estaba con un fundido
+  let pausedByHide = false
+  const onHide = ()=>{
+    if(!audio.paused){ pausedByHide = true; clearInterval(fadeTimer); audio.pause() }
+    if(sfxCtx && sfxCtx.state === 'running') sfxCtx.suspend().catch(()=>{})
+  }
+  const onShow = ()=>{
+    if(!pausedByHide) return
+    pausedByHide = false
+    if(enabled){ audio.volume = 0; play() }
+  }
+  document.addEventListener('visibilitychange', ()=> document.hidden ? onHide() : onShow())
+  window.addEventListener('pagehide', onHide)
+  window.addEventListener('pageshow', e =>{ if(e.persisted) onShow() })
 
   updateButton()
   play()
@@ -1916,7 +1945,9 @@ function initTeam(){
     const frontNodes = Array.from(card.childNodes)
     const head = document.createElement('div'); head.className = 'member-back-head'
     head.append(name.cloneNode(true), role.cloneNode(true))
-    const full = bio.cloneNode(true); full.removeAttribute('id'); full.className = 'bio-full'
+    const long = card.querySelector('.bio-long')
+    if(long) long.remove()
+    const full = (long || bio).cloneNode(true); full.removeAttribute('id'); full.hidden = false; full.className = 'bio-full'
     const backNodes = [head, full]
     if(link) backNodes.push(link.cloneNode(true))
     backNodes.push(hint('enemy_flip_back', ES.back))

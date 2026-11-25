@@ -28,7 +28,7 @@
     <!-- Intro animada en la primera visita de la sesión; animación de regreso al volver del proyecto.
          Se decide aquí, antes del primer pintado, y respeta "reducir movimiento". -->
     <script>try{var d=document.documentElement,ss=sessionStorage,n=performance.getEntriesByType&&performance.getEntriesByType('navigation')[0];if(!matchMedia('(prefers-reduced-motion: reduce)').matches){if(ss.getItem('growtale_return')||(n&&n.type==='back_forward'&&ss.getItem('growtale_intro'))){d.classList.add('return')}else if(!ss.getItem('growtale_intro')){d.classList.add('intro')}}ss.removeItem('growtale_return');ss.setItem('growtale_intro','1')}catch(e){}</script>
-    <link rel="stylesheet" href="styles.css?v=20261124d">
+    <link rel="stylesheet" href="styles.css?v=20261125f">
     <link rel="prefetch" href="/about/">
   </head>
   <body class="cover-page">
@@ -64,10 +64,23 @@
           <a id="discover-btn" class="btn btn-primary" href="/about/" data-i18n="discover">Descubre GrowTale</a>
         </div>
       </div>
+
+      <!-- Redes sociales (X y TikTok, próximamente) -->
+      <nav class="landing-social" aria-label="Redes sociales" data-i18n-aria-label="social_label">
+        <a class="social-link" href="https://instagram.com/growtaleapp" target="_blank" rel="noopener" aria-label="GrowTale en Instagram" data-i18n-aria-label="social_instagram" title="Instagram">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <span class="social-link is-disabled" role="link" aria-disabled="true" aria-label="X (próximamente)" data-i18n-aria-label="social_x_soon" title="X · Próximamente" data-i18n-title="social_x_soon">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2.2l7.7-8.8L2 2h6.8l4.7 6.2L18.9 2zm-1.2 18h1.7L7.4 3.9H5.6L17.7 20z"/></svg>
+        </span>
+        <span class="social-link is-disabled" role="link" aria-disabled="true" aria-label="TikTok (próximamente)" data-i18n-aria-label="social_tiktok_soon" title="TikTok · Próximamente" data-i18n-title="social_tiktok_soon">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden="true"><path d="M16.6 2c.4 2.3 1.9 4 4.4 4.3v3.3c-1.6 0-3.1-.5-4.4-1.3v6.4c0 3.6-2.7 6.3-6.2 6.3S4.2 18.3 4.2 14.8s2.8-6.3 6.3-6.3c.4 0 .7 0 1 .1v3.4c-.3-.1-.6-.2-1-.2-1.6 0-3 1.3-3 3s1.4 3 3 3 3-1.3 3-3V2h3.1z"/></svg>
+        </span>
+      </nav>
     </main>
 
     <audio id="theme-audio" preload="auto" hidden>
-      <source src="assets/audio/theme.m4a" type="audio/mp4">
+      <source src="assets/audio/main-theme.m4a" type="audio/mp4">
     </audio>
 
     <!-- Cursor animado (solo escritorio) -->
@@ -76,8 +89,8 @@
       <div class="cursor-inner"></div>
     </div>
 
-    <script src="shader.js?v=20261124d" defer></script>
-    <script src="app.js?v=20261124d" defer></script>
-    <script src="cursor.js?v=20261124d" defer></script>
+    <script src="shader.js?v=20261125f" defer></script>
+    <script src="app.js?v=20261125f" defer></script>
+    <script src="cursor.js?v=20261125f" defer></script>
   </body>
 </html>

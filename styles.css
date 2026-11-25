@@ -3036,3 +3036,44 @@ body *::-webkit-scrollbar-thumb:hover{background-color:#36b6c4}
   .skills-demo .skill-buttons .skill-glyph{width:20px;height:20px;flex:0 0 20px}
   .skills-demo .skill-buttons .skill-btn-name{font-size:.72rem;letter-spacing:-.01em;hyphens:manual;-webkit-hyphens:manual;overflow-wrap:normal}
 }
+
+/* =========================================
+   Portada: redes sociales abajo (X y TikTok, próximamente)
+   ========================================= */
+.landing-social{position:fixed;left:50%;bottom:max(22px,env(safe-area-inset-bottom));z-index:70;display:flex;gap:14px;transform:translateX(-50%)}
+.social-link{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;color:#e6f7f4;text-decoration:none;
+  background:rgba(4,32,41,.55);border:1px solid rgba(165,214,208,.28);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  transition:background .2s ease,border-color .2s ease,transform .2s ease,color .2s ease}
+a.social-link:hover,a.social-link:focus-visible{background:#127d86;border-color:#5fd0da;color:#fff;transform:scale(1.12);outline:none}
+.social-link.is-disabled{opacity:.38;cursor:not-allowed;filter:grayscale(1)}
+@media (prefers-reduced-motion:no-preference){
+  html.intro .landing-social{animation:fadeIn 700ms ease 1700ms both}
+  html.return .landing-social{animation:fadeIn 500ms ease 600ms both}
+  html.leaving .landing-social{animation:fadeOut 300ms ease forwards}
+}
+@media (max-width:600px){ .landing-social{gap:12px} .social-link{width:40px;height:40px} }
+
+/* Contacto: redes sociales (tono dorado del bloque Proyecto) */
+.contact-social{display:flex;align-items:center;gap:14px;margin-top:20px}
+.contact-social-label{margin:0;font-size:.8rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--btn-gold-pressed)}
+.contact-social-links{display:flex;gap:10px}
+.contact-social .social-link{color:#f0dc98;background:rgba(61,51,27,.55);border-color:rgba(215,193,120,.35);backdrop-filter:none;-webkit-backdrop-filter:none}
+.contact-social a.social-link:hover,.contact-social a.social-link:focus-visible{background:#a58749;border-color:#f0dc98;color:#fff;transform:scale(1.12);outline:none}
+@media (max-width:800px){ .contact-social{justify-content:center} }
+
+/* =========================================
+   Equipo: tarjetas de tamaño fijo. Delante, un resumen de extensión similar (3 líneas) y sin
+   LinkedIn; al voltear, la descripción completa y el enlace
+   ========================================= */
+.team-section .member-card.flip-card{height:350px}
+.team-section .member-card.flip-card .flip-inner{height:100%}
+.team-section .member-card.flip-card .flip-face{height:100%}
+.team-section .flip-front .member-link{display:none}
+.team-section .flip-front .bio-short{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden;max-height:none}
+.team-section .flip-back{overflow:hidden}
+@media (max-width:700px){
+  .team-section .team-collage > .member-card.flip-card{height:350px}
+}
+
+/* Equipo: delante un resumen propio de una frase (sin recortes ni puntos suspensivos) */
+.team-section .flip-front .bio-short{display:block;-webkit-line-clamp:unset;line-clamp:none;overflow:visible}
